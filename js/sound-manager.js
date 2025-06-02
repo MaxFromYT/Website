@@ -11,26 +11,55 @@ const SoundManager = {
 
         // Define sounds and their placeholder sources
         this.sounds = {
-            'nav_hover': { src: this.soundPath + 'nav_hover_tick.mp3', volume: 0.3, instance: null },
-            'nav_click': { src: this.soundPath + 'nav_click_confirm.mp3', volume: 0.5, instance: null },
-            'section_reveal': { src: this.soundPath + 'section_swoosh_gentle.mp3', volume: 0.4, instance: null },
-            'viz_start': { src: this.soundPath + 'viz_start_chime.mp3', volume: 0.4, instance: null }
+            'nav_hover': {
+                src: this.soundPath + 'nav_hover_tick.mp3',
+                volume: 0.3,
+                instance: null,
+                description: "Short, crisp, clean digital tick. Almost like a precise mechanical switch. Very subtle."
+            },
+            'nav_click': {
+                src: this.soundPath + 'nav_click_confirm.mp3',
+                volume: 0.5,
+                instance: null,
+                description: "Slightly more resonant than hover, a soft 'confirm' or 'engage' sound. Gentle, positive."
+            },
+            'section_reveal': {
+                src: this.soundPath + 'section_swoosh_gentle.mp3',
+                volume: 0.4,
+                instance: null,
+                description: "A soft, smooth whoosh with a subtle ethereal shimmer. Not too fast, conveys elegant movement."
+            },
+            'viz_start': {
+                src: this.soundPath + 'viz_start_chime.mp3',
+                volume: 0.4,
+                instance: null,
+                description: "A clear, crystalline chime or bell sound, signifying activation or data appearing. Modern and clean."
+            }
         };
 
         this.ambientLoops = {
-            'hero_ambient': { src: this.soundPath + 'hero_ambient_pad.mp3', volume: 0.0, targetVolume: 0.15, instance: null, fading: false },
-            'viz_ambient': { src: this.soundPath + 'viz_ambient_digital.mp3', volume: 0.0, targetVolume: 0.1, instance: null, fading: false }
+            'hero_ambient': {
+                src: this.soundPath + 'hero_ambient_pad.mp3',
+                volume: 0.0, targetVolume: 0.10,
+                instance: null, fading: false,
+                description: "Very low, deep, slowly evolving synth pad. Minimalist, slightly melancholic but with a sense of vastness and technology. Think 'Mac Pro' screensaver but in audio."
+            },
+            'viz_ambient': {
+                src: this.soundPath + 'viz_ambient_digital.mp3',
+                volume: 0.0, targetVolume: 0.08,
+                instance: null, fading: false,
+                description: "Subtle, sparse digital texture. Faint data-like pulses, quiet clicks, and clean, short synthesized tones. Evokes information flow, very high-tech and clean."
+            }
         };
 
-        // Preload sounds (or attempt to)
         for (const key in this.sounds) {
             try {
                 this.sounds[key].instance = new Audio(this.sounds[key].src);
                 this.sounds[key].instance.volume = this.sounds[key].volume * this.masterVolume;
                 this.sounds[key].instance.load();
-                this.sounds[key].instance.onerror = () => console.warn(`SoundManager: Error loading ${key} - ${this.sounds[key].src}`);
+                this.sounds[key].instance.onerror = () => { /* console.warn(`SoundManager: Error loading ${key} - ${this.sounds[key].src}`); */ }; // Commented out
             } catch (e) {
-                console.warn(`SoundManager: Could not create Audio object for ${key} (likely due to test environment).`, e);
+                // console.warn(`SoundManager: Could not create Audio object for ${key} (likely due to test environment).`, e); // Commented out
             }
         }
         for (const key in this.ambientLoops) {
@@ -39,14 +68,13 @@ const SoundManager = {
                 this.ambientLoops[key].instance.volume = this.ambientLoops[key].volume * this.masterVolume;
                 this.ambientLoops[key].instance.loop = true;
                 this.ambientLoops[key].instance.load();
-                this.ambientLoops[key].instance.onerror = () => console.warn(`SoundManager: Error loading loop ${key} - ${this.ambientLoops[key].src}`);
+                this.ambientLoops[key].instance.onerror = () => { /* console.warn(`SoundManager: Error loading loop ${key} - ${this.ambientLoops[key].src}`); */ }; // Commented out
             } catch (e) {
-                console.warn(`SoundManager: Could not create Audio object for loop ${key} (likely due to test environment).`, e);
+                // console.warn(`SoundManager: Could not create Audio object for loop ${key} (likely due to test environment).`, e); // Commented out
             }
         }
 
         this.isInitialized = true;
-        // console.log("SoundManager Initialized (sounds will not play due to placeholder paths).");
     },
 
     playSound: function(soundName) {
@@ -65,7 +93,7 @@ const SoundManager = {
             loop.instance.play().catch(e => { /* console.warn(`SoundManager: Could not play loop ${loopName}`, e) */ });
         }
 
-        if (typeof gsap !== 'undefined') { // Check if GSAP is available
+        if (typeof gsap !== 'undefined') {
             if (loop.fading) gsap.killTweensOf(loop.instance);
             loop.fading = true;
             gsap.to(loop.instance, {
@@ -74,16 +102,16 @@ const SoundManager = {
                 ease: "sine.inOut",
                 onComplete: () => loop.fading = false
             });
-        } else { // Fallback if GSAP not available
+        } else {
             loop.instance.volume = loop.targetVolume * this.masterVolume;
         }
     },
 
     stopAmbientLoop: function(loopName, fadeDuration = 1) {
-        if (!this.isInitialized || !this.ambientLoops[loopName] || !this.ambientLoops[loopName].instance || this.ambientLoops[loopName].instance.paused) return; // Added check for loop.instance.paused
+        if (!this.isInitialized || !this.ambientLoops[loopName] || !this.ambientLoops[loopName].instance || this.ambientLoops[loopName].instance.paused) return;
         const loop = this.ambientLoops[loopName];
 
-        if (typeof gsap !== 'undefined') { // Check if GSAP is available
+        if (typeof gsap !== 'undefined') {
             if (loop.fading) gsap.killTweensOf(loop.instance);
             loop.fading = true;
             gsap.to(loop.instance, {
@@ -95,7 +123,7 @@ const SoundManager = {
                     loop.fading = false;
                 }
             });
-        } else { // Fallback if GSAP not available
+        } else {
              loop.instance.volume = 0;
              loop.instance.pause();
         }

@@ -2,7 +2,6 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    // Throttle function to limit the rate at which a function can fire.
     function throttle(func, limit) {
         let inThrottle;
         return function() {
@@ -16,7 +15,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Enhanced Hero Text Animations using SplitText (with fallbacks)
     const heroH2 = document.querySelector('.hero-section h2');
     const heroP = document.querySelector('.hero-section p');
 
@@ -26,11 +24,10 @@ document.addEventListener('DOMContentLoaded', () => {
         gsap.from(splitH2.chars, {
             duration: 0.8, opacity: 0, scale: 0, y: 80, rotationX: -90,
             transformOrigin: "0% 50% -50", ease: "back.out(1.2)", stagger: 0.03, delay: 0.5
-            // onComplete: () => { if (SoundManager) SoundManager.playSound('section_reveal'); } // Example integration
         });
     } else if (heroH2) {
-        gsap.from(heroH2, { duration: 1, y: 50, opacity: 0, delay: 0.5, ease: "power3.out" /* onComplete: () => { if (SoundManager) SoundManager.playSound('section_reveal'); } */ });
-        if(typeof SplitText === 'undefined') console.warn("SplitText plugin not available for H2. Using fallback animation.");
+        gsap.from(heroH2, { duration: 1, y: 50, opacity: 0, delay: 0.5, ease: "power3.out" });
+        // if(typeof SplitText === 'undefined') console.warn("SplitText plugin not available for H2. Using fallback animation.");
     }
 
     if (heroP && typeof SplitText !== 'undefined') {
@@ -40,10 +37,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     } else if (heroP) {
         gsap.from(heroP, { duration: 1, y: 30, opacity: 0, delay: 1.0, ease: "power3.out" });
-        if(typeof SplitText === 'undefined') console.warn("SplitText plugin not available for P. Using fallback animation.");
+        // if(typeof SplitText === 'undefined') console.warn("SplitText plugin not available for P. Using fallback animation.");
     }
 
-    // Initialize Advanced Carousel (Swiper.js)
     if (document.querySelector('.advanced-carousel')) {
         const swiper = new Swiper('.advanced-carousel', {
             direction: 'horizontal', loop: true, effect: 'fade',
@@ -55,14 +51,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // GSAP and ScrollTrigger dependent animations
     let navLinks;
     let sections;
 
     if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
         gsap.registerPlugin(ScrollTrigger);
 
-        // Advanced ScrollTrigger Choreography for Biography Section
         const biographySection = document.querySelector('#biography');
         if (biographySection) {
             ScrollTrigger.getAll().forEach(st => {
@@ -100,7 +94,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        // Interactive Timeline Animations
         const timelineItems = document.querySelectorAll('.timeline-item');
         timelineItems.forEach((item, index) => {
             gsap.set(item, { opacity: 0, y: 50 });
@@ -124,7 +117,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // Scroll-Triggered Animations for General Content Sections
         const contentSections = document.querySelectorAll('.content-section');
         contentSections.forEach((section, index) => {
             if (section.id !== 'biography' && !section.closest('.timeline')) {
@@ -133,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     trigger: section, start: "top 90%", end: "bottom 10%",
                     onEnter: () => {
                         gsap.to(section, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', delay: index * 0.1 });
-                        if (SoundManager && section.id !== 'home') SoundManager.playSound('section_reveal'); // Play for general sections, not hero
+                        if (SoundManager && section.id !== 'home') SoundManager.playSound('section_reveal');
                     },
                     onLeaveBack: () => gsap.to(section, { opacity: 0, y: 75, duration: 0.4, ease: 'power2.in' }),
                     once: false
@@ -141,7 +133,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // Horizontal Scroll for Video Gallery
         const videoGalleryWrapper = document.querySelector('.video-gallery-wrapper');
         const videoGalleryTrack = document.querySelector('.video-gallery-track');
         if (videoGalleryWrapper && videoGalleryTrack && videoGalleryTrack.children.length > 1) {
@@ -167,7 +158,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        // Scroll-Spy and Section Transition Logic (navLinks and sections defined here)
         navLinks = document.querySelectorAll('header nav ul li a');
         sections = document.querySelectorAll('main > section[id]');
         const allSectionsForTransition = Array.from(sections);
@@ -192,12 +182,12 @@ document.addEventListener('DOMContentLoaded', () => {
         updateActiveNavLink();
 
         navLinks.forEach(link => {
-            link.addEventListener('mouseenter', () => { // Sound on hover
+            link.addEventListener('mouseenter', () => {
                 if (SoundManager) SoundManager.playSound('nav_hover');
             });
             link.addEventListener('click', function(event) {
                 event.preventDefault();
-                if (SoundManager) SoundManager.playSound('nav_click'); // Sound on click
+                if (SoundManager) SoundManager.playSound('nav_click');
                 const targetId = this.getAttribute('href');
                 const targetSection = document.querySelector(targetId);
                 if (!targetSection) return;
@@ -226,7 +216,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
-        // Ambient Sound Triggers
         const heroSectionForSound = document.querySelector('#home');
         if (heroSectionForSound && SoundManager) {
             ScrollTrigger.create({
@@ -247,10 +236,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 onLeaveBack: () => SoundManager.stopAmbientLoop('viz_ambient', 1.5),
             });
         }
-
     }
 
-    // Hero Decorative SVG Path Animation (DrawSVG or Fallback)
     const svgPaths = document.querySelectorAll('#hero-decorative-svg path');
     if (svgPaths.length > 0 && typeof gsap !== 'undefined') {
         if (typeof DrawSVGPlugin !== 'undefined') {
@@ -261,7 +248,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 delay: 1.5, repeat: -1, yoyo: true, repeatDelay: 1
             });
         } else {
-            console.warn("DrawSVGPlugin not available. Using fallback SVG animation.");
+            // console.warn("DrawSVGPlugin not available. Using fallback SVG animation.");
             svgPaths.forEach((path, index) => {
                 const length = path.getTotalLength();
                 path.style.strokeDasharray = length;
@@ -275,7 +262,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Hero Decorative SVG Element Animation (Physics2D or Fallback Float)
     const heroSVG = document.querySelector("#hero-decorative-svg");
     if (heroSVG && typeof gsap !== 'undefined') {
         if (typeof Physics2DPlugin !== 'undefined') {
@@ -307,7 +293,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 duration: 1000, repeat: -1
             });
         } else {
-            console.warn("Physics2DPlugin not available for hero SVG. Using existing float animation.");
+            // console.warn("Physics2DPlugin not available for hero SVG. Using existing float animation.");
             gsap.to("#hero-decorative-svg", {
                 duration: 5, y: "-=15px", x: "+=10px", rotation: 5,
                 ease: "sine.inOut", repeat: -1, yoyo: true
@@ -315,23 +301,43 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Video Placeholder Interaction
     const videoPlaceholders = document.querySelectorAll('.video-player-placeholder');
     videoPlaceholders.forEach(placeholder => {
         const playButton = placeholder.querySelector('.play-button-overlay');
+        const videoTitlePara = placeholder.querySelector('p');
+        const videoTitle = videoTitlePara ? videoTitlePara.textContent : 'video';
+
+        if (playButton && videoTitlePara) {
+             playButton.setAttribute('aria-label', `Play video: ${videoTitle}`);
+        }
+
         if (playButton) {
-            playButton.addEventListener('click', () => {
+            const action = () => {
                 playButton.style.display = 'none';
                 const fakeControls = placeholder.querySelector('.fake-controls');
                 if (fakeControls) {
                     fakeControls.style.opacity = '1';
                     fakeControls.style.transform = 'translateY(0)';
                 }
-            });
+            };
+
+            // Remove previous listeners if they were stored on the element, to prevent duplication
+            if (playButton._clickHandler) playButton.removeEventListener('click', playButton._clickHandler);
+            if (playButton._keydownHandler) playButton.removeEventListener('keydown', playButton._keydownHandler);
+
+            playButton._clickHandler = action;
+            playButton._keydownHandler = (event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    action();
+                }
+            };
+
+            playButton.addEventListener('click', playButton._clickHandler);
+            playButton.addEventListener('keydown', playButton._keydownHandler);
         }
     });
 
-    // Custom Cursor Follower
     const follower = document.querySelector('.cursor-follower');
     if (follower) {
         let mouseX = 0, mouseY = 0;
@@ -367,7 +373,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 10);
     }
 
-    // Extreme Hover Effect for Header Navigation Links (SplitText based)
     const navLinksForSplit = document.querySelectorAll('header nav ul li a');
     if (typeof SplitText !== 'undefined' && typeof gsap !== 'undefined') {
         navLinksForSplit.forEach(link => {
@@ -387,6 +392,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     } else {
-        if(typeof SplitText === 'undefined') console.warn("SplitText plugin not available for nav link hover effects. Using CSS fallback hover effects.");
+        // if(typeof SplitText === 'undefined') console.warn("SplitText plugin not available for nav link hover effects. Using CSS fallback hover effects."); // Removed
     }
 });

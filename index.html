@@ -8,10 +8,12 @@
     <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" />
 </head>
 <body>
-    <header>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <header role="banner">
         <div class="container">
-            <h1 class="logo">Dennis Doubin</h1>
-            <nav>
+            <!-- Logo: ensure it's properly described if it were an image -->
+            <h1 class="logo" tabindex="0">Dennis Doubin</h1> <!-- Made focusable if it acts like a home link -->
+            <nav role="navigation" aria-label="Main Navigation">
                 <ul>
                     <li><a href="#home">Home</a></li>
                     <li><a href="#biography">Biography</a></li>
@@ -23,14 +25,14 @@
         </div>
     </header>
 
-    <canvas id="ambient-bg-canvas"></canvas>
+    <canvas id="ambient-bg-canvas" aria-hidden="true"></canvas>
 
-    <main>
+    <main id="main-content" role="main" tabindex="-1"> <!-- tabindex -1 allows JS to focus it -->
         <div class="container">
             <!-- Hero Section -->
-            <section id="home" class="hero-section">
-                <canvas id="hero-canvas"></canvas>
-                <svg id="hero-decorative-svg" viewBox="0 0 200 200" width="150" height="150">
+            <section id="home" class="hero-section" role="region" aria-labelledby="hero-title">
+                <canvas id="hero-canvas" aria-hidden="true"></canvas> <!-- Decorative -->
+                <svg id="hero-decorative-svg" viewBox="0 0 200 200" width="150" height="150" aria-hidden="true"> <!-- Decorative -->
                     <defs>
                         <linearGradient id="svgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
                             <stop offset="0%" style="stop-color:rgba(0,113,227,0.8); stop-opacity:1" />
@@ -41,15 +43,15 @@
                     <path id="svgPath2" d="M50 100 Q100 70 150 100 T250 100" stroke="url(#svgGrad)" stroke-width="3" fill="none" opacity="0.7"/>
                     <path id="svgPath3" d="M50 150 Q100 120 150 150 T250 150" stroke="url(#svgGrad)" stroke-width="2" fill="none" opacity="0.4"/>
                 </svg>
-                <h2>Welcome</h2>
+                <h2 id="hero-title">Welcome</h2>
                 <p>Experience the dynamic artistry of Dennis Doubin, a conductor renowned for his passionate interpretations, profound musical insight, and an electrifying stage presence that captivates audiences worldwide.</p>
                 <!-- Placeholder for a striking image later -->
                 <div class="hero-image-placeholder"><span>[Hero Image Placeholder]</span></div>
             </section>
 
             <!-- Biography Section -->
-            <section id="biography" class="content-section">
-                <h2>Biography</h2>
+            <section id="biography" class="content-section" role="region" aria-labelledby="bio-title">
+                <h2 id="bio-title">Biography</h2>
                 <p>Born in Prague in 1965, Dennis Doubin's prodigious musical talent was unmistakable from a young age. It was his grandfather, a former cellist with the Czech Philharmonic, who first placed a miniature baton in his hand, igniting a lifelong passion. Early studies at the Prague Conservatory under the tutelage of the legendary Maestro Vasek Novak (a fictional mentor) honed his innate understanding of orchestral color and rhythmic vitality.</p>
                 <p>A recipient of the prestigious 'Golden Lion Scholarship' (fictional award), Doubin furthered his studies at The Juilliard School in New York. There, he absorbed wisdom from iconic figures and visiting masters, graduating with top honors and a reputation for fiery intellect and profound musicality. His conducting is a mesmerizing blend of intellectual rigor and raw emotional power; he seeks to illuminate the architectural grandeur of each score while fostering a collaborative spirit that allows musicians the freedom to bring their own voices to the fore.</p>
                 <p>"Music," Dennis Doubin often says, "is the ultimate dialogue – between composer and performer, performer and audience, soul and the universe. Our role is to be faithful interpreters and passionate communicators of these timeless human stories."</p>
@@ -103,8 +105,8 @@
             </section>
 
             <!-- Performances Section -->
-            <section id="performances" class="content-section">
-                <h2>Performances</h2>
+            <section id="performances" class="content-section" role="region" aria-labelledby="perf-title">
+                <h2 id="perf-title">Performances</h2>
                 <h3>Upcoming Performances</h3>
                 <ul>
                     <li><strong>Mahler's Symphony No. 5:</strong> January 15, 2024, Carnegie Hall, New York with the New York Philharmonic. <a href="#">A monumental journey through shadow and light, Maestro Doubin leads a transcendent performance of Mahler's epic Fifth Symphony. Presented by the New York Arts Foundation.</a></li>
@@ -118,36 +120,36 @@
             </section>
 
             <!-- Media Section -->
-            <section id="media" class="content-section">
-                <h2>Media</h2>
+            <section id="media" class="content-section" role="region" aria-labelledby="media-title">
+                <h2 id="media-title">Media</h2>
                 <p>Explore photos and videos of Dennis Doubin in action.</p>
                 <div class="media-showcase"> <!-- Existing container -->
                     <h3>Photo Gallery</h3>
                     <!-- Swiper -->
-                    <div class="swiper advanced-carousel">
+                    <div class="swiper advanced-carousel" role="region" aria-roledescription="carousel" aria-label="Photo Gallery of Dennis Doubin">
                         <div class="swiper-wrapper">
                             <div class="swiper-slide">
-                                <img src="https://via.placeholder.com/800x450/2a2a2a/FFFFFF?Text=Dennis+Doubin+Conducting+Vienna+Philharmonic+-+Dynamic+Shot" alt="Dennis Doubin Conducting Vienna Philharmonic - Dynamic Shot">
+                                <img src="https://via.placeholder.com/800x450/2a2a2a/FFFFFF?Text=Vienna+Philharmonic+Dynamic+Gestures+Mid-Crescendo+Stage-Lit+Lens+Flare+Concert+Photography" alt="Dennis Doubin conducting the Vienna Philharmonic with dynamic, fluid gestures, caught mid-crescendo. View from slightly below, capturing the energy of the orchestra and the grandeur of a historic concert hall. Lighting is warm, stage-lit, with a slight lens flare. Style: High-impact concert photography.">
                                 <div class="swiper-caption">Conducting the Vienna Philharmonic, 2023.</div>
                             </div>
                             <div class="swiper-slide">
-                                <img src="https://via.placeholder.com/800x450/3a3a3a/FFFFFF?Text=Dennis+Doubin+Rehearsal+-+Intense+Focus" alt="Dennis Doubin Rehearsal - Intense Focus">
+                                <img src="https://via.placeholder.com/800x450/3a3a3a/FFFFFF?Text=Rehearsal+Close-up+Expressive+Hands+Sheet+Music+Soft+Window+Light+Photojournalistic" alt="Dennis Doubin in intense rehearsal with a focused orchestra. Close-up on Doubin's expressive face and hands, sheet music visible. Natural, soft window light from the side, creating depth. Atmosphere of deep concentration and collaboration. Style: Candid, photojournalistic.">
                                 <div class="swiper-caption">Rehearsal for the Summer Festival.</div>
                             </div>
                             <div class="swiper-slide">
-                                <img src="https://via.placeholder.com/800x450/4a4a4a/FFFFFF?Text=Dennis+Doubin+Post-Concert+Ovation+-+Carnegie+Hall" alt="Dennis Doubin Post-Concert Ovation - Carnegie Hall">
+                                <img src="https://via.placeholder.com/800x450/4a4a4a/FFFFFF?Text=Carnegie+Hall+Ovation+Hand+on+Heart+Golden+Lighting+Iconic+Performance+Moment" alt="Dennis Doubin acknowledging a roaring ovation at Carnegie Hall, slight smile, hand to heart. View from the audience, capturing the vastness of the hall and the warmth of the reception. Golden lighting, sense of triumph. Style: Iconic performance moment.">
                                 <div class="swiper-caption">Post-concert ovation at Carnegie Hall.</div>
                             </div>
                             <div class="swiper-slide">
-                                <img src="https://via.placeholder.com/800x450/2d2d2d/FFFFFF?Text=Dennis+Doubin+Studio+Portrait+-+Thoughtful" alt="Dennis Doubin Studio Portrait - Thoughtful">
+                                <img src="https://via.placeholder.com/800x450/2d2d2d/FFFFFF?Text=Studio+Portrait+Authoritative+Presence+Minimalist+Setting+Clean+Lighting+Contemporary" alt="Studio portrait of Dennis Doubin, looking directly at the camera with a calm, authoritative presence. Modern, minimalist setting. Lighting is clean and even, emphasizing a sharp, tailored suit. Style: Contemporary corporate/artistic portrait.">
                                 <div class="swiper-caption">Studio Portrait, 2024.</div>
                             </div>
                         </div>
                         <!-- Add Pagination -->
                         <div class="swiper-pagination"></div>
                         <!-- Add Navigation -->
-                        <div class="swiper-button-prev"></div>
-                        <div class="swiper-button-next"></div>
+                        <div class="swiper-button-prev" role="button" aria-label="Previous slide"></div>
+                        <div class="swiper-button-next" role="button" aria-label="Next slide"></div>
                         <!-- Add Scrollbar -->
                         <!-- <div class="swiper-scrollbar"></div> --> <!-- Optional, can be added later if desired -->
                     </div>
@@ -157,8 +159,8 @@
                         <div class="video-gallery-track"> <!-- New Track -->
                             <!-- Existing video player placeholders go here -->
                             <div class="video-player-placeholder">
-                                <img src="https://via.placeholder.com/400x225/222/FFFFFF?Text=Thumbnail:+Brahms+Symphony+No.1+Excerpt" alt="Thumbnail: Brahms Symphony No. 1 Excerpt">
-                                <div class="play-button-overlay">▶</div>
+                                <img src="https://via.placeholder.com/400x225/222/FFFFFF?Text=Thumb:Brahms+Symph1+Abstract+Visual+Swirling+Colors+Motion+Graphics" alt="Video Thumbnail: Abstract visual representing Brahms Symphony No. 1 - perhaps swirling dark blues and passionate reds, with a hint of classical instruments. Style: Motion graphics, artistic interpretation.">
+                                <div class="play-button-overlay" role="button" tabindex="0" aria-label="Play video: Excerpt: Brahms Symphony No. 1">▶</div>
                                 <div class="fake-controls">
                                     <span class="control-icon play-pause-icon">❚❚</span>
                                     <div class="fake-progress-bar-container"><div class="fake-progress-bar-filled"></div></div>
@@ -170,8 +172,8 @@
                                 <p>Excerpt: Brahms Symphony No. 1</p>
                             </div>
                             <div class="video-player-placeholder">
-                                <img src="https://via.placeholder.com/400x225/222/FFFFFF?Text=Thumbnail:+Interview+-+Role+of+a+Conductor" alt="Thumbnail: Interview - Role of a Conductor">
-                                <div class="play-button-overlay">▶</div>
+                                <img src="https://via.placeholder.com/400x225/222/FFFFFF?Text=Thumb:Interview+Doubin+Thoughtful+Cinematic+Study+Background" alt="Video Thumbnail: Dennis Doubin in a thoughtful interview setting, subtly lit, looking off-camera as if in deep conversation. Background is a library or study. Style: Cinematic interview still.">
+                                <div class="play-button-overlay" role="button" tabindex="0" aria-label="Play video: Interview: The Role of a Conductor">▶</div>
                                 <div class="fake-controls">
                                     <span class="control-icon play-pause-icon">❚❚</span>
                                     <div class="fake-progress-bar-container"><div class="fake-progress-bar-filled" style="width: 60%;"></div></div>
@@ -184,8 +186,8 @@
                             </div>
                             <!-- Add one or two more video placeholders for a better horizontal scroll effect -->
                             <div class="video-player-placeholder">
-                                <img src="https://via.placeholder.com/400x225/222/FFFFFF?Text=Thumbnail:+Live+Performance+Clip" alt="Thumbnail: Live Performance Clip">
-                                <div class="play-button-overlay">▶</div>
+                                <img src="https://via.placeholder.com/400x225/222/FFFFFF?Text=Thumb:Salzburg+Festival+Live+Performance+Energetic+Stage+Lights" alt="Video Thumbnail: A dynamic shot from a live performance at the Salzburg Festival, capturing the energy of the orchestra under bright stage lights. Style: Energetic live event still.">
+                                <div class="play-button-overlay" role="button" tabindex="0" aria-label="Play video: Live from Salzburg Festival">▶</div>
                                 <div class="fake-controls">
                                     <span class="control-icon play-pause-icon">❚❚</span>
                                     <div class="fake-progress-bar-container"><div class="fake-progress-bar-filled" style="width: 20%;"></div></div>
@@ -197,8 +199,8 @@
                                 <p>Live from Salzburg Festival</p>
                             </div>
                             <div class="video-player-placeholder">
-                                <img src="https://via.placeholder.com/400x225/222/FFFFFF?Text=Thumbnail:+Behind+the+Scenes" alt="Thumbnail: Behind the Scenes">
-                                <div class="play-button-overlay">▶</div>
+                                <img src="https://via.placeholder.com/400x225/222/FFFFFF?Text=Thumb:Behind+Scenes+Rehearsal+Candid+Laughter+Documentary" alt="Video Thumbnail: Behind-the-scenes glimpse of Dennis Doubin in rehearsal, laughing with musicians. Casual, warm, and human moment. Style: Documentary, candid.">
+                                <div class="play-button-overlay" role="button" tabindex="0" aria-label="Play video: A Day in Rehearsal">▶</div>
                                 <div class="fake-controls">
                                     <span class="control-icon play-pause-icon">❚❚</span>
                                     <div class="fake-progress-bar-container"><div class="fake-progress-bar-filled" style="width: 75%;"></div></div>
@@ -214,12 +216,12 @@
                 </div>
             </section> <!-- Closing #media section -->
 
-            <section id="legacy-dataviz" class="content-section">
+            <section id="legacy-dataviz" class="content-section" role="region" aria-labelledby="dataviz-title">
                 <div class="container">
-                    <h2>A Legacy in Motion</h2>
+                    <h2 id="dataviz-title">A Legacy in Motion</h2>
                     <p class="viz-description">An abstract representation of Maestro Doubin's journey through landmark achievements and pivotal collaborations over the decades.</p>
                     <div class="dataviz-canvas-container">
-                        <canvas id="dataviz-canvas"></canvas>
+                        <canvas id="dataviz-canvas" role="img" aria-label="Abstract 3D network graph visualizing Dennis Doubin's career milestones, connections between years, events, and orchestras, animated to show growth and evolution."></canvas>
                     </div>
                 </div>
             </section>
@@ -253,12 +255,20 @@
     <!-- LIKELY TO FAIL OR BE UNNECESSARY IF window.scrollTo is used -->
 
     <!-- GSAP should be loaded before this if GSAP is used for volume fades -->
-    <script src="js/sound-manager.js"></script>
-    <!-- Other custom scripts -->
+    <!-- Sound manager, could be deferred if sounds are not critical for initial interaction -->
+    <script src="js/sound-manager.js" defer></script>
+
+    <!-- Custom Scripts -->
+    <!-- Core visual enhancements, load early -->
     <script src="js/hero-animation.js"></script>
+    <script src="js/ambient-background.js"></script> <!-- Ambient BG, could be deferred if very heavy -->
+
+    <!-- Main interaction logic -->
     <script src="js/main.js"></script>
-    <script src="js/ambient-background.js"></script>
-    <script src="js/dataviz-animation.js"></script> <!-- New script -->
+
+    <!-- Feature-specific, could be candidates for deferred loading or code splitting -->
+    <script src="js/dataviz-animation.js" defer></script>
+
     <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
     <div class="cursor-follower"></div>
 </body>

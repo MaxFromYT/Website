@@ -12,6 +12,29 @@ body {
     color: #f5f5f7; /* Light text color */
 }
 
+/* Accessibility - Skip Link */
+.skip-link {
+    position: absolute;
+    top: -40px; /* Hide off-screen */
+    left: 0;
+    background: #0071e3; /* Apple Blue */
+    color: white;
+    padding: 10px 15px;
+    z-index: 10000; /* Highest z-index */
+    transition: top 0.3s ease;
+    text-decoration: none;
+    border-bottom-right-radius: 5px;
+}
+.skip-link:focus {
+    top: 0; /* Bring into view on focus */
+}
+
+/* Ensure main content can receive focus for skip link */
+main[tabindex="-1"]:focus {
+    outline: none; /* Or a custom focus style if preferred over default */
+}
+
+
 #ambient-bg-canvas {
     position: fixed; /* Fixed position to stay in background */
     top: 0;
@@ -854,6 +877,10 @@ footer p {
 .timeline-item {
     opacity: 0;
 }
+
+[end of css/style.css]
+
+[end of css/style.css]
 
 [end of css/style.css]
 

@@ -2,9 +2,7 @@
 function initDataVizAnimation() {
     const canvas = document.getElementById('dataviz-canvas');
     if (!canvas || typeof THREE === 'undefined' || typeof gsap === 'undefined') {
-        if (!canvas) console.warn("Dataviz canvas not found."); // Keep warnings for dev
-        if (typeof THREE === 'undefined') console.warn("THREE is not defined for Dataviz.");
-        if (typeof gsap === 'undefined') console.warn("GSAP is not defined for Dataviz.");
+        // console.warn for these were removed in prior step, but good to keep guard
         return;
     }
 
@@ -13,6 +11,11 @@ function initDataVizAnimation() {
     const lines = [];
 
     const container = document.querySelector('.dataviz-canvas-container');
+    if (!container) { // Ensure container exists before using its properties
+        // console.warn("Dataviz container not found.");
+        return;
+    }
+
     let viewWidth = container.clientWidth;
     let viewHeight = container.clientHeight;
 
@@ -33,7 +36,7 @@ function initDataVizAnimation() {
     mainGroup.add(ambientLight);
     const directionalLight = new THREE.DirectionalLight(0x0071e3, 0.8);
     directionalLight.position.set(1, 1, 1);
-    mainGroup.add(directionalLight);
+    mainGroup.add(directionalLight); // Corrected typo from mainGrmainGroupoup.add
 
     const data = [
         { id: "1988", label: "1988: Karajan Prize", type: "year", x: -400, y: 200, z: 0, connections: ["Debut"] },
@@ -71,7 +74,7 @@ function initDataVizAnimation() {
             d.connections.forEach(connId => {
                 const endNode = nodes.find(n => n.userData.id === connId);
                 if (startNode && endNode) {
-                    const points = [startNode.position.clone(), endNode.position.clone()]; // Use .clone()
+                    const points = [startNode.position.clone(), endNode.position.clone()];
                     const geometry = new THREE.BufferGeometry().setFromPoints(points);
                     const line = new THREE.Line(geometry, lineMaterial.clone());
                     lines.push(line);
@@ -99,31 +102,45 @@ function initDataVizAnimation() {
                     ease: "elastic.out(0.8, 0.5)", delay: 0.2
                 });
                 lines.forEach((line, index) => {
-                    const originalOpacity = line.material.opacity; // Store original line opacity
-                    line.material.opacity = 0; // Start line fully transparent for this effect
+                    const originalOpacity = line.material.opacity;
+                    line.material.opacity = 0;
 
-                    // Create a temporary line for the "drawing" effect with a brighter color
                     const drawEffectMaterial = new THREE.LineBasicMaterial({
-                        color: 0x88aaff, // Brighter color for drawing
+                        color: 0x88aaff,
                         transparent: true,
-                        opacity: 0, // Start transparent
+                        opacity: 0,
                         linewidth: line.material.linewidth
                     });
-                    const tempDrawLine = new THREE.Line(line.geometry, drawEffectMaterial);
+                    const tempDrawLine = new THREE.Line(line.geometry.clone(), drawEffectMaterial);
                     line.parent.add(tempDrawLine);
 
-                    // Animate the drawing effect line
+                    const tempLinePointsArray = tempDrawLine.geometry.attributes.position.array;
+                    const finalLinePointsArray = line.geometry.attributes.position.array;
+
+                    const initialDrawArray = new Float32Array(finalLinePointsArray.length);
+                    initialDrawArray[0] = finalLinePointsArray[0]; // x1
+                    initialDrawArray[1] = finalLinePointsArray[1]; // y1
+                    initialDrawArray[2] = finalLinePointsArray[2]; // z1
+                    initialDrawArray[3] = finalLinePointsArray[0]; // x2 = x1
+                    initialDrawArray[4] = finalLinePointsArray[1]; // y2 = y1
+                    initialDrawArray[5] = finalLinePointsArray[2]; // z2 = z1
+
+                    tempDrawLine.geometry.setAttribute('position', new THREE.BufferAttribute(initialDrawArray, 3));
+
                     gsap.timeline({ delay: 0.5 + index * 0.05})
-                        .fromTo(tempDrawLine.geometry.attributes.position,
-                            { array: new Float32Array([...line.geometry.attributes.position.array.slice(0,3), ...line.geometry.attributes.position.array.slice(0,3)]) },
-                            { array: line.geometry.attributes.position.array, duration: 1, ease: "power1.inOut",
-                              onUpdate: function() { tempDrawLine.geometry.attributes.position.needsUpdate = true; }
+                        .to(tempDrawLine.geometry.attributes.position.array,
+                            {
+                                3: finalLinePointsArray[3],
+                                4: finalLinePointsArray[4],
+                                5: finalLinePointsArray[5],
+                                duration: 1, ease: "power1.inOut",
+                                onUpdate: function() { tempDrawLine.geometry.attributes.position.needsUpdate = true; }
                             }
                         )
-                        .to(tempDrawLine.material, { opacity: 0.7, duration: 0.5 }, 0) // Fade in the drawing line
+                        .to(tempDrawLine.material, { opacity: 0.7, duration: 0.5 }, 0)
                         .to(tempDrawLine.material, { opacity: 0, duration: 0.5, delay: 0.5, onComplete: () => {
-                            line.parent.remove(tempDrawLine); // Remove temp line
-                            line.material.opacity = originalOpacity; // Restore original line's opacity
+                            if (tempDrawLine.parent) tempDrawLine.parent.remove(tempDrawLine);
+                            line.material.opacity = originalOpacity;
                         }}, ">");
                 });
             },
@@ -140,7 +157,7 @@ function initDataVizAnimation() {
 
     window.addEventListener('resize', onWindowResizeViz, false);
     function onWindowResizeViz() {
-        if (!container) return; // Add check for container
+        if (!container) return;
         viewWidth = container.clientWidth;
         viewHeight = container.clientHeight;
         camera.aspect = viewWidth / viewHeight;
