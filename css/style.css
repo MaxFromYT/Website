@@ -1,0 +1,673 @@
+/* Basic CSS Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    line-height: 1.6;
+    background-color: #1d1d1f; /* Dark background similar to Mac Pro aesthetic */
+    color: #f5f5f7; /* Light text color */
+}
+
+/*
+ Primary Color Palette:
+ - Background: #1d1d1f (Dark Gray - already set on body)
+ - Text: #f5f5f7 (Off-white - already set on body)
+ - Accent / Highlight: #0071e3 (Apple Blue)
+ - Secondary Background / Panels: #2c2c2e (Slightly lighter dark gray)
+*/
+
+/*
+ Typography:
+ - Primary Font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif... (already set on body)
+ - Headings Font: Specific weights or styles of the primary font.
+*/
+
+/* Header Styles */
+header {
+    background-color: #2c2c2e; /* Slightly lighter dark gray for header */
+    padding: 1rem 0;
+    border-bottom: 1px solid #424245; /* Subtle border */
+}
+
+header .container {
+    width: 90%;
+    max-width: 1200px; /* Max width for content */
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header .logo {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #f5f5f7;
+}
+
+header nav ul {
+    list-style: none;
+    display: flex;
+}
+
+header nav ul li {
+    margin-left: 20px;
+}
+
+header nav ul li a {
+    text-decoration: none;
+    color: #f5f5f7;
+    font-size: 1rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+header nav ul li a:hover,
+header nav ul li a.active { /* Assuming an 'active' class for current page */
+    background-color: #0071e3; /* Apple Blue for hover/active */
+    color: #fff;
+}
+
+/* Container for main content sections */
+main .container {
+    width: 90%;
+    max-width: 1200px; /* Max width for content */
+    margin: 2rem auto; /* Add some space from header and around content */
+    padding: 0 1rem; /* Padding for smaller screens */
+}
+
+/* General Content Section Styling */
+.content-section {
+    background-color: #2c2c2e; /* Slightly lighter dark gray for content panels */
+    padding: 2rem;
+    margin-bottom: 2rem;
+    border-radius: 8px; /* Subtle rounded corners */
+    border: 1px solid #424245; /* Subtle border */
+}
+
+.content-section h2 {
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: #f5f5f7;
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid #0071e3; /* Apple Blue accent for headings */
+    padding-bottom: 0.5rem;
+    display: inline-block; /* To make border only as wide as text */
+}
+
+.content-section p, .content-section ul {
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    line-height: 1.8;
+}
+
+.content-section ul {
+    list-style-position: inside;
+    padding-left: 0; /* Resetting default padding if any */
+}
+
+.content-section ul li {
+    margin-bottom: 0.5rem;
+}
+
+.content-section a {
+    color: #0071e3; /* Apple Blue for links */
+    text-decoration: none;
+}
+
+.content-section a:hover {
+    text-decoration: underline;
+}
+
+/* Hero Section Specifics */
+.hero-section {
+    text-align: center;
+    padding: 3rem 2rem;
+    background-color: #1d1d1f; /* Match body background for a more seamless hero */
+    border: none; /* No border for hero */
+    border-radius: 0; /* No radius for hero if it's full-width feel */
+}
+
+.hero-section h2 { /* Overriding general h2 for hero */
+    font-size: 3.5rem;
+    border-bottom: none; /* No border for hero title */
+    margin-bottom: 1rem;
+}
+
+.hero-section p {
+    font-size: 1.5rem;
+    color: #c7c7c7; /* Slightly muted text for hero tagline */
+    margin-bottom: 2rem;
+}
+
+.hero-image-placeholder { /* Styling the placeholder div */
+    width: 100%;
+    height: 400px;
+    background-color: #38383a; /* Darker placeholder color */
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    color: #666;
+    font-size: 1.2rem;
+}
+
+/* Media Section Placeholders */
+.media-gallery-placeholder {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Adjusted minmax */
+    gap: 1rem; /* Replaced 'gap' with 'grid-gap' for broader compatibility, or keep 'gap' if targeting modern browsers only */
+    margin-top: 20px;
+}
+
+.media-gallery-placeholder > div { /* Styling the placeholder items */
+    height: 200px; /* Increased height for better visual */
+    background-color: #38383a; /* Darker placeholder color */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    color: #666;
+    font-size: 1rem;
+}
+
+/* Performances Section Specifics */
+#performances h3 {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #f5f5f7;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+}
+
+#performances ul {
+    list-style-type: none; /* Removing bullets for performance lists */
+    padding-left: 0;
+}
+
+#performances ul li strong {
+    color: #0071e3; /* Highlight event names */
+}
+
+/* Footer Styles */
+footer {
+    background-color: #1d1d1f; /* Darkest background for footer */
+    color: #a0a0a5; /* Muted text color for footer */
+    padding: 2rem 0;
+    border-top: 1px solid #424245; /* Subtle border */
+    text-align: center;
+}
+
+footer .container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    align-items: center;
+}
+
+footer p {
+    margin-bottom: 0.5rem; /* Space below copyright text */
+    font-size: 0.9rem;
+}
+
+.footer-links {
+    margin-bottom: 0.5rem; /* Space below links */
+}
+
+.footer-links a {
+    color: #a0a0a5;
+    text-decoration: none;
+    font-size: 0.9rem;
+    margin: 0 0.5rem;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: #0071e3; /* Apple Blue for hover */
+}
+
+.social-media a {
+    color: #a0a0a5;
+    text-decoration: none;
+    font-size: 1.2rem; /* Larger for icon placeholders */
+    margin: 0 0.75rem;
+    transition: color 0.3s ease;
+}
+
+.social-media a:hover {
+    color: #0071e3; /* Apple Blue for hover */
+}
+
+/* Media Showcase General */
+.media-showcase h3 {
+    font-size: 1.8rem;
+    font-weight: 500;
+    color: #f5f5f7;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #424245;
+    padding-bottom: 0.5rem;
+}
+
+/* Carousel Styles */
+.carousel {
+    position: relative;
+    overflow: hidden;
+    background-color: #222; /* Dark background for carousel */
+    border-radius: 8px;
+    border: 1px solid #424245;
+}
+
+.carousel-inner {
+    display: flex; /* Will be controlled by JS, but set for structure */
+    /* transition: transform 0.5s ease; */ /* JS will handle this */
+}
+
+.carousel-item {
+    min-width: 100%;
+    /* display: none; */ /* JS will handle active display */
+}
+
+.carousel-item.active { /* Static display of first item for now */
+    display: block;
+}
+
+.carousel-item img {
+    width: 100%;
+    display: block;
+    max-height: 500px; /* Max height for carousel images */
+    object-fit: cover; /* Ensure images cover the area nicely */
+}
+
+.carousel-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    padding: 1rem;
+    text-align: center;
+    font-size: 1rem;
+}
+
+.carousel-control {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    border: none;
+    padding: 0.75rem 1rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+    z-index: 10;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.carousel-control:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.carousel-control.prev {
+    left: 10px;
+}
+
+.carousel-control.next {
+    right: 10px;
+}
+
+/* Video Gallery Styles */
+.video-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.video-player-placeholder {
+    background-color: #222;
+    border-radius: 8px;
+    padding: 1rem;
+    text-align: center;
+    border: 1px solid #424245;
+    position: relative; /* For play button overlay */
+}
+
+.video-player-placeholder img {
+    width: 100%;
+    border-radius: 6px;
+    margin-bottom: 0.5rem;
+}
+
+.video-player-placeholder .play-button-overlay {
+    position: absolute;
+    top: 35%; /* Adjust as needed */
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 3rem;
+    color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(0,0,0,0.3);
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.video-player-placeholder:hover .play-button-overlay {
+    background-color: rgba(0,113,227,0.8); /* Apple Blue hover */
+    color: #fff;
+}
+
+.video-player-placeholder p {
+    font-size: 1rem;
+    color: #f5f5f7;
+    margin-top: 0.5rem;
+}
+
+/* Timeline Styles */
+.timeline-title {
+    font-size: 1.8rem;
+    font-weight: 500;
+    color: #f5f5f7;
+    margin-top: 2.5rem; /* More space before timeline */
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.timeline {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 1rem 0;
+}
+
+.timeline::before { /* The central line */
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background-color: #0071e3; /* Apple Blue */
+    transform: translateX(-50%);
+    border-radius: 2px;
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 2rem; /* Space between items */
+    width: 50%;
+}
+
+.timeline-item:nth-child(odd) {
+    padding-right: 30px; /* Space from central line */
+    left: 0;
+    text-align: right;
+}
+
+.timeline-item:nth-child(even) {
+    padding-left: 30px; /* Space from central line */
+    left: 50%;
+    text-align: left;
+}
+
+.timeline-dot {
+    content: '';
+    position: absolute;
+    top: 10px; /* Align with text better */
+    width: 16px;
+    height: 16px;
+    background-color: #f5f5f7; /* Light dot */
+    border: 3px solid #0071e3; /* Apple Blue border */
+    border-radius: 50%;
+    z-index: 1;
+}
+
+.timeline-item:nth-child(odd) .timeline-dot {
+    right: -8px; /* (16px / 2) */
+    transform: translateX(50%);
+}
+
+.timeline-item:nth-child(even) .timeline-dot {
+    left: -8px; /* (16px / 2) */
+    transform: translateX(-50%);
+}
+
+.timeline-date {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #0071e3; /* Apple Blue */
+    margin-bottom: 0.5rem;
+    display: block; /* Ensure it takes its own line if needed */
+}
+
+.timeline-item:nth-child(odd) .timeline-date {
+     margin-top: 5px; /* Adjust alignment */
+}
+.timeline-item:nth-child(even) .timeline-date {
+     margin-top: 5px; /* Adjust alignment */
+}
+
+
+.timeline-content {
+    background-color: #3a3a3c; /* Slightly different shade for timeline items */
+    padding: 1rem;
+    border-radius: 6px;
+    border: 1px solid #4a4a4c;
+}
+
+.timeline-content h4 {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #f5f5f7;
+    margin-bottom: 0.5rem;
+}
+
+.timeline-content p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #c7c7c7; /* Muted text for details */
+    margin-bottom: 0; /* Remove default p margin if it's the last element */
+}
+
+/* Responsive Design - Media Queries */
+
+/* For tablets and smaller desktops */
+@media (max-width: 992px) {
+    header .container,
+    main .container,
+    footer .container {
+        width: 95%; /* Slightly more width for content */
+    }
+
+    header .logo {
+        font-size: 1.6rem;
+    }
+
+    header nav ul li a {
+        font-size: 0.95rem;
+        padding: 0.4rem 0.6rem;
+    }
+
+    .hero-section h2 {
+        font-size: 2.8rem;
+    }
+
+    .hero-section p {
+        font-size: 1.3rem;
+    }
+
+    .content-section h2 {
+        font-size: 2rem;
+    }
+
+    .timeline::before {
+        left: 20px; /* Shift timeline line to the left */
+        transform: translateX(0);
+    }
+
+    .timeline-item {
+        width: 100%; /* Full width for timeline items */
+        padding-left: 50px; /* Space for dot and content */
+        padding-right: 0;
+        left: 0 !important; /* Override inline left style from JS if any, or previous even style */
+        text-align: left !important; /* Ensure all items align left */
+    }
+
+    .timeline-item:nth-child(odd),
+    .timeline-item:nth-child(even) {
+        left: 0;
+        padding-left: 50px; /* Uniform padding */
+        padding-right: 10px; /* Some padding on the right */
+        text-align: left;
+    }
+
+    .timeline-dot {
+        left: 20px; /* Align dot with the new line position */
+        transform: translateX(-50%);
+    }
+
+    .timeline-item:nth-child(odd) .timeline-dot,
+    .timeline-item:nth-child(even) .timeline-dot {
+        left: 20px; /* Align all dots to the line */
+        transform: translateX(-50%);
+    }
+}
+
+/* For mobile devices */
+@media (max-width: 768px) {
+    header .container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    header .logo {
+        margin-bottom: 0.75rem;
+    }
+
+    header nav ul {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    header nav ul li {
+        margin-left: 0;
+        margin-bottom: 0.5rem; /* Space between nav items in column */
+        width: 100%;
+        text-align: center;
+    }
+
+    header nav ul li a {
+        display: block; /* Make links take full width */
+        width: 80%;
+        margin: 0 auto;
+    }
+
+    .hero-section {
+        padding: 2rem 1rem;
+    }
+
+    .hero-section h2 {
+        font-size: 2.2rem;
+    }
+
+    .hero-section p {
+        font-size: 1.1rem;
+    }
+
+    .hero-image-placeholder {
+        height: 250px; /* Reduce height for mobile */
+    }
+
+    .content-section {
+        padding: 1.5rem;
+    }
+
+    .content-section h2 {
+        font-size: 1.8rem;
+    }
+
+    .content-section p, .content-section ul {
+        font-size: 1rem;
+        line-height: 1.7;
+    }
+
+    .carousel-caption {
+        font-size: 0.9rem;
+        padding: 0.75rem;
+    }
+
+    .carousel-control {
+        padding: 0.5rem 0.75rem;
+        font-size: 1.2rem;
+    }
+
+    .video-gallery {
+        grid-template-columns: 1fr; /* Stack videos on mobile */
+    }
+
+    footer .container {
+        padding: 0 1rem;
+    }
+
+    .footer-links a, .social-media a {
+        margin: 0 0.3rem; /* Reduce margin for smaller screens */
+    }
+}
+
+/* Specific adjustments for very small screens */
+@media (max-width: 480px) {
+    .hero-section h2 {
+        font-size: 1.8rem;
+    }
+    .hero-section p {
+        font-size: 1rem;
+    }
+
+    .content-section h2 {
+        font-size: 1.6rem;
+    }
+
+    .timeline-title {
+        font-size: 1.5rem;
+    }
+
+    .timeline::before {
+        left: 15px;
+    }
+    .timeline-item {
+        padding-left: 35px;
+    }
+    .timeline-item:nth-child(odd) .timeline-dot,
+    .timeline-item:nth-child(even) .timeline-dot {
+        left: 15px;
+        width: 12px;
+        height: 12px;
+    }
+    .timeline-item:nth-child(odd) .timeline-dot {
+        right: -6px;
+    }
+    .timeline-item:nth-child(even) .timeline-dot {
+        left: -6px;
+    }
+    .timeline-content h4 {
+        font-size: 1.1rem;
+    }
+    .timeline-content p {
+        font-size: 0.9rem;
+    }
+}
