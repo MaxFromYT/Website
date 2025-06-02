@@ -12,6 +12,17 @@ body {
     color: #f5f5f7; /* Light text color */
 }
 
+#ambient-bg-canvas {
+    position: fixed; /* Fixed position to stay in background */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Place it behind all other content */
+    /* Ensure it doesn't capture mouse events meant for content */
+    pointer-events: none;
+}
+
 /* Cursor Follower */
 .cursor-follower {
     position: fixed;
@@ -93,6 +104,8 @@ header nav ul li a {
     position: relative; /* Needed for pseudo-element positioning */
     overflow: hidden; /* To contain the shine */
     transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease; /* Add transform */
+    display: inline-block; /* Ensures perspective works correctly if not already block/inline-block */
+    perspective: 400px; /* For 3D character transforms */
 }
 
 header nav ul li a::after { /* Shine element */
@@ -241,12 +254,28 @@ main .container {
     z-index: 0; /* Behind the text content */
 }
 
+#hero-decorative-svg {
+    position: absolute;
+    top: 50%;
+    left: 15%; /* Position it to the left side */
+    transform: translate(-50%, -50%);
+    z-index: 2; /* Above canvas, below main text if it overlaps, but position it away */
+    width: 200px; /* Adjust size as needed */
+    height: 200px;
+    pointer-events: none; /* So it doesn't interfere with hero canvas interaction */
+}
+
+#hero-decorative-svg path {
+    stroke-linecap: round;
+}
+
+
 .hero-section h2 { /* Overriding general h2 for hero */
     font-size: 3.5rem;
     border-bottom: none; /* No border for hero title */
     margin-bottom: 1rem;
     position: relative; /* Ensure text is above the canvas */
-    z-index: 1;
+    z-index: 1; /* Adjusted from original to ensure it's above SVG if SVG had higher z-index */
     color: #f5f5f7; /* Ensure text color is set, might need adjustment for contrast */
     will-change: transform, opacity; /* Animated by GSAP */
 }
@@ -256,7 +285,7 @@ main .container {
     color: #c7c7c7; /* Slightly muted text for hero tagline */
     margin-bottom: 2rem;
     position: relative; /* Ensure text is above the canvas */
-    z-index: 1;
+    z-index: 1; /* Adjusted from original */
     will-change: transform, opacity; /* Animated by GSAP */
 }
 
@@ -272,7 +301,7 @@ main .container {
     color: #666;
     font-size: 1.2rem;
     position: relative;
-    z-index: 1;
+    z-index: 1; /* Ensure this is also above SVG if it were to be kept */
 }
 
 /* Media Section Placeholders - This class is now replaced by Swiper structure. */
@@ -443,12 +472,29 @@ footer p {
 
 
 /* Video Gallery & Custom Player Styles */
-.video-gallery {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1.5rem;
-    margin-top: 1rem;
+/* .video-gallery was the old grid container, replaced by wrapper/track */
+
+/* Horizontal Scrolling Video Gallery */
+.video-gallery-wrapper {
+    overflow: hidden;
+    padding: 1rem 0;
 }
+
+.video-gallery-track {
+    display: flex;
+    flex-direction: row;
+    width: max-content;
+}
+
+.video-gallery-track .video-player-placeholder {
+    margin-right: 20px;
+    flex-shrink: 0;
+    width: 350px;
+}
+.video-gallery-track .video-player-placeholder:last-child {
+    margin-right: 0;
+}
+
 
 .video-player-placeholder {
     background-color: #1a1a1c;
@@ -682,6 +728,38 @@ footer p {
     margin-bottom: 0;
 }
 
+/* Data Visualization Section Styles */
+#legacy-dataviz {
+    /* Standard .content-section styles will apply */
+    text-align: center; /* Center the title and description */
+}
+
+#legacy-dataviz .viz-description {
+    font-size: 1.1rem;
+    color: #c7c7c7;
+    max-width: 700px;
+    margin: 0 auto 1.5rem auto; /* Center description */
+}
+
+.dataviz-canvas-container {
+    width: 100%;
+    /* max-width: 800px; // Optional max width for the viz */
+    height: 500px; /* Adjust as needed */
+    margin: 1rem auto;
+    position: relative; /* If needed for overlays or tooltips later */
+    background-color: rgba(0,0,0,0.1); /* Faint background for canvas area */
+    border-radius: 8px;
+    border: 1px solid #424245;
+}
+
+#dataviz-canvas {
+    width: 100%;
+    height: 100%;
+    display: block; /* Remove any extra space */
+    border-radius: 7px; /* Match container if no padding */
+}
+
+
 /* Responsive Design - Media Queries */
 
 @media (max-width: 992px) {
@@ -728,7 +806,11 @@ footer p {
     .advanced-carousel .swiper-button-prev::after,
     .advanced-carousel .swiper-button-next::after { font-size: 1.2rem; }
 
-    .video-gallery { grid-template-columns: 1fr; }
+    /* Update for horizontal scroll on mobile */
+    .video-gallery-track .video-player-placeholder {
+        width: 280px; /* Smaller width for videos on mobile to allow seeing next item */
+        margin-right: 15px;
+    }
     .video-player-placeholder .play-button-overlay { width:60px; height:60px; font-size:2rem; top: calc(50% - 30px); }
 
 
@@ -755,6 +837,10 @@ footer p {
     .advanced-carousel .swiper-button-prev::after,
     .advanced-carousel .swiper-button-next::after { font-size: 1rem; }
 
+    .video-gallery-track .video-player-placeholder {
+        width: 250px; /* Even smaller for very small screens */
+    }
+
     .fake-controls { height:30px; padding: 0 5px;}
     .fake-controls .control-icon { margin: 0 3px; font-size: 0.8rem;}
     .fake-controls .play-pause-icon { font-size: 1rem; }
@@ -768,3 +854,17 @@ footer p {
 .timeline-item {
     opacity: 0;
 }
+
+[end of css/style.css]
+
+[end of css/style.css]
+
+[end of css/style.css]
+
+[end of css/style.css]
+
+[end of css/style.css]
+
+[end of css/style.css]
+
+[end of css/style.css]

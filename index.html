@@ -22,11 +22,25 @@
             </nav>
         </div>
     </header>
+
+    <canvas id="ambient-bg-canvas"></canvas>
+
     <main>
         <div class="container">
             <!-- Hero Section -->
             <section id="home" class="hero-section">
                 <canvas id="hero-canvas"></canvas>
+                <svg id="hero-decorative-svg" viewBox="0 0 200 200" width="150" height="150">
+                    <defs>
+                        <linearGradient id="svgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:rgba(0,113,227,0.8); stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:rgba(0,50,100,0.5); stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    <path id="svgPath1" d="M50 50 Q100 20 150 50 T250 50" stroke="url(#svgGrad)" stroke-width="4" fill="none" />
+                    <path id="svgPath2" d="M50 100 Q100 70 150 100 T250 100" stroke="url(#svgGrad)" stroke-width="3" fill="none" opacity="0.7"/>
+                    <path id="svgPath3" d="M50 150 Q100 120 150 150 T250 150" stroke="url(#svgGrad)" stroke-width="2" fill="none" opacity="0.4"/>
+                </svg>
                 <h2>Welcome</h2>
                 <p>Experience the dynamic artistry of Dennis Doubin, a conductor renowned for his passionate interpretations, profound musical insight, and an electrifying stage presence that captivates audiences worldwide.</p>
                 <!-- Placeholder for a striking image later -->
@@ -139,50 +153,80 @@
                     </div>
                     <!-- Videos section follows here -->
                     <h3>Videos</h3>
-                    <div class="video-gallery">
-                        <div class="video-player-placeholder">
-                            <img src="https://via.placeholder.com/400x225/222/FFFFFF?Text=Thumbnail:+Brahms+Symphony+No.1+Excerpt" alt="Thumbnail: Brahms Symphony No. 1 Excerpt">
-                            <div class="play-button-overlay">▶</div>
-
-                            <!-- New: Fake Control Bar -->
-                            <div class="fake-controls">
-                                <span class="control-icon play-pause-icon">❚❚</span> <!-- Pause symbol, implies it's playing -->
-                                <div class="fake-progress-bar-container">
-                                    <div class="fake-progress-bar-filled"></div>
+                    <div class="video-gallery-wrapper"> <!-- New Wrapper -->
+                        <div class="video-gallery-track"> <!-- New Track -->
+                            <!-- Existing video player placeholders go here -->
+                            <div class="video-player-placeholder">
+                                <img src="https://via.placeholder.com/400x225/222/FFFFFF?Text=Thumbnail:+Brahms+Symphony+No.1+Excerpt" alt="Thumbnail: Brahms Symphony No. 1 Excerpt">
+                                <div class="play-button-overlay">▶</div>
+                                <div class="fake-controls">
+                                    <span class="control-icon play-pause-icon">❚❚</span>
+                                    <div class="fake-progress-bar-container"><div class="fake-progress-bar-filled"></div></div>
+                                    <span class="control-icon time-display">0:00 / 0:00</span>
+                                    <span class="control-icon volume-icon">🔊</span>
+                                    <span class="control-icon settings-icon">⚙</span>
+                                    <span class="control-icon fullscreen-icon">⛶</span>
                                 </div>
-                                <span class="control-icon time-display">0:00 / 0:00</span>
-                                <span class="control-icon volume-icon">🔊</span>
-                                <span class="control-icon settings-icon">⚙</span>
-                                <span class="control-icon fullscreen-icon">⛶</span>
+                                <p>Excerpt: Brahms Symphony No. 1</p>
                             </div>
-
-                            <p>Excerpt: Brahms Symphony No. 1</p> <!-- Title -->
-                        </div>
-                        <div class="video-player-placeholder">
-                            <img src="https://via.placeholder.com/400x225/222/FFFFFF?Text=Thumbnail:+Interview+-+Role+of+a+Conductor" alt="Thumbnail: Interview - Role of a Conductor">
-                            <div class="play-button-overlay">▶</div>
-
-                            <div class="fake-controls">
-                                <span class="control-icon play-pause-icon">❚❚</span>
-                                <div class="fake-progress-bar-container">
-                                    <div class="fake-progress-bar-filled" style="width: 60%;"></div> <!-- Example different progress -->
+                            <div class="video-player-placeholder">
+                                <img src="https://via.placeholder.com/400x225/222/FFFFFF?Text=Thumbnail:+Interview+-+Role+of+a+Conductor" alt="Thumbnail: Interview - Role of a Conductor">
+                                <div class="play-button-overlay">▶</div>
+                                <div class="fake-controls">
+                                    <span class="control-icon play-pause-icon">❚❚</span>
+                                    <div class="fake-progress-bar-container"><div class="fake-progress-bar-filled" style="width: 60%;"></div></div>
+                                    <span class="control-icon time-display">0:00 / 0:00</span>
+                                    <span class="control-icon volume-icon">🔊</span>
+                                    <span class="control-icon settings-icon">⚙</span>
+                                    <span class="control-icon fullscreen-icon">⛶</span>
                                 </div>
-                                <span class="control-icon time-display">0:00 / 0:00</span>
-                                <span class="control-icon volume-icon">🔊</span>
-                                <span class="control-icon settings-icon">⚙</span>
-                                <span class="control-icon fullscreen-icon">⛶</span>
+                                <p>Interview: The Role of a Conductor</p>
                             </div>
-
-                        <p>Interview: The Role of a Conductor</p>
+                            <!-- Add one or two more video placeholders for a better horizontal scroll effect -->
+                            <div class="video-player-placeholder">
+                                <img src="https://via.placeholder.com/400x225/222/FFFFFF?Text=Thumbnail:+Live+Performance+Clip" alt="Thumbnail: Live Performance Clip">
+                                <div class="play-button-overlay">▶</div>
+                                <div class="fake-controls">
+                                    <span class="control-icon play-pause-icon">❚❚</span>
+                                    <div class="fake-progress-bar-container"><div class="fake-progress-bar-filled" style="width: 20%;"></div></div>
+                                    <span class="control-icon time-display">0:00 / 0:00</span>
+                                    <span class="control-icon volume-icon">🔊</span>
+                                    <span class="control-icon settings-icon">⚙</span>
+                                    <span class="control-icon fullscreen-icon">⛶</span>
+                                </div>
+                                <p>Live from Salzburg Festival</p>
+                            </div>
+                            <div class="video-player-placeholder">
+                                <img src="https://via.placeholder.com/400x225/222/FFFFFF?Text=Thumbnail:+Behind+the+Scenes" alt="Thumbnail: Behind the Scenes">
+                                <div class="play-button-overlay">▶</div>
+                                <div class="fake-controls">
+                                    <span class="control-icon play-pause-icon">❚❚</span>
+                                    <div class="fake-progress-bar-container"><div class="fake-progress-bar-filled" style="width: 75%;"></div></div>
+                                    <span class="control-icon time-display">0:00 / 0:00</span>
+                                    <span class="control-icon volume-icon">🔊</span>
+                                    <span class="control-icon settings-icon">⚙</span>
+                                    <span class="control-icon fullscreen-icon">⛶</span>
+                                </div>
+                                <p>A Day in Rehearsal</p>
+                            </div>
                         </div>
                     </div>
                 </div>
+            </section> <!-- Closing #media section -->
+
+            <section id="legacy-dataviz" class="content-section">
+                <div class="container">
+                    <h2>A Legacy in Motion</h2>
+                    <p class="viz-description">An abstract representation of Maestro Doubin's journey through landmark achievements and pivotal collaborations over the decades.</p>
+                    <div class="dataviz-canvas-container">
+                        <canvas id="dataviz-canvas"></canvas>
+                    </div>
+                </div>
             </section>
-        </div>
-    </main>
-    <footer>
-        <div class="container">
-            <p>&copy; 2024 Dennis Doubin. All Rights Reserved.</p>
+
+            <footer>
+                <div class="container">
+                    <p>&copy; 2024 Dennis Doubin. All Rights Reserved.</p>
             <div class="footer-links">
                 <a href="#">Privacy Policy</a> | <a href="#">Terms of Use</a> | <a href="#contact">Contact</a>
             </div>
@@ -199,10 +243,22 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/SplitText.min.js"></script>
+    <!-- THIS IS LIKELY TO FAIL if SplitText is not on public CDNs -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/DrawSVGPlugin.min.js"></script>
+    <!-- LIKELY TO FAIL -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/Physics2DPlugin.min.js"></script>
+    <!-- LIKELY TO FAIL -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollToPlugin.min.js"></script>
+    <!-- LIKELY TO FAIL OR BE UNNECESSARY IF window.scrollTo is used -->
 
-    <!-- Custom Scripts -->
+    <!-- GSAP should be loaded before this if GSAP is used for volume fades -->
+    <script src="js/sound-manager.js"></script>
+    <!-- Other custom scripts -->
     <script src="js/hero-animation.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/ambient-background.js"></script>
+    <script src="js/dataviz-animation.js"></script> <!-- New script -->
     <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
     <div class="cursor-follower"></div>
 </body>

@@ -1,132 +1,148 @@
-// Three.js Hero Particle Animation
+// Three.js Hero Advanced 3D Scene
 function initHeroAnimation() {
     const canvas = document.getElementById('hero-canvas');
     if (!canvas) {
-        // console.error('Hero canvas not found'); // Removed console.error
+        // console.error('Hero canvas not found'); // Removed for prod
         return;
     }
 
-    let scene, camera, renderer, particles, material;
+    let scene, camera, renderer, sculptureGroup;
     let mouseX = 0, mouseY = 0;
-    let windowHalfX = window.innerWidth / 2;
-    let windowHalfY = window.innerHeight / 2;
 
     const heroSection = document.getElementById('home');
-    const initialWidth = heroSection ? heroSection.offsetWidth : window.innerWidth;
-    const initialHeight = heroSection ? heroSection.offsetHeight : window.innerHeight;
+    let viewWidth = heroSection ? heroSection.offsetWidth : window.innerWidth;
+    let viewHeight = heroSection ? heroSection.offsetHeight : window.innerHeight;
+    let windowHalfX = viewWidth / 2;
+    let windowHalfY = viewHeight / 2;
 
-    windowHalfX = initialWidth / 2;
-    windowHalfY = initialHeight / 2;
 
+    // Scene setup
     scene = new THREE.Scene();
-    camera = new THREE.PerspectiveCamera(75, initialWidth / initialHeight, 1, 3000);
-    camera.position.z = 1000;
+    // scene.fog = new THREE.Fog(0x1d1d1f, 500, 2000); // Subtle fog for depth
 
-    renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true });
-    renderer.setSize(initialWidth, initialHeight);
+    camera = new THREE.PerspectiveCamera(60, viewWidth / viewHeight, 0.1, 2000); // Adjusted FOV and far plane
+    camera.position.z = 600; // Camera position to view the sculpture
+
+    renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+    renderer.setSize(viewWidth, viewHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    // renderer.outputEncoding = THREE.sRGBEncoding; // For more accurate colors with PBR
+    // renderer.toneMapping = THREE.ACESFilmicToneMapping; // For HDR-like effect
+    // renderer.toneMappingExposure = 1.0;
 
-    const particleCount = 5000;
-    const positions = new Float32Array(particleCount * 3);
-    const colors = new Float32Array(particleCount * 3);
+    // Lighting
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.3); // Soft white light
+    scene.add(ambientLight);
 
-    const color = new THREE.Color();
+    const pointLight1 = new THREE.PointLight(0x0071e3, 0.8, 1500); // Apple Blueish light
+    pointLight1.position.set(300, 200, 400);
+    scene.add(pointLight1);
 
-    for (let i = 0; i < particleCount; i++) {
-        const x = Math.random() * 2000 - 1000;
-        const y = Math.random() * 2000 - 1000;
-        const z = Math.random() * 2000 - 1000;
-        positions[i * 3] = x;
-        positions[i * 3 + 1] = y;
-        positions[i * 3 + 2] = z;
+    const pointLight2 = new THREE.PointLight(0xffffff, 0.6, 1500); // White light
+    pointLight2.position.set(-300, -100, 300);
+    scene.add(pointLight2);
 
-        const randomValue = Math.random();
-        if (randomValue < 0.05) {
-            color.setHSL(0.6, 0.7, Math.random() * 0.5 + 0.5);
-        } else {
-            const intensity = Math.random() * 0.5 + 0.5;
-            color.setRGB(intensity, intensity, intensity);
-        }
-        colors[i * 3] = color.r;
-        colors[i * 3 + 1] = color.g;
-        colors[i * 3 + 2] = color.b;
+    // Geometric Sculpture
+    sculptureGroup = new THREE.Group();
+    const baseGeometry = new THREE.SphereGeometry(30, 32, 32); // Base geometry for spheres
+
+    for (let i = 0; i < 25; i++) { // Create a cluster of spheres
+        const material = new THREE.MeshStandardMaterial({
+            color: Math.random() > 0.8 ? 0x0071e3 : 0xaaaaaa, // Mostly silver, some blue
+            metalness: 0.9,
+            roughness: Math.random() * 0.4 + 0.1, // Varying roughness for different sheens
+            // emissive: Math.random() > 0.9 ? 0x003366 : 0x000000, // Subtle blue emissive on some
+            flatShading: false
+        });
+
+        const sphere = new THREE.Mesh(baseGeometry, material); // Reuse baseGeometry
+
+        // Fibonacci sphere algorithm for even distribution
+        const phi = Math.acos(-1 + (2 * i) / 24); // 24 instead of 25 to avoid pole duplication if endpoint included
+        const theta = Math.sqrt(25 * Math.PI) * phi;
+
+        sphere.position.x = 200 * Math.cos(theta) * Math.sin(phi);
+        sphere.position.y = 200 * Math.sin(theta) * Math.sin(phi);
+        sphere.position.z = 200 * Math.cos(phi);
+
+        const scale = Math.random() * 0.5 + 0.5;
+        sphere.scale.set(scale,scale,scale);
+        sphere.userData.originalScale = scale; // Store original scale for animation
+
+        sculptureGroup.add(sphere);
     }
+    scene.add(sculptureGroup);
 
-    const geometry = new THREE.BufferGeometry();
-    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-    geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-
-    material = new THREE.PointsMaterial({
-        size: 3,
-        vertexColors: true,
-        transparent: true,
-        opacity: 0.8,
-        blending: THREE.AdditiveBlending,
-        depthWrite: false
-    });
-
-    particles = new THREE.Points(geometry, material);
-    scene.add(particles);
-
+    // Mouse move listener
     document.addEventListener('mousemove', onDocumentMouseMove, false);
-    document.addEventListener('touchstart', onDocumentTouchStart, false);
-    document.addEventListener('touchmove', onDocumentTouchMove, false);
+    document.addEventListener('touchstart', onDocumentTouchStart, { passive: false });
+    document.addEventListener('touchmove', onDocumentTouchMove, { passive: false });
+
+
+    // Resize listener
     window.addEventListener('resize', onWindowResize, false);
 
+    // Animation loop
     function animate() {
         requestAnimationFrame(animate);
         render();
     }
 
     function render() {
-        const time = Date.now() * 0.00005;
+        const time = Date.now() * 0.0001;
 
-        camera.position.x += (mouseX - camera.position.x) * 0.03;
-        camera.position.y += (-mouseY - camera.position.y) * 0.03;
+        camera.position.x += (mouseX * 0.5 - camera.position.x) * 0.02;
+        camera.position.y += (-mouseY * 0.5 - camera.position.y) * 0.02;
         camera.lookAt(scene.position);
 
-        particles.rotation.x = time * 0.2;
-        particles.rotation.y = time * 0.15;
+        sculptureGroup.rotation.x = time * 0.3;
+        sculptureGroup.rotation.y = time * 0.2;
+
+        sculptureGroup.children.forEach((child, index) => {
+            const k = Math.sin(time * 2 + index * 0.5);
+            const scaleFactor = 1 + k * 0.05;
+            if (child.userData.originalScale) { // Check if originalScale was stored
+                 child.scale.set(child.userData.originalScale * scaleFactor, child.userData.originalScale * scaleFactor, child.userData.originalScale*scaleFactor);
+            }
+        });
 
         renderer.render(scene, camera);
     }
 
     function onWindowResize() {
-        const heroElem = document.getElementById('home');
-        const currentWidth = heroElem ? heroElem.offsetWidth : window.innerWidth;
-        const currentHeight = heroElem ? heroElem.offsetHeight : window.innerHeight;
+        viewWidth = heroSection ? heroSection.offsetWidth : window.innerWidth;
+        viewHeight = heroSection ? heroSection.offsetHeight : window.innerHeight;
+        windowHalfX = viewWidth / 2;
+        windowHalfY = viewHeight / 2;
 
-        windowHalfX = currentWidth / 2;
-        windowHalfY = currentHeight / 2;
-
-        camera.aspect = currentWidth / currentHeight;
+        camera.aspect = viewWidth / viewHeight;
         camera.updateProjectionMatrix();
-        renderer.setSize(currentWidth, currentHeight);
+        renderer.setSize(viewWidth, viewHeight);
     }
 
     function onDocumentMouseMove(event) {
-        mouseX = (event.clientX - windowHalfX) / 2;
-        mouseY = (event.clientY - windowHalfY) / 2;
+        mouseX = (event.clientX - windowHalfX);
+        mouseY = (event.clientY - windowHalfY);
     }
 
     function onDocumentTouchStart(event) {
         if (event.touches.length === 1) {
             event.preventDefault();
-            mouseX = (event.touches[0].pageX - windowHalfX) / 2;
-            mouseY = (event.touches[0].pageY - windowHalfY) / 2;
+            mouseX = (event.touches[0].pageX - windowHalfX);
+            mouseY = (event.touches[0].pageY - windowHalfY);
         }
     }
 
     function onDocumentTouchMove(event) {
         if (event.touches.length === 1) {
             event.preventDefault();
-            mouseX = (event.touches[0].pageX - windowHalfX) / 2;
-            mouseY = (event.touches[0].pageY - windowHalfY) / 2;
+            mouseX = (event.touches[0].pageX - windowHalfX);
+            mouseY = (event.touches[0].pageY - windowHalfY);
         }
     }
 
     animate();
-    setTimeout(onWindowResize, 100);
+    onWindowResize();
 }
 
 if (document.readyState === 'loading') {
@@ -134,3 +150,4 @@ if (document.readyState === 'loading') {
 } else {
     initHeroAnimation();
 }
+```
