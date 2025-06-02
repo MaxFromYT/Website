@@ -1,6 +1,21 @@
 // Main JS file for site-wide scripts and GSAP animations
 
 document.addEventListener('DOMContentLoaded', () => {
+
+    // Throttle function to limit the rate at which a function can fire.
+    function throttle(func, limit) {
+        let inThrottle;
+        return function() {
+            const args = arguments;
+            const context = this;
+            if (!inThrottle) {
+                func.apply(context, args);
+                inThrottle = true;
+                setTimeout(() => inThrottle = false, limit);
+            }
+        }
+    }
+
     // GSAP Animation for Hero Text
     if (document.querySelector('.hero-section h2') && document.querySelector('.hero-section p')) {
         gsap.from(".hero-section h2", { duration: 1, y: 50, opacity: 0, delay: 0.5, ease: "power3.out" });
@@ -50,7 +65,6 @@ document.addEventListener('DOMContentLoaded', () => {
         // Scroll-Triggered Animations for General Content Sections
         const contentSections = document.querySelectorAll('.content-section');
         contentSections.forEach((section, index) => {
-            // Avoid re-animating sections that are part of the timeline, as they have their own logic
             if (!section.closest('.timeline')) {
                 gsap.set(section, { opacity: 0, y: 75 });
                 ScrollTrigger.create({
@@ -72,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
             sections.forEach(section => {
                 const sectionTop = section.offsetTop;
                 const sectionHeight = section.offsetHeight;
-                if (pageYOffset >= sectionTop - sectionHeight / 2 && pageYOffset < sectionTop + sectionHeight / 2) { // Adjusted threshold to be more centered
+                if (pageYOffset >= sectionTop - sectionHeight / 2 && pageYOffset < sectionTop + sectionHeight / 2) {
                      currentSectionId = section.getAttribute('id');
                 }
             });
@@ -83,21 +97,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
         }
-        window.addEventListener('scroll', updateActiveNavLink);
-        updateActiveNavLink(); // Initial check
-
-    } else {
-        console.warn("GSAP or ScrollTrigger not available for advanced animations.");
+        window.addEventListener('scroll', throttle(updateActiveNavLink, 100)); // Apply throttle
+        updateActiveNavLink();
     }
+    // Removed console.warn for missing GSAP/ScrollTrigger, as these are core to the site.
 
     // Video Placeholder Interaction
     const videoPlaceholders = document.querySelectorAll('.video-player-placeholder');
     videoPlaceholders.forEach(placeholder => {
         const playButton = placeholder.querySelector('.play-button-overlay');
-        const videoTitle = placeholder.querySelector('p')?.textContent || 'video';
         if (playButton) {
             playButton.addEventListener('click', () => {
-                console.log(`Attempting to play: ${videoTitle}`);
+                // console.log removed
                 playButton.style.display = 'none';
                 const fakeControls = placeholder.querySelector('.fake-controls');
                 if (fakeControls) {
@@ -137,26 +148,19 @@ document.addEventListener('DOMContentLoaded', () => {
         links.forEach(link => {
             link.addEventListener('mouseenter', () => {
                 follower.classList.add('hover-link');
-                // Update scale directly as the main transform is now handled in updateFollower
                 follower.style.transform = `translate(${followerX - (follower.offsetWidth / 2)}px, ${followerY - (follower.offsetHeight / 2)}px) scale(2.5)`;
-
             });
             link.addEventListener('mouseleave', () => {
                 follower.classList.remove('hover-link');
-                 // Update scale directly
                 follower.style.transform = `translate(${followerX - (follower.offsetWidth / 2)}px, ${followerY - (follower.offsetHeight / 2)}px) scale(1)`;
             });
         });
-         // Initial positioning based on current mouse (if any) or default to 0,0
-        // This ensures the follower doesn't jump from a default CSS position
-        setTimeout(() => { // Delay slightly to ensure mouseX/Y might be populated
+
+        setTimeout(() => {
             followerX = mouseX;
             followerY = mouseY;
-            // The scale is handled by body:hover .cursor-follower initially
-            // For the very first frame, ensure it's correctly positioned and scaled.
             const initialScale = document.body.matches(':hover') ? 1 : 0;
             follower.style.transform = `translate(${followerX - (follower.offsetWidth / 2)}px, ${followerY - (follower.offsetHeight / 2)}px) scale(${initialScale})`;
         }, 10);
-
     }
 });
