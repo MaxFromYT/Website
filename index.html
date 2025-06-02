@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dennis Doubin - Conductor</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" />
 </head>
 <body>
     <header>
@@ -25,6 +26,7 @@
         <div class="container">
             <!-- Hero Section -->
             <section id="home" class="hero-section">
+                <canvas id="hero-canvas"></canvas>
                 <h2>Welcome</h2>
                 <p>Experience the dynamic artistry of Dennis Doubin, a conductor renowned for his passionate interpretations and profound musical insight.</p>
                 <!-- Placeholder for a striking image later -->
@@ -84,37 +86,72 @@
             <section id="media" class="content-section">
                 <h2>Media</h2>
                 <p>Explore photos and videos of Dennis Doubin in action.</p>
-                <div class="media-showcase">
+                <div class="media-showcase"> <!-- Existing container -->
                     <h3>Photo Gallery</h3>
-                    <div class="carousel">
-                        <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                <img src="https://via.placeholder.com/800x400/333/808080?Text=Gallery+Image+1" alt="Gallery Image 1">
-                        <div class="carousel-caption">Conducting the Vienna Philharmonic, 2023.</div>
+                    <!-- Swiper -->
+                    <div class="swiper advanced-carousel">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                                <img src="https://via.placeholder.com/800x450/2a2a2a/FFFFFF?Text=Dennis+Doubin+Conducting+Vienna+Philharmonic" alt="Dennis Doubin Conducting Vienna Philharmonic">
+                                <div class="swiper-caption">Conducting the Vienna Philharmonic, 2023.</div>
                             </div>
-                            <div class="carousel-item">
-                                <img src="https://via.placeholder.com/800x400/444/808080?Text=Gallery+Image+2" alt="Gallery Image 2">
-                        <div class="carousel-caption">Rehearsal for the Summer Festival.</div>
+                            <div class="swiper-slide">
+                                <img src="https://via.placeholder.com/800x450/3a3a3a/FFFFFF?Text=Dennis+Doubin+Rehearsal+Summer+Festival" alt="Dennis Doubin Rehearsal Summer Festival">
+                                <div class="swiper-caption">Rehearsal for the Summer Festival.</div>
                             </div>
-                            <div class="carousel-item">
-                                <img src="https://via.placeholder.com/800x400/555/808080?Text=Gallery+Image+3" alt="Gallery Image 3">
-                        <div class="carousel-caption">Post-concert ovation at Carnegie Hall.</div>
+                            <div class="swiper-slide">
+                                <img src="https://via.placeholder.com/800x450/4a4a4a/FFFFFF?Text=Dennis+Doubin+Post-Concert+Carnegie+Hall" alt="Dennis Doubin Post-Concert Carnegie Hall">
+                                <div class="swiper-caption">Post-concert ovation at Carnegie Hall.</div>
+                            </div>
+                            <div class="swiper-slide">
+                                <img src="https://via.placeholder.com/800x450/2d2d2d/FFFFFF?Text=Dennis+Doubin+Studio+Portrait" alt="Dennis Doubin Studio Portrait">
+                                <div class="swiper-caption">Studio Portrait, 2024.</div>
                             </div>
                         </div>
-                        <button class="carousel-control prev" aria-label="Previous">&lt;</button>
-                        <button class="carousel-control next" aria-label="Next">&gt;</button>
+                        <!-- Add Pagination -->
+                        <div class="swiper-pagination"></div>
+                        <!-- Add Navigation -->
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-button-next"></div>
+                        <!-- Add Scrollbar -->
+                        <!-- <div class="swiper-scrollbar"></div> --> <!-- Optional, can be added later if desired -->
                     </div>
-
+                    <!-- Videos section follows here -->
                     <h3>Videos</h3>
                     <div class="video-gallery">
                         <div class="video-player-placeholder">
                             <img src="https://via.placeholder.com/400x225/222/808080?Text=Video+Thumbnail+1" alt="Video Thumbnail 1">
                             <div class="play-button-overlay">▶</div>
-                        <p>Excerpt: Brahms Symphony No. 1</p>
+
+                            <!-- New: Fake Control Bar -->
+                            <div class="fake-controls">
+                                <span class="control-icon play-pause-icon">❚❚</span> <!-- Pause symbol, implies it's playing -->
+                                <div class="fake-progress-bar-container">
+                                    <div class="fake-progress-bar-filled"></div>
+                                </div>
+                                <span class="control-icon time-display">0:00 / 0:00</span>
+                                <span class="control-icon volume-icon">🔊</span>
+                                <span class="control-icon settings-icon">⚙</span>
+                                <span class="control-icon fullscreen-icon">⛶</span>
+                            </div>
+
+                            <p>Excerpt: Brahms Symphony No. 1</p> <!-- Title -->
                         </div>
                         <div class="video-player-placeholder">
                             <img src="https://via.placeholder.com/400x225/222/808080?Text=Video+Thumbnail+2" alt="Video Thumbnail 2">
                             <div class="play-button-overlay">▶</div>
+
+                            <div class="fake-controls">
+                                <span class="control-icon play-pause-icon">❚❚</span>
+                                <div class="fake-progress-bar-container">
+                                    <div class="fake-progress-bar-filled" style="width: 60%;"></div> <!-- Example different progress -->
+                                </div>
+                                <span class="control-icon time-display">0:00 / 0:00</span>
+                                <span class="control-icon volume-icon">🔊</span>
+                                <span class="control-icon settings-icon">⚙</span>
+                                <span class="control-icon fullscreen-icon">⛶</span>
+                            </div>
+
                         <p>Interview: The Role of a Conductor</p>
                         </div>
                     </div>
@@ -136,5 +173,16 @@
             </div>
         </div>
     </footer>
+
+    <!-- External Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js"></script>
+
+    <!-- Custom Scripts -->
+    <script src="js/hero-animation.js"></script>
+    <script src="js/main.js"></script>
+    <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+    <div class="cursor-follower"></div>
 </body>
 </html>

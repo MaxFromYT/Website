@@ -12,6 +12,32 @@ body {
     color: #f5f5f7; /* Light text color */
 }
 
+/* Cursor Follower */
+.cursor-follower {
+    position: fixed;
+    width: 20px;
+    height: 20px;
+    background-color: rgba(0, 113, 227, 0.5); /* Apple Blue, semi-transparent */
+    border-radius: 50%;
+    pointer-events: none; /* So it doesn't interfere with mouse events on other elements */
+    z-index: 9999; /* High z-index */
+    left: 0;
+    top: 0;
+    transform: translate(-50%, -50%) scale(0); /* Initially hidden and centered */
+    transition: transform 0.2s ease-out, background-color 0.2s ease; /* Smooth transitions */
+    mix-blend-mode: difference; /* Interesting visual effect with colors behind it */
+}
+
+body:hover .cursor-follower { /* Show when mouse is over body */
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.cursor-follower.hover-link {
+    transform: translate(-50%, -50%) scale(2.5);
+    background-color: rgba(255, 255, 255, 0.7);
+}
+
+
 /*
  Primary Color Palette:
  - Background: #1d1d1f (Dark Gray - already set on body)
@@ -63,14 +89,63 @@ header nav ul li a {
     font-size: 1rem;
     padding: 0.5rem 0.75rem;
     border-radius: 5px;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    position: relative; /* Needed for pseudo-element positioning */
+    overflow: hidden; /* To contain the shine */
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease; /* Add transform */
 }
 
-header nav ul li a:hover,
-header nav ul li a.active { /* Assuming an 'active' class for current page */
+header nav ul li a::after { /* Shine element */
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -150%; /* Start off-screen to the left */
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.3) 50%, /* Brighter part of shine */
+        rgba(255, 255, 255, 0) 100%
+    );
+    transform: skewX(-25deg); /* Angled shine */
+    transition: left 0.5s ease; /* Slower transition for the shine itself */
+}
+
+header nav ul li a:hover {
     background-color: #0071e3; /* Apple Blue for hover/active */
     color: #fff;
+    transform: translateY(-2px) scale(1.05); /* Subtle lift and scale */
 }
+
+header nav ul li a:hover::after {
+    left: 150%; /* Animate shine across the button */
+}
+
+/* Active state for navigation (Scroll-spy) */
+header nav ul li a.active {
+    background-color: #0071e3;
+    color: #fff;
+}
+
+header nav ul li a.active::before,
+header nav ul li a:hover::before { /* Also show on hover for consistency */
+    content: '';
+    position: absolute;
+    bottom: -2px; /* Position below the link text */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0%; /* Start with 0 width */
+    height: 2px;
+    background-color: #0071e3; /* Apple Blue */
+    transition: width 0.3s ease-out;
+}
+header nav ul li a.active::before {
+    width: 60%; /* Animate to this width for active link */
+}
+header nav ul li a:hover::before {
+     width: 80%; /* Slightly wider on hover */
+}
+
 
 /* Container for main content sections */
 main .container {
@@ -130,24 +205,40 @@ main .container {
     background-color: #1d1d1f; /* Match body background for a more seamless hero */
     border: none; /* No border for hero */
     border-radius: 0; /* No radius for hero if it's full-width feel */
+    position: relative; /* Needed for absolute positioning of canvas */
+    overflow: hidden; /* Ensure canvas doesn't spill out if dimensions are slightly off */
+}
+
+#hero-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0; /* Behind the text content */
 }
 
 .hero-section h2 { /* Overriding general h2 for hero */
     font-size: 3.5rem;
     border-bottom: none; /* No border for hero title */
     margin-bottom: 1rem;
+    position: relative; /* Ensure text is above the canvas */
+    z-index: 1;
+    color: #f5f5f7; /* Ensure text color is set, might need adjustment for contrast */
 }
 
 .hero-section p {
     font-size: 1.5rem;
     color: #c7c7c7; /* Slightly muted text for hero tagline */
     margin-bottom: 2rem;
+    position: relative; /* Ensure text is above the canvas */
+    z-index: 1;
 }
 
-.hero-image-placeholder { /* Styling the placeholder div */
+.hero-image-placeholder {
     width: 100%;
     height: 400px;
-    background-color: #38383a; /* Darker placeholder color */
+    background-color: #38383a;
     margin-top: 20px;
     display: flex;
     align-items: center;
@@ -155,26 +246,13 @@ main .container {
     border-radius: 8px;
     color: #666;
     font-size: 1.2rem;
+    position: relative;
+    z-index: 1;
 }
 
-/* Media Section Placeholders */
-.media-gallery-placeholder {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Adjusted minmax */
-    gap: 1rem; /* Replaced 'gap' with 'grid-gap' for broader compatibility, or keep 'gap' if targeting modern browsers only */
-    margin-top: 20px;
-}
+/* Media Section Placeholders - This class is now replaced by Swiper structure. */
+/* Styles for .media-gallery-placeholder and its children can be removed if no longer used. */
 
-.media-gallery-placeholder > div { /* Styling the placeholder items */
-    height: 200px; /* Increased height for better visual */
-    background-color: #38383a; /* Darker placeholder color */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 8px;
-    color: #666;
-    font-size: 1rem;
-}
 
 /* Performances Section Specifics */
 #performances h3 {
@@ -186,20 +264,20 @@ main .container {
 }
 
 #performances ul {
-    list-style-type: none; /* Removing bullets for performance lists */
+    list-style-type: none;
     padding-left: 0;
 }
 
 #performances ul li strong {
-    color: #0071e3; /* Highlight event names */
+    color: #0071e3;
 }
 
 /* Footer Styles */
 footer {
-    background-color: #1d1d1f; /* Darkest background for footer */
-    color: #a0a0a5; /* Muted text color for footer */
+    background-color: #1d1d1f;
+    color: #a0a0a5;
     padding: 2rem 0;
-    border-top: 1px solid #424245; /* Subtle border */
+    border-top: 1px solid #424245;
     text-align: center;
 }
 
@@ -208,17 +286,17 @@ footer .container {
     max-width: 1200px;
     margin: 0 auto;
     display: flex;
-    flex-direction: column; /* Stack elements vertically */
+    flex-direction: column;
     align-items: center;
 }
 
 footer p {
-    margin-bottom: 0.5rem; /* Space below copyright text */
+    margin-bottom: 0.5rem;
     font-size: 0.9rem;
 }
 
 .footer-links {
-    margin-bottom: 0.5rem; /* Space below links */
+    margin-bottom: 0.5rem;
 }
 
 .footer-links a {
@@ -230,19 +308,19 @@ footer p {
 }
 
 .footer-links a:hover {
-    color: #0071e3; /* Apple Blue for hover */
+    color: #0071e3;
 }
 
 .social-media a {
     color: #a0a0a5;
     text-decoration: none;
-    font-size: 1.2rem; /* Larger for icon placeholders */
+    font-size: 1.2rem;
     margin: 0 0.75rem;
     transition: color 0.3s ease;
 }
 
 .social-media a:hover {
-    color: #0071e3; /* Apple Blue for hover */
+    color: #0071e3;
 }
 
 /* Media Showcase General */
@@ -256,76 +334,90 @@ footer p {
     padding-bottom: 0.5rem;
 }
 
-/* Carousel Styles */
-.carousel {
-    position: relative;
-    overflow: hidden;
-    background-color: #222; /* Dark background for carousel */
-    border-radius: 8px;
-    border: 1px solid #424245;
-}
+/* Old Carousel Styles - Can be removed if no longer used */
+/* .carousel { ... } */
+/* .carousel-inner { ... } */
+/* .carousel-item { ... } */
+/* .carousel-item.active { ... } */
+/* .carousel-item img { ... } */
+/* .carousel-caption { ... } */
+/* .carousel-control { ... } */
 
-.carousel-inner {
-    display: flex; /* Will be controlled by JS, but set for structure */
-    /* transition: transform 0.5s ease; */ /* JS will handle this */
-}
 
-.carousel-item {
-    min-width: 100%;
-    /* display: none; */ /* JS will handle active display */
-}
-
-.carousel-item.active { /* Static display of first item for now */
-    display: block;
-}
-
-.carousel-item img {
+/* Advanced Carousel (Swiper) Styles */
+.advanced-carousel {
     width: 100%;
-    display: block;
-    max-height: 500px; /* Max height for carousel images */
-    object-fit: cover; /* Ensure images cover the area nicely */
+    margin: 20px auto;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #424245;
+    background-color: #222;
 }
 
-.carousel-caption {
+.advanced-carousel .swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    background: #1c1c1e;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.advanced-carousel .swiper-slide img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-height: 500px;
+    object-fit: cover;
+}
+
+.swiper-caption {
     position: absolute;
     bottom: 0;
     left: 0;
-    right: 0;
-    background-color: rgba(0, 0, 0, 0.6);
-    color: #fff;
-    padding: 1rem;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #f5f5f7;
+    padding: 15px;
+    font-size: 0.9rem;
     text-align: center;
-    font-size: 1rem;
+    box-sizing: border-box;
 }
 
-.carousel-control {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: rgba(0, 0, 0, 0.5);
+.advanced-carousel .swiper-button-prev,
+.advanced-carousel .swiper-button-next {
+    color: #0071e3;
+    background-color: rgba(28, 28, 31, 0.5);
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+.advanced-carousel .swiper-button-prev:hover,
+.advanced-carousel .swiper-button-next:hover {
+    background-color: rgba(0, 113, 227, 0.8);
     color: #fff;
-    border: none;
-    padding: 0.75rem 1rem;
+}
+.advanced-carousel .swiper-button-prev::after,
+.advanced-carousel .swiper-button-next::after {
     font-size: 1.5rem;
-    cursor: pointer;
-    z-index: 10;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
+    font-weight: bold;
 }
 
-.carousel-control:hover {
-    background-color: rgba(0, 0, 0, 0.8);
+.advanced-carousel .swiper-pagination-bullet {
+    background-color: #888;
+    opacity: 0.7;
+    transition: background-color 0.3s ease, opacity 0.3s ease;
 }
 
-.carousel-control.prev {
-    left: 10px;
+.advanced-carousel .swiper-pagination-bullet-active {
+    background-color: #0071e3;
+    opacity: 1;
 }
 
-.carousel-control.next {
-    right: 10px;
-}
 
-/* Video Gallery Styles */
+/* Video Gallery & Custom Player Styles */
 .video-gallery {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -334,55 +426,133 @@ footer p {
 }
 
 .video-player-placeholder {
-    background-color: #222;
+    background-color: #1a1a1c;
     border-radius: 8px;
-    padding: 1rem;
     text-align: center;
-    border: 1px solid #424245;
-    position: relative; /* For play button overlay */
+    border: 1px solid #333;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.video-player-placeholder:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 10px 30px rgba(0, 113, 227, 0.3);
 }
 
 .video-player-placeholder img {
     width: 100%;
-    border-radius: 6px;
-    margin-bottom: 0.5rem;
+    display: block;
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+    aspect-ratio: 16/9;
+    object-fit: cover;
 }
 
 .video-player-placeholder .play-button-overlay {
     position: absolute;
-    top: 35%; /* Adjust as needed */
+    top: calc(50% - 35px);
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 3rem;
-    color: rgba(255, 255, 255, 0.8);
-    background-color: rgba(0,0,0,0.3);
+    font-size: 2.5rem;
+    color: rgba(255, 255, 255, 0.9);
+    background-color: rgba(0,0,0,0.4);
     border-radius: 50%;
-    width: 60px;
-    height: 60px;
+    width: 70px;
+    height: 70px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+    z-index: 2;
 }
 
 .video-player-placeholder:hover .play-button-overlay {
-    background-color: rgba(0,113,227,0.8); /* Apple Blue hover */
+    background-color: rgba(0,113,227,0.9);
     color: #fff;
+    transform: translate(-50%, -50%) scale(1.1);
 }
 
 .video-player-placeholder p {
     font-size: 1rem;
     color: #f5f5f7;
-    margin-top: 0.5rem;
+    margin: 0;
+    padding: 0.75rem 1rem;
+    background-color: #232325;
+    border-bottom-left-radius: 7px;
+    border-bottom-right-radius: 7px;
+    text-align: left;
 }
+
+/* Fake Controls Styling */
+.fake-controls {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 35px;
+    background-color: rgba(20, 20, 22, 0.85);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    box-sizing: border-box;
+    z-index: 1;
+    opacity: 0;
+    transform: translateY(100%);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.video-player-placeholder:hover .fake-controls {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.fake-controls .control-icon {
+    color: #b0b0b0;
+    font-size: 0.9rem;
+    margin: 0 6px;
+    cursor: default;
+}
+.fake-controls .control-icon:hover {
+    color: #fff;
+}
+
+.fake-controls .play-pause-icon {
+    font-size: 1.1rem;
+}
+
+.fake-progress-bar-container {
+    flex-grow: 1;
+    height: 6px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+    margin: 0 10px;
+    overflow: hidden;
+}
+
+.fake-progress-bar-filled {
+    width: 30%;
+    height: 100%;
+    background-color: #0071e3;
+    border-radius: 3px;
+}
+
+.fake-controls .time-display {
+    font-size: 0.8rem;
+    min-width: 70px;
+    text-align: center;
+}
+
 
 /* Timeline Styles */
 .timeline-title {
     font-size: 1.8rem;
     font-weight: 500;
     color: #f5f5f7;
-    margin-top: 2.5rem; /* More space before timeline */
+    margin-top: 2.5rem;
     margin-bottom: 1.5rem;
     text-align: center;
 }
@@ -394,32 +564,33 @@ footer p {
     padding: 1rem 0;
 }
 
-.timeline::before { /* The central line */
+.timeline::before {
     content: '';
     position: absolute;
     left: 50%;
     top: 0;
     bottom: 0;
     width: 4px;
-    background-color: #0071e3; /* Apple Blue */
+    background-color: #0071e3;
     transform: translateX(-50%);
     border-radius: 2px;
 }
 
 .timeline-item {
     position: relative;
-    margin-bottom: 2rem; /* Space between items */
+    margin-bottom: 2rem;
     width: 50%;
+    opacity: 0; /* Start hidden for GSAP */
 }
 
 .timeline-item:nth-child(odd) {
-    padding-right: 30px; /* Space from central line */
+    padding-right: 30px;
     left: 0;
     text-align: right;
 }
 
 .timeline-item:nth-child(even) {
-    padding-left: 30px; /* Space from central line */
+    padding-left: 30px;
     left: 50%;
     text-align: left;
 }
@@ -427,43 +598,43 @@ footer p {
 .timeline-dot {
     content: '';
     position: absolute;
-    top: 10px; /* Align with text better */
+    top: 10px;
     width: 16px;
     height: 16px;
-    background-color: #f5f5f7; /* Light dot */
-    border: 3px solid #0071e3; /* Apple Blue border */
+    background-color: #f5f5f7;
+    border: 3px solid #0071e3;
     border-radius: 50%;
     z-index: 1;
 }
 
 .timeline-item:nth-child(odd) .timeline-dot {
-    right: -8px; /* (16px / 2) */
+    right: -8px;
     transform: translateX(50%);
 }
 
 .timeline-item:nth-child(even) .timeline-dot {
-    left: -8px; /* (16px / 2) */
+    left: -8px;
     transform: translateX(-50%);
 }
 
 .timeline-date {
     font-size: 1.1rem;
     font-weight: 600;
-    color: #0071e3; /* Apple Blue */
+    color: #0071e3;
     margin-bottom: 0.5rem;
-    display: block; /* Ensure it takes its own line if needed */
+    display: block;
 }
 
 .timeline-item:nth-child(odd) .timeline-date {
-     margin-top: 5px; /* Adjust alignment */
+     margin-top: 5px;
 }
 .timeline-item:nth-child(even) .timeline-date {
-     margin-top: 5px; /* Adjust alignment */
+     margin-top: 5px;
 }
 
 
 .timeline-content {
-    background-color: #3a3a3c; /* Slightly different shade for timeline items */
+    background-color: #3a3a3c;
     padding: 1rem;
     border-radius: 6px;
     border: 1px solid #4a4a4c;
@@ -479,195 +650,93 @@ footer p {
 .timeline-content p {
     font-size: 0.95rem;
     line-height: 1.6;
-    color: #c7c7c7; /* Muted text for details */
-    margin-bottom: 0; /* Remove default p margin if it's the last element */
+    color: #c7c7c7;
+    margin-bottom: 0;
 }
 
 /* Responsive Design - Media Queries */
 
-/* For tablets and smaller desktops */
 @media (max-width: 992px) {
     header .container,
     main .container,
     footer .container {
-        width: 95%; /* Slightly more width for content */
+        width: 95%;
     }
 
-    header .logo {
-        font-size: 1.6rem;
-    }
+    header .logo { font-size: 1.6rem; }
+    header nav ul li a { font-size: 0.95rem; padding: 0.4rem 0.6rem; }
+    .hero-section h2 { font-size: 2.8rem; }
+    .hero-section p { font-size: 1.3rem; }
+    .content-section h2 { font-size: 2rem; }
 
-    header nav ul li a {
-        font-size: 0.95rem;
-        padding: 0.4rem 0.6rem;
-    }
-
-    .hero-section h2 {
-        font-size: 2.8rem;
-    }
-
-    .hero-section p {
-        font-size: 1.3rem;
-    }
-
-    .content-section h2 {
-        font-size: 2rem;
-    }
-
-    .timeline::before {
-        left: 20px; /* Shift timeline line to the left */
-        transform: translateX(0);
-    }
-
-    .timeline-item {
-        width: 100%; /* Full width for timeline items */
-        padding-left: 50px; /* Space for dot and content */
-        padding-right: 0;
-        left: 0 !important; /* Override inline left style from JS if any, or previous even style */
-        text-align: left !important; /* Ensure all items align left */
-    }
-
+    .timeline::before { left: 20px; transform: translateX(0); }
+    .timeline-item { width: 100%; padding-left: 50px; padding-right: 10px; left: 0 !important; text-align: left !important; }
     .timeline-item:nth-child(odd),
-    .timeline-item:nth-child(even) {
-        left: 0;
-        padding-left: 50px; /* Uniform padding */
-        padding-right: 10px; /* Some padding on the right */
-        text-align: left;
-    }
-
-    .timeline-dot {
-        left: 20px; /* Align dot with the new line position */
-        transform: translateX(-50%);
-    }
-
+    .timeline-item:nth-child(even) { padding-left: 50px; padding-right: 10px; text-align: left; }
+    .timeline-dot { left: 20px; transform: translateX(-50%); }
     .timeline-item:nth-child(odd) .timeline-dot,
-    .timeline-item:nth-child(even) .timeline-dot {
-        left: 20px; /* Align all dots to the line */
-        transform: translateX(-50%);
-    }
+    .timeline-item:nth-child(even) .timeline-dot { left: 20px; transform: translateX(-50%); }
 }
 
-/* For mobile devices */
 @media (max-width: 768px) {
-    header .container {
-        flex-direction: column;
-        align-items: center;
-    }
+    header .container { flex-direction: column; align-items: center; }
+    header .logo { margin-bottom: 0.75rem; }
+    header nav ul { flex-direction: column; align-items: center; width: 100%; }
+    header nav ul li { margin-left: 0; margin-bottom: 0.5rem; width: 100%; text-align: center; }
+    header nav ul li a { display: block; width: 80%; margin: 0 auto; }
 
-    header .logo {
-        margin-bottom: 0.75rem;
-    }
+    .hero-section { padding: 2rem 1rem; }
+    .hero-section h2 { font-size: 2.2rem; }
+    .hero-section p { font-size: 1.1rem; }
+    .hero-image-placeholder { height: 250px; }
+    .content-section { padding: 1.5rem; }
+    .content-section h2 { font-size: 1.8rem; }
+    .content-section p, .content-section ul { font-size: 1rem; line-height: 1.7; }
 
-    header nav ul {
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-    }
+    .swiper-caption { font-size: 0.9rem; padding: 0.75rem; }
 
-    header nav ul li {
-        margin-left: 0;
-        margin-bottom: 0.5rem; /* Space between nav items in column */
-        width: 100%;
-        text-align: center;
-    }
+    .advanced-carousel .swiper-button-prev,
+    .advanced-carousel .swiper-button-next { width: 38px; height: 38px; }
+    .advanced-carousel .swiper-button-prev::after,
+    .advanced-carousel .swiper-button-next::after { font-size: 1.2rem; }
 
-    header nav ul li a {
-        display: block; /* Make links take full width */
-        width: 80%;
-        margin: 0 auto;
-    }
+    .video-gallery { grid-template-columns: 1fr; }
+    .video-player-placeholder .play-button-overlay { width:60px; height:60px; font-size:2rem; top: calc(50% - 30px); }
 
-    .hero-section {
-        padding: 2rem 1rem;
-    }
 
-    .hero-section h2 {
-        font-size: 2.2rem;
-    }
-
-    .hero-section p {
-        font-size: 1.1rem;
-    }
-
-    .hero-image-placeholder {
-        height: 250px; /* Reduce height for mobile */
-    }
-
-    .content-section {
-        padding: 1.5rem;
-    }
-
-    .content-section h2 {
-        font-size: 1.8rem;
-    }
-
-    .content-section p, .content-section ul {
-        font-size: 1rem;
-        line-height: 1.7;
-    }
-
-    .carousel-caption {
-        font-size: 0.9rem;
-        padding: 0.75rem;
-    }
-
-    .carousel-control {
-        padding: 0.5rem 0.75rem;
-        font-size: 1.2rem;
-    }
-
-    .video-gallery {
-        grid-template-columns: 1fr; /* Stack videos on mobile */
-    }
-
-    footer .container {
-        padding: 0 1rem;
-    }
-
-    .footer-links a, .social-media a {
-        margin: 0 0.3rem; /* Reduce margin for smaller screens */
-    }
+    footer .container { padding: 0 1rem; }
+    .footer-links a, .social-media a { margin: 0 0.3rem; }
 }
 
-/* Specific adjustments for very small screens */
 @media (max-width: 480px) {
-    .hero-section h2 {
-        font-size: 1.8rem;
-    }
-    .hero-section p {
-        font-size: 1rem;
-    }
+    .hero-section h2 { font-size: 1.8rem; }
+    .hero-section p { font-size: 1rem; }
+    .content-section h2 { font-size: 1.6rem; }
+    .timeline-title { font-size: 1.5rem; }
 
-    .content-section h2 {
-        font-size: 1.6rem;
-    }
-
-    .timeline-title {
-        font-size: 1.5rem;
-    }
-
-    .timeline::before {
-        left: 15px;
-    }
-    .timeline-item {
-        padding-left: 35px;
-    }
+    .timeline::before { left: 15px; }
+    .timeline-item { padding-left: 35px; }
     .timeline-item:nth-child(odd) .timeline-dot,
-    .timeline-item:nth-child(even) .timeline-dot {
-        left: 15px;
-        width: 12px;
-        height: 12px;
-    }
-    .timeline-item:nth-child(odd) .timeline-dot {
-        right: -6px;
-    }
-    .timeline-item:nth-child(even) .timeline-dot {
-        left: -6px;
-    }
-    .timeline-content h4 {
-        font-size: 1.1rem;
-    }
-    .timeline-content p {
-        font-size: 0.9rem;
-    }
+    .timeline-item:nth-child(even) .timeline-dot { left: 15px; width: 12px; height: 12px; }
+
+    .timeline-content h4 { font-size: 1.1rem; }
+    .timeline-content p { font-size: 0.9rem; }
+
+    .advanced-carousel .swiper-button-prev,
+    .advanced-carousel .swiper-button-next { width: 30px; height: 30px; }
+    .advanced-carousel .swiper-button-prev::after,
+    .advanced-carousel .swiper-button-next::after { font-size: 1rem; }
+
+    .fake-controls { height:30px; padding: 0 5px;}
+    .fake-controls .control-icon { margin: 0 3px; font-size: 0.8rem;}
+    .fake-controls .play-pause-icon { font-size: 1rem; }
+    .fake-controls .time-display { font-size: 0.7rem; min-width: 60px; }
+    .video-player-placeholder .play-button-overlay { width:50px; height:50px; font-size:1.8rem; top: calc(50% - 25px); }
+
+}
+
+/* Timeline Animation Initial States */
+/* GSAP handles initial states like opacity and transform, so these CSS rules are mostly for fallback or if JS is disabled. */
+.timeline-item {
+    opacity: 0;
 }
