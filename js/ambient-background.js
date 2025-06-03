@@ -22,12 +22,12 @@ function initAmbientBackground() {
     // Subtle Animated Grid
     const gridSize = 1000;
     const gridDivisions = 30;
-    const gridLineColor = new THREE.Color(0x2a2a2e);
+    const gridLineColor = new THREE.Color(0x3a3a3e); // Slightly darker and less blue
 
     const gridMaterial = new THREE.LineBasicMaterial({
         color: gridLineColor,
         transparent: true,
-        opacity: 0.15
+        opacity: 0.15 // Initial opacity, will be animated
     });
 
     const gridPoints = [];
@@ -66,19 +66,13 @@ function initAmbientBackground() {
     dustGeometry.setAttribute('opacity', new THREE.BufferAttribute(initialOpacities, 1));
 
     const dustMaterial = new THREE.PointsMaterial({
-        color: 0x444444,
+        color: 0x555555, // Slightly lighter dust
         size: 1,
         transparent: true,
-        // opacity: 1.0, // Set to 1 if using attribute, or remove if material opacity is pulsed globally
         blending: THREE.AdditiveBlending,
         depthWrite: false,
-        // vertexColors: false // Ensure this is false if not using vertex colors for opacity/color
     });
-    // To use the 'opacity' attribute, a custom shader would typically be needed for PointsMaterial.
-    // For simplicity, we'll pulse the material's overall opacity instead of per-vertex.
-    // So, remove the opacity attribute from geometry for now.
-    dustGeometry.deleteAttribute('opacity');
-
+    dustGeometry.deleteAttribute('opacity'); // Ensure if it was added before
 
     dust = new THREE.Points(dustGeometry, dustMaterial);
     scene.add(dust);
@@ -96,14 +90,13 @@ function initAmbientBackground() {
         // Generative Grid Behavior
         if (gridLines) {
             gridLines.rotation.y = time * 0.1;
-            gridLines.material.opacity = 0.08 + Math.sin(fastTime * 0.5) * 0.07;
+            gridLines.material.opacity = 0.06 + Math.sin(fastTime * 0.5) * 0.04; // More subtle
         }
 
         // Enhanced Generative Dust Particle Behavior
         if (dust) {
             dust.rotation.y = time * 0.05;
-            // Pulse overall material opacity for dust, as per-vertex without shaders is complex
-            dust.material.opacity = Math.max(0.05, (Math.sin(fastTime * 0.7) + 1) / 2 * 0.25);
+            dust.material.opacity = Math.max(0.03, (Math.sin(fastTime * 0.7) + 1) / 2 * 0.15); // More subtle dust
 
 
             const positions = dust.geometry.attributes.position.array;

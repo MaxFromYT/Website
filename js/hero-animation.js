@@ -34,11 +34,14 @@ function initHeroAnimation() {
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.3); // Soft white light
     scene.add(ambientLight);
 
-    const pointLight1 = new THREE.PointLight(0x0071e3, 0.8, 1500); // Apple Blueish light
+    const hemiLight = new THREE.HemisphereLight( 0xffffff, 0x444444, 0.1 ); // skyColor, groundColor, intensity
+    scene.add( hemiLight );
+
+    const pointLight1 = new THREE.PointLight(0x0071e3, 0.7, 1500); // Apple Blueish light, intensity 0.7
     pointLight1.position.set(300, 200, 400);
     scene.add(pointLight1);
 
-    const pointLight2 = new THREE.PointLight(0xffffff, 0.6, 1500); // White light
+    const pointLight2 = new THREE.PointLight(0xffffff, 0.5, 1500); // White light, intensity 0.5
     pointLight2.position.set(-300, -100, 300);
     scene.add(pointLight2);
 
@@ -48,10 +51,9 @@ function initHeroAnimation() {
 
     for (let i = 0; i < 25; i++) { // Create a cluster of spheres
         const material = new THREE.MeshStandardMaterial({
-            color: Math.random() > 0.8 ? 0x0071e3 : 0xaaaaaa, // Mostly silver, some blue
-            metalness: 0.9,
-            roughness: Math.random() * 0.4 + 0.1, // Varying roughness for different sheens
-            // emissive: Math.random() > 0.9 ? 0x003366 : 0x000000, // Subtle blue emissive on some
+            color: Math.random() > 0.7 ? 0x0071e3 : (Math.random() > 0.5 ? 0xbbbbbb : 0xdddddd), // More varied grays, less frequent blue
+            metalness: 0.85, // Slightly less mirror-like
+            roughness: Math.random() * 0.3 + 0.2, // Range from fairly smooth to moderately rough
             flatShading: false
         });
 

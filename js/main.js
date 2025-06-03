@@ -3,7 +3,7 @@
 function fetchAndDisplayMockData() {
     const displayArea = document.getElementById('fetched-data-display');
     if (!displayArea) {
-        console.warn('API data display area not found.');
+        // console.warn('API data display area not found.'); // Removed for cleanup
         return;
     }
 
@@ -39,7 +39,7 @@ function fetchAndDisplayMockData() {
             `;
         })
         .catch(error => {
-            console.error('Error fetching mock data:', error);
+            // console.error('Error fetching mock data:', error); // Removed for cleanup
             displayArea.innerHTML = `<p style="color: red;">Failed to load data: ${error.message}</p>`;
         });
 }
@@ -71,7 +71,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     } else if (heroH2) {
         gsap.from(heroH2, { duration: 1, y: 50, opacity: 0, delay: 0.5, ease: "power3.out" });
-        // if(typeof SplitText === 'undefined') console.warn("SplitText plugin not available for H2. Using fallback animation.");
     }
 
     if (heroP && typeof SplitText !== 'undefined') {
@@ -81,7 +80,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     } else if (heroP) {
         gsap.from(heroP, { duration: 1, y: 30, opacity: 0, delay: 1.0, ease: "power3.out" });
-        // if(typeof SplitText === 'undefined') console.warn("SplitText plugin not available for P. Using fallback animation.");
     }
 
     if (document.querySelector('.advanced-carousel')) {
@@ -101,69 +99,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
         gsap.registerPlugin(ScrollTrigger);
 
-        const biographySection = document.querySelector('#biography');
-        if (biographySection) {
-            ScrollTrigger.getAll().forEach(st => {
-                if (st.trigger === biographySection) {
-                    st.kill();
-                }
-            });
-            gsap.set(biographySection, { opacity: 1, y: 0, clearProps: "ScrollTrigger" });
-
-            const bioMainText = biographySection.querySelectorAll('p:not(.quote)');
-            const reviewQuotesContainer = biographySection.querySelector('.review-quotes');
-            const reviewQuotes = biographySection.querySelectorAll('.review-quotes .quote');
-            const timelineContainer = biographySection.querySelector('.timeline');
-
-            gsap.set([reviewQuotesContainer, timelineContainer], { opacity: 0 });
-            gsap.set(reviewQuotesContainer, {y: 50});
-            if (timelineContainer) gsap.set(timelineContainer, {x: -100});
-
-            const bioScrubTimeline = gsap.timeline({
-                scrollTrigger: {
-                    trigger: biographySection, pin: true, start: "top top",
-                    end: "+=2000", scrub: 1.2, anticipatePin: 1
-                }
-            });
-            bioScrubTimeline.to(bioMainText, { opacity: 0.7, scale: 0.98, duration: 0.5, ease: "power1.inOut" }, 0);
-            if (reviewQuotesContainer) {
-                bioScrubTimeline.to(reviewQuotesContainer, { opacity: 1, y: 0, duration: 1, ease: "power2.out" }, ">-0.2");
-                if (reviewQuotes.length > 0) {
-                     bioScrubTimeline.from(reviewQuotes, { opacity: 0, x: 50, duration: 0.8, stagger: 0.3, ease: "back.out(1.4)" }, "-=0.5");
-                }
-            }
-            if (timelineContainer) {
-                bioScrubTimeline.to(timelineContainer, { opacity: 1, x: 0, duration: 1.5, ease: "expo.out" }, ">-0.5");
-                bioScrubTimeline.to(bioMainText, { opacity: 0.3, x: () => -(biographySection.offsetWidth * 0.1), duration: 1.5, ease: "power1.inOut" }, "<");
-            }
-        }
-
-        const timelineItems = document.querySelectorAll('.timeline-item');
-        timelineItems.forEach((item, index) => {
-            gsap.set(item, { opacity: 0, y: 50 });
-            ScrollTrigger.create({
-                trigger: item, start: "top 85%", end: "bottom 15%",
-                scroller: biographySection && biographySection.matches(".gsap-pin-active") ? biographySection : window,
-                onEnter: () => gsap.to(item, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', delay: index % 2 === 0 ? 0 : 0.2 }),
-                onLeaveBack: () => gsap.to(item, { opacity: 0, y: 50, duration: 0.4, ease: 'power2.in' }),
-                once: false
-            });
-            const dot = item.querySelector('.timeline-dot');
-            if (dot) {
-                gsap.set(dot, { scale: 0 });
-                ScrollTrigger.create({
-                    trigger: item, start: "top 80%",
-                    scroller: biographySection && biographySection.matches(".gsap-pin-active") ? biographySection : window,
-                    onEnter: () => gsap.to(dot, { scale: 1, duration: 0.5, ease: 'elastic.out(1, 0.5)', delay: (index % 2 === 0 ? 0 : 0.2) + 0.2 }),
-                    onLeaveBack: () => gsap.to(dot, { scale: 0, duration: 0.3, ease: 'power2.in' }),
-                    once: false
-                });
-            }
-        });
-
         const contentSections = document.querySelectorAll('.content-section');
         contentSections.forEach((section, index) => {
-            if (section.id !== 'biography' && !section.closest('.timeline')) {
+            // Remove 'biography' exclusion, and ensure timeline items are not animated if they are part of a removed section.
+            // The new sections are '.feature-section'
+            if (section.classList.contains('feature-section') || section.id === 'home' || section.id === 'contact') { // Keep existing logic for current sections if needed, or adapt
                 gsap.set(section, { opacity: 0, y: 75 });
                 ScrollTrigger.create({
                     trigger: section, start: "top 90%", end: "bottom 10%",
@@ -177,44 +117,55 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        const videoGalleryWrapper = document.querySelector('.video-gallery-wrapper');
-        const videoGalleryTrack = document.querySelector('.video-gallery-track');
-        if (videoGalleryWrapper && videoGalleryTrack && videoGalleryTrack.children.length > 1) {
-            let scrollDistance = videoGalleryTrack.offsetWidth - videoGalleryWrapper.offsetWidth;
-            if (scrollDistance > 0) {
-                let videoTrackTween = gsap.to(videoGalleryTrack, {
-                    x: () => -scrollDistance, ease: "none",
-                    scrollTrigger: {
-                        trigger: videoGalleryWrapper, start: "center center",
-                        end: () => "+=" + videoGalleryTrack.offsetWidth,
-                        scrub: 1.5, pin: true, invalidateOnRefresh: true, anticipatePin: 1
-                    }
-                });
-                const videoItems = videoGalleryTrack.querySelectorAll('.video-player-placeholder');
-                videoItems.forEach(item => {
-                    gsap.to(item, { scale: 0.95, opacity: 0.7, ease: "none",
-                        scrollTrigger: { trigger: item, containerAnimation: videoTrackTween, start: "center right", end: "center left", scrub: true }
-                    });
-                    gsap.to(item, { scale: 1, opacity: 1, ease: "none",
-                        scrollTrigger: { trigger: item, containerAnimation: videoTrackTween, start: "left center", end: "right center", scrub: true }
-                    });
-                });
-            }
-        }
-
         navLinks = document.querySelectorAll('header nav ul li a');
-        sections = document.querySelectorAll('main > section[id]');
-        const allSectionsForTransition = Array.from(sections);
+        // Corrected sections query to include top-level sections and those within #new-features-container
+        sections = document.querySelectorAll('main > section[id], #new-features-container > section[id]');
 
         function updateActiveNavLink() {
             let currentSectionId = '';
+            let minDistance = Infinity;
+            const viewportCenterY = window.pageYOffset + window.innerHeight / 2;
+            const headerHeight = document.querySelector('header')?.offsetHeight || 70;
+
+
             sections.forEach(section => {
-                const sectionTop = section.offsetTop;
+                const sectionTop = section.offsetTop - headerHeight; // Adjust for sticky header
                 const sectionHeight = section.offsetHeight;
-                if (pageYOffset >= sectionTop - sectionHeight / 2 && pageYOffset < sectionTop + sectionHeight / 2) {
-                     currentSectionId = section.getAttribute('id');
+                const sectionCenterY = sectionTop + sectionHeight / 2;
+
+                // Check if section is in viewport (more than 10% visible)
+                const visibleTop = Math.max(sectionTop, window.pageYOffset);
+                const visibleBottom = Math.min(sectionTop + sectionHeight, window.pageYOffset + window.innerHeight);
+                const visibleHeight = Math.max(0, visibleBottom - visibleTop);
+                const visibleRatio = visibleHeight / sectionHeight;
+
+                if (visibleRatio > 0.1) {
+                    const distanceToViewportCenter = Math.abs(viewportCenterY - sectionCenterY);
+                    if (distanceToViewportCenter < minDistance) {
+                        minDistance = distanceToViewportCenter;
+                        currentSectionId = section.getAttribute('id');
+                    }
                 }
             });
+
+            // Fallback for very top of page for #home
+            if (window.pageYOffset < (sections[0]?.offsetTop - headerHeight - 50 || 200) && sections[0]?.id === 'home') {
+                 currentSectionId = 'home';
+            }
+
+            // Special handling for #new-features-container link
+            const newFeaturesContainerElement = document.getElementById('new-features-container');
+            let isInsideNewFeaturesContainer = false;
+            if (newFeaturesContainerElement) {
+                const targetSectionElement = document.getElementById(currentSectionId);
+                if (targetSectionElement && newFeaturesContainerElement.contains(targetSectionElement) &&
+                    currentSectionId !== 'user-dashboard' &&
+                    currentSectionId !== 'ugc-feed-section' &&
+                    currentSectionId !== 'advanced-form-section') {
+                    isInsideNewFeaturesContainer = true;
+                }
+            }
+
             navLinks.forEach(link => {
                 link.classList.remove('active');
                 if (link.getAttribute('href') === '#' + currentSectionId) {
@@ -235,28 +186,27 @@ document.addEventListener('DOMContentLoaded', () => {
                 const targetId = this.getAttribute('href');
                 const targetSection = document.querySelector(targetId);
                 if (!targetSection) return;
-                const outPromises = allSectionsForTransition.map(section => {
-                    if (section !== targetSection && gsap.getProperty(section, "opacity") == 1) {
-                        return gsap.to(section, {
-                            duration: 0.5, opacity: 0, ease: "power2.in"
-                        }).then(() => gsap.set(section, {display: 'none'}));
-                    }
-                    return Promise.resolve();
-                });
-                Promise.all(outPromises).then(() => {
-                    gsap.set(targetSection, { display: 'block', opacity: 0 });
-                    gsap.to(targetSection, {
-                        duration: 0.7, opacity: 1, ease: "power3.out", delay: 0.1,
-                        onComplete: () => {
-                            const headerHeight = document.querySelector('header')?.offsetHeight || 70;
-                            if (typeof ScrollToPlugin !== 'undefined') {
-                                gsap.to(window, { duration: 0.8, scrollTo: { y: targetSection.offsetTop - headerHeight }, ease: "power2.inOut" });
-                            } else {
-                                window.scrollTo({ top: targetSection.offsetTop - headerHeight, behavior: 'smooth' });
-                            }
-                        }
-                    });
-                });
+
+                const headerHeight = document.querySelector('header')?.offsetHeight || 70;
+                let scrollToPosition = targetSection.offsetTop - headerHeight;
+
+                // If target is #new-features-container, scroll to its top, or slightly above its first child.
+                if (targetId === '#new-features-container' && targetSection.id === 'new-features-container') {
+                     // We want to see the start of this scrollable area, not necessarily a specific child.
+                     // The offsetTop of new-features-container itself might be what we need.
+                     // The container an H2, so scrolling to its top is fine.
+                }
+
+
+                // Simplified scroll logic
+                if (typeof ScrollToPlugin !== 'undefined') {
+                    gsap.to(window, { duration: 0.8, scrollTo: { y: scrollToPosition, autoKill: true }, ease: "power2.inOut" });
+                } else {
+                    window.scrollTo({ top: scrollToPosition, behavior: 'smooth' });
+                }
+
+                // Update active link immediately after click for responsiveness
+                // updateActiveNavLink(); // This might be too soon if scroll is not instant. Better to rely on scroll listener.
             });
         });
 
@@ -270,16 +220,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 onLeaveBack: () => SoundManager.stopAmbientLoop('hero_ambient', 2),
             });
         }
-        const dataVizSection = document.querySelector('#legacy-dataviz');
-        if (dataVizSection && SoundManager) {
-             ScrollTrigger.create({
-                trigger: dataVizSection, start: "top center", end: "bottom center",
-                onEnter: () => { SoundManager.playSound('viz_start'); SoundManager.playAmbientLoop('viz_ambient', 1.5); },
-                onLeave: () => SoundManager.stopAmbientLoop('viz_ambient', 1.5),
-                onEnterBack: () => { SoundManager.playSound('viz_start'); SoundManager.playAmbientLoop('viz_ambient', 1.5); },
-                onLeaveBack: () => SoundManager.stopAmbientLoop('viz_ambient', 1.5),
-            });
-        }
+        // Sound trigger for hero section can remain if #home is still used.
+        // Removed sound trigger for legacy-dataviz
     }
 
     const svgPaths = document.querySelectorAll('#hero-decorative-svg path');
@@ -292,7 +234,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 delay: 1.5, repeat: -1, yoyo: true, repeatDelay: 1
             });
         } else {
-            // console.warn("DrawSVGPlugin not available. Using fallback SVG animation.");
             svgPaths.forEach((path, index) => {
                 const length = path.getTotalLength();
                 path.style.strokeDasharray = length;
@@ -337,7 +278,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 duration: 1000, repeat: -1
             });
         } else {
-            // console.warn("Physics2DPlugin not available for hero SVG. Using existing float animation.");
             gsap.to("#hero-decorative-svg", {
                 duration: 5, y: "-=15px", x: "+=10px", rotation: 5,
                 ease: "sine.inOut", repeat: -1, yoyo: true
@@ -480,8 +420,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             });
         });
-    } else {
-        // if(typeof SplitText === 'undefined') console.warn("SplitText plugin not available for nav link hover effects. Using CSS fallback hover effects."); // Removed
     }
 
     // Call for fetching mock API data
