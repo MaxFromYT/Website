@@ -99,27 +99,216 @@ document.addEventListener('DOMContentLoaded', () => {
     if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
         gsap.registerPlugin(ScrollTrigger);
 
+        // Comment out or remove the generic section fade-in to replace with custom ones
+        /*
         const contentSections = document.querySelectorAll('.content-section');
         contentSections.forEach((section, index) => {
-            // Remove 'biography' exclusion, and ensure timeline items are not animated if they are part of a removed section.
-            // The new sections are '.feature-section'
-            if (section.classList.contains('feature-section') || section.id === 'home' || section.id === 'contact') { // Keep existing logic for current sections if needed, or adapt
-                gsap.set(section, { opacity: 0, y: 75 });
-                ScrollTrigger.create({
-                    trigger: section, start: "top 90%", end: "bottom 10%",
-                    onEnter: () => {
-                        gsap.to(section, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', delay: index * 0.1 });
-                        if (SoundManager && section.id !== 'home') SoundManager.playSound('section_reveal');
-                    },
-                    onLeaveBack: () => gsap.to(section, { opacity: 0, y: 75, duration: 0.4, ease: 'power2.in' }),
-                    once: false
-                });
+            if (section.classList.contains('feature-section') || section.id === 'home' || section.id === 'contact') {
+                // Avoid applying generic animations to sections that will get custom ones below
+                if (!['user-authentication', 'cms-placeholder-area', 'user-dashboard', 'recommendations-section'].includes(section.id)) {
+                    gsap.set(section, { opacity: 0, y: 75 });
+                    ScrollTrigger.create({
+                        trigger: section, start: "top 90%", end: "bottom 10%",
+                        onEnter: () => {
+                            gsap.to(section, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', delay: index * 0.1 });
+                            if (SoundManager && section.id !== 'home') SoundManager.playSound('section_reveal');
+                        },
+                        onLeaveBack: () => gsap.to(section, { opacity: 0, y: 75, duration: 0.4, ease: 'power2.in' }),
+                        once: false // Set to true if you want it only once, but custom anims below use true
+                    });
+                }
             }
         });
+        */
+
+        // Entrance Animation for #user-authentication
+        const authSection = document.getElementById('user-authentication');
+        if (authSection) { // Check if element exists before setting up animation
+            gsap.set(authSection.querySelectorAll('.auth-form'), { autoAlpha: 0, y: 50 });
+            gsap.set(authSection.querySelectorAll('.form-group, .social-login-container'), { autoAlpha: 0, x: -30 });
+
+            ScrollTrigger.create({
+                trigger: authSection,
+                start: "top 80%",
+                once: true, // Play animation once
+                onEnter: () => {
+                    gsap.timeline({ defaults: { ease: "power3.out" } })
+                        .to(authSection.querySelectorAll('.auth-form'), { autoAlpha: 1, y: 0, duration: 0.6, stagger: 0.2 })
+                        .to(authSection.querySelectorAll('.form-group, .social-login-container'), { autoAlpha: 1, x: 0, duration: 0.5, stagger: 0.1 }, "-=0.3");
+                }
+            });
+        }
+
+        // Entrance Animation for #cms-placeholder-area (Mac Pro News & Articles)
+        const cmsSection = document.getElementById('cms-placeholder-area');
+        if (cmsSection) {
+            const editor = cmsSection.querySelector('.wysiwyg-editor-placeholder-container');
+            const articles = cmsSection.querySelectorAll('.cms-content-block');
+
+            if (editor) gsap.set(editor, { autoAlpha: 0, scale: 0.9, y: 30 });
+            gsap.set(articles, { autoAlpha: 0, y: 50, rotationX: -20 }); // Initial slightly tilted state
+
+            ScrollTrigger.create({
+                trigger: cmsSection,
+                start: "top 80%",
+                once: true,
+                onEnter: () => {
+                    const tl = gsap.timeline({ defaults: { ease: "expo.out" } });
+                    if (editor) tl.to(editor, { autoAlpha: 1, scale: 1, y: 0, duration: 0.8 });
+                    tl.to(articles, {
+                        autoAlpha: 1,
+                        y: 0,
+                        rotationX: 0,
+                        duration: 0.7,
+                        stagger: 0.2
+                    }, editor ? "-=0.5" : "+=0");
+                }
+            });
+        }
+
+        // Entrance Animation for #user-dashboard
+        const dashboardSection = document.getElementById('user-dashboard');
+        if (dashboardSection) {
+            const widgets = dashboardSection.querySelectorAll('.dashboard-widget');
+            gsap.set(widgets, { autoAlpha: 0, scale: 0.8, rotationZ: (i) => (i % 2 === 0 ? -5 : 5) });
+
+            ScrollTrigger.create({
+                trigger: dashboardSection,
+                start: "top 80%",
+                once: true,
+                onEnter: () => {
+                    gsap.to(widgets, {
+                        autoAlpha: 1,
+                        scale: 1,
+                        rotationZ: 0,
+                        duration: 0.6,
+                        stagger: {
+                            amount: 0.5,
+                            from: "random", // or "start", "center", "edges"
+                            ease: "power2.out"
+                        },
+                        ease: "elastic.out(1, 0.75)"
+                    });
+                }
+            });
+        }
+
+        // Entrance Animation for #recommendations-section
+        const recSection = document.getElementById('recommendations-section');
+        if (recSection) {
+            const cards = recSection.querySelectorAll('.recommendation-card');
+            gsap.set(cards, {
+                autoAlpha: 0,
+                z: -200,
+                rotationY: -45,
+                skewX: -10
+            });
+            const cardContainer = recSection.querySelector('.recommendations-grid');
+            if (cardContainer) gsap.set(cardContainer, { perspective: 1000 });
+
+            ScrollTrigger.create({
+                trigger: recSection,
+                start: "top 85%",
+                once: true,
+                onEnter: () => {
+                    gsap.to(cards, {
+                        autoAlpha: 1,
+                        z: 0,
+                        rotationY: 0,
+                        skewX: 0,
+                        duration: 0.8,
+                        stagger: 0.15,
+                        ease: "power3.out"
+                    });
+                }
+            });
+        }
 
         navLinks = document.querySelectorAll('header nav ul li a');
         // Corrected sections query to include top-level sections and those within #new-features-container
         sections = document.querySelectorAll('main > section[id], #new-features-container > section[id]');
+
+        // Advanced 3D Text Animations for Feature Section Titles
+        let splitTextAvailable = false;
+        if (typeof SplitText !== 'undefined') {
+            // Assuming SplitText is globally available or already registered if using modules
+            // If it's a GSAP club plugin that needs explicit registration: gsap.registerPlugin(SplitText);
+            splitTextAvailable = true;
+        } else {
+            console.warn("SplitText plugin is not available. Fallback text animations will be less complex.");
+        }
+
+        const featureSectionTitles = document.querySelectorAll('#new-features-container > .feature-section > h2');
+
+        featureSectionTitles.forEach((title, index) => {
+            gsap.set(title, { perspective: 800 });
+
+            if (splitTextAvailable) {
+                const split = new SplitText(title, { type: "chars,words" });
+                gsap.set(split.chars, { autoAlpha: 0 });
+
+                if (index % 3 === 0) { // Style 1: Chars fly in from different depths
+                    gsap.set(split.chars, {
+                        z: () => gsap.utils.random(-150, 50),
+                        rotationX: () => gsap.utils.random(-90, 90),
+                        rotationY: () => gsap.utils.random(-45, 45),
+                        scale: () => gsap.utils.random(0.5, 1.5)
+                    });
+                    ScrollTrigger.create({
+                        trigger: title,
+                        start: "top 85%",
+                        once: true,
+                        onEnter: () => {
+                            gsap.to(split.chars, {
+                                autoAlpha: 1, z: 0, rotationX: 0, rotationY: 0, scale: 1,
+                                duration: 0.8, stagger: { amount: 0.6, from: "random" },
+                                ease: "expo.out"
+                            });
+                        }
+                    });
+                } else if (index % 3 === 1) { // Style 2: Words cascade in with a 3D flip
+                    gsap.set(split.words, { autoAlpha: 0, rotationX: -90, yPercent: -50, transformOrigin: "center center -50" });
+                    ScrollTrigger.create({
+                        trigger: title,
+                        start: "top 85%",
+                        once: true,
+                        onEnter: () => {
+                            gsap.to(split.words, {
+                                autoAlpha: 1, rotationX: 0, yPercent: 0,
+                                duration: 0.7, stagger: 0.15, ease: "power3.out"
+                            });
+                        }
+                    });
+                } else { // Style 3: Characters reveal with a wave and scale
+                    gsap.set(split.chars, { autoAlpha: 0, scale: 0.2, y: (i) => (i % 2 === 0 ? -20 : 20) });
+                    ScrollTrigger.create({
+                        trigger: title,
+                        start: "top 85%",
+                        once: true,
+                        onEnter: () => {
+                            gsap.to(split.chars, {
+                                autoAlpha: 1, scale: 1, y: 0,
+                                duration: 0.6, stagger: 0.05, ease: "back.out(1.4)"
+                            });
+                        }
+                    });
+                }
+            } else { // Fallback if SplitText is not available
+                gsap.set(title, { autoAlpha: 0, y: 50, rotationX: -30 });
+                ScrollTrigger.create({
+                    trigger: title,
+                    start: "top 85%",
+                    once: true,
+                    onEnter: () => {
+                        gsap.to(title, {
+                            autoAlpha: 1, y: 0, rotationX: 0,
+                            duration: 0.8, ease: "power3.out"
+                        });
+                    }
+                });
+            }
+        });
+
 
         function updateActiveNavLink() {
             let currentSectionId = '';
@@ -427,6 +616,119 @@ document.addEventListener('DOMContentLoaded', () => {
         fetchAndDisplayMockData();
     }
 
+    // Hover Animation for Recommendation Cards
+    const recCards = document.querySelectorAll('#recommendations-section .recommendation-card');
+    if (recCards.length > 0 && typeof gsap !== 'undefined') {
+        recCards.forEach(card => {
+            const cardWrapper = card;
+            gsap.set(cardWrapper, { transformStyle: "preserve-3d", transformPerspective: 1000 });
+
+            card.addEventListener('mouseenter', (e) => { // Pass event to access mouseX/Y directly
+                gsap.to(cardWrapper, {
+                    duration: 0.4,
+                    rotationY: () => {
+                        const rect = cardWrapper.getBoundingClientRect();
+                        const mouseX = e.clientX - rect.left;
+                        return (mouseX / rect.width - 0.5) * -30;
+                    },
+                    rotationX: () => {
+                        const rect = cardWrapper.getBoundingClientRect();
+                        const mouseY = e.clientY - rect.top;
+                        return (mouseY / rect.height - 0.5) * 20;
+                    },
+                    scale: 1.03,
+                    boxShadow: "0 12px 25px rgba(0,0,0,0.12)",
+                    ease: "power2.out"
+                });
+            });
+
+            card.addEventListener('mousemove', (e) => {
+                 gsap.to(cardWrapper, {
+                    duration: 0.6,
+                    rotationY: () => {
+                        const rect = cardWrapper.getBoundingClientRect();
+                        const mouseX = e.clientX - rect.left;
+                        return (mouseX / rect.width - 0.5) * -30;
+                    },
+                    rotationX: () => {
+                        const rect = cardWrapper.getBoundingClientRect();
+                        const mouseY = e.clientY - rect.top;
+                        return (mouseY / rect.height - 0.5) * 20;
+                    },
+                    ease: "power1.out"
+                });
+            });
+
+            card.addEventListener('mouseleave', () => {
+                gsap.to(cardWrapper, {
+                    duration: 0.5,
+                    rotationY: 0,
+                    rotationX: 0,
+                    scale: 1,
+                    boxShadow: "0 2px 5px rgba(0,0,0,0.05)", // Original shadow from CSS
+                    ease: "elastic.out(1, 0.75)"
+                });
+            });
+        });
+    }
+
+    // Hover Animation for Dashboard Widgets
+    const dashboardWidgets = document.querySelectorAll('#user-dashboard .dashboard-widget');
+    if (dashboardWidgets.length > 0 && typeof gsap !== 'undefined') {
+        dashboardWidgets.forEach(widget => {
+            const title = widget.querySelector('h4');
+            const originalBoxShadow = window.getComputedStyle(widget).boxShadow; // Get computed style
+            const originalBorderColor = window.getComputedStyle(widget).borderColor;
+
+            widget.addEventListener('mouseenter', () => {
+                gsap.to(widget, {
+                    duration: 0.3,
+                    y: -5,
+                    scale: 1.01,
+                    boxShadow: "0 8px 20px rgba(0,0,0,0.1)",
+                    borderColor: "#007aff",
+                    ease: "power2.out"
+                });
+                if (title) gsap.to(title, { duration: 0.3, color: "#007aff", ease: "power2.out" });
+            });
+
+            widget.addEventListener('mouseleave', () => {
+                gsap.to(widget, {
+                    duration: 0.4,
+                    y: 0,
+                    scale: 1,
+                    boxShadow: originalBoxShadow,
+                    borderColor: originalBorderColor,
+                    ease: "power2.out"
+                });
+                if (title) gsap.to(title, { duration: 0.3, color: "#1d1d1f", ease: "power2.out" });
+            });
+        });
+    }
+
+    // Interactive Button Enhancements (General .btn)
+    const allButtons = document.querySelectorAll('.btn');
+    if (allButtons.length > 0 && typeof gsap !== 'undefined') {
+        allButtons.forEach(button => {
+            // Ensure existing listeners are cleared if this code runs multiple times (e.g. hot reload)
+            // However, standard DOMContentLoaded usually runs once.
+            // For simplicity, we'll assume it runs once. If issues, add explicit listener removal.
+
+            button.addEventListener('mousedown', () => {
+                 gsap.to(button, { scale: 0.95, duration: 0.1, ease: "power1.in" });
+            });
+            button.addEventListener('mouseup', () => {
+                gsap.to(button, { scale: 1, duration: 0.4, ease: "elastic.out(1, 0.6)"});
+            });
+             button.addEventListener('mouseleave', () => {
+                if (gsap.getProperty(button, "scale") !== 1) {
+                    gsap.to(button, { scale: 1, duration: 0.4, ease: "elastic.out(1, 0.6)"});
+                }
+            });
+        });
+    }
+
+
     // Conditional Logic for Advanced Form (Contact/Survey)
     const enquiryTypeSelect = document.getElementById('form-enquiry-type');
     const otherEnquiryGroup = document.getElementById('other-enquiry-type-group');
@@ -723,5 +1025,212 @@ document.addEventListener('DOMContentLoaded', () => {
             const i = Math.floor(Math.log(bytes) / Math.log(k));
             return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
         }
+    }
+
+    // Hero Foreground Canvas Animation
+    const fgCanvas = document.getElementById('hero-foreground-canvas');
+    if (fgCanvas) {
+        const fgCtx = fgCanvas.getContext('2d');
+        let fgCanvasWidth = window.innerWidth;
+        let fgCanvasHeight = window.innerHeight; // Or hero section height
+        const swirls = [];
+
+        function resizeFgCanvas() {
+            const heroSection = document.getElementById('home'); // Assuming 'home' is the ID of the hero section
+            fgCanvasWidth = heroSection ? heroSection.offsetWidth : window.innerWidth;
+            fgCanvasHeight = heroSection ? heroSection.offsetHeight : window.innerHeight;
+
+            // Adjust for device pixel ratio for sharper rendering
+            fgCanvas.width = fgCanvasWidth * window.devicePixelRatio;
+            fgCanvas.height = fgCanvasHeight * window.devicePixelRatio;
+            fgCanvas.style.width = fgCanvasWidth + 'px';
+            fgCanvas.style.height = fgCanvasHeight + 'px';
+            fgCtx.scale(window.devicePixelRatio, window.devicePixelRatio);
+        }
+
+        class Swirl {
+            constructor() {
+                this.x = Math.random() * fgCanvasWidth;
+                this.y = Math.random() * fgCanvasHeight;
+                this.radius = 20 + Math.random() * 50;
+                this.angle = Math.random() * Math.PI * 2;
+                this.speed = (Math.random() - 0.5) * 0.04; // Can be positive or negative
+                this.length = Math.PI / 2 + Math.random() * Math.PI; // Length of the arc
+                this.lineWidth = 1 + Math.random() * 2;
+                // Using a base color and animating opacity via GSAP and draw method
+                this.baseColor = Math.random() > 0.5 ? '0, 122, 255' : '200, 200, 200';
+                this.currentOpacity = 0; // Start transparent, GSAP will fade it in
+                this.life = 0;
+                this.maxLife = 100 + Math.random() * 100; // Frames to live
+
+                // Animate opacity in with GSAP
+                gsap.to(this, { currentOpacity: 0.3 + Math.random() * 0.5, duration: 0.5 + Math.random() * 0.5 });
+            }
+
+            update() {
+                this.angle += this.speed;
+                this.life++;
+                if (this.life > this.maxLife * 0.7) { // Start fading out
+                    // Let GSAP handle fade-out for smoothness if preferred, or manual like this
+                    this.currentOpacity -= 0.01;
+                }
+            }
+
+            draw() {
+                if (this.currentOpacity <= 0) return;
+                fgCtx.beginPath();
+                fgCtx.arc(this.x, this.y, this.radius, this.angle, this.angle + this.length);
+                fgCtx.strokeStyle = `rgba(${this.baseColor}, ${this.currentOpacity})`;
+                fgCtx.lineWidth = this.lineWidth;
+                fgCtx.stroke();
+            }
+        }
+
+        function createSwirls() {
+            if (swirls.length < 50 && Math.random() < 0.3) { // Max 50 swirls, add periodically
+                swirls.push(new Swirl());
+            }
+        }
+
+        function animateForeground() {
+            fgCtx.clearRect(0, 0, fgCanvasWidth, fgCanvasHeight); // Use scaled dimensions for clearing
+            createSwirls();
+            for (let i = swirls.length - 1; i >= 0; i--) {
+                const swirl = swirls[i];
+                swirl.update();
+                if (swirl.currentOpacity <= 0 || swirl.life >= swirl.maxLife) {
+                    swirls.splice(i, 1);
+                } else {
+                    swirl.draw();
+                }
+            }
+        }
+
+        if (typeof gsap !== 'undefined') {
+            gsap.ticker.add(animateForeground);
+            window.addEventListener('resize', resizeFgCanvas);
+            resizeFgCanvas(); // Initial size set
+        } else {
+            // console.warn("GSAP not available for foreground canvas animation."); // Already removed this type of comment
+        }
+    }
+
+    // Generative Art Block Initialization
+    function initGenerativeArtBlock(containerId) {
+        const container = document.getElementById(containerId);
+        if (!container || typeof THREE === 'undefined') {
+            // console.warn(`Container ${containerId} not found or THREE.js missing.`); // Keep this commented for prod
+            return;
+        }
+
+        let scene, camera, renderer, mesh;
+        let mouseX = 0, mouseY = 0; // For mouse interaction
+
+        function init() {
+            scene = new THREE.Scene();
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+
+            camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+            camera.position.z = 3; // Adjusted for TorusKnot size
+
+            renderer = new THREE.WebGLRenderer({
+                antialias: true,
+                alpha: true,
+                stencil: false
+            });
+            renderer.setSize(width, height);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            container.appendChild(renderer.domElement);
+
+            const geometry = new THREE.TorusKnotGeometry(1, 0.2, 80, 12); // Adjusted params for visual appeal
+            const material = new THREE.MeshStandardMaterial({
+                color: 0x007aff, // Apple Blue
+                metalness: 0.6,
+                roughness: 0.3, // Slightly less rough for more shine
+                emissive: 0x002244, // Darker blue emissive
+                emissiveIntensity: 0.25 // Subtle emissive intensity
+            });
+            mesh = new THREE.Mesh(geometry, material);
+            scene.add(mesh);
+
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.4); // Slightly brighter ambient
+            scene.add(ambientLight);
+            const pointLight = new THREE.PointLight(0xffffff, 0.8, 150); // Brighter point light
+            pointLight.position.set(2, 3, 4); // Adjusted position
+            scene.add(pointLight);
+
+            // Second point light for more even lighting
+            const pointLight2 = new THREE.PointLight(0xffffff, 0.4, 100);
+            pointLight2.position.set(-4, -2, -3);
+            scene.add(pointLight2);
+
+
+            container.addEventListener('mousemove', onMouseMove, false);
+            // Optimization: Only add resize listener if it's truly dynamic or unique per block.
+            // If all blocks are similar size or resize with window, a single global handler is better.
+            // For now, keeping it local for encapsulation.
+            window.addEventListener('resize', onWindowResize, false);
+            animate();
+        }
+
+        function onMouseMove(event) {
+            const rect = container.getBoundingClientRect();
+            mouseX = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+            mouseY = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+        }
+
+        function onWindowResize() {
+            // Debounce or throttle this if many instances are created
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+            if (width > 0 && height > 0) { // Ensure container is visible
+                camera.aspect = width / height;
+                camera.updateProjectionMatrix();
+                renderer.setSize(width, height);
+            }
+        }
+
+        let targetRotationX = 0;
+        let targetRotationY = 0;
+
+        function animate() {
+            requestAnimationFrame(animate);
+
+            // Smooth mouse interaction
+            targetRotationX = mouseY * 0.3;
+            targetRotationY = mouseX * 0.3;
+
+            mesh.rotation.x += (targetRotationX - mesh.rotation.x) * 0.05;
+            mesh.rotation.y += (targetRotationY - mesh.rotation.y) * 0.05;
+            mesh.rotation.z += 0.002; // Slower constant spin
+
+            renderer.render(scene, camera);
+        }
+
+        // Handle cases where container might not be immediately visible or sized
+        // Use a small timeout or IntersectionObserver if size is an issue on load
+        if (container.clientWidth > 0 && container.clientHeight > 0) {
+            init();
+        } else {
+            // Fallback or wait for visibility if needed, for now, log warning if not sized
+            // console.warn(`Container ${containerId} has no dimensions at init time.`);
+            // Optionally, use a ResizeObserver to init when size is available
+            const resizeObserver = new ResizeObserver(entries => {
+                for (let entry of entries) {
+                    if (entry.contentRect.width > 0 && entry.contentRect.height > 0) {
+                        init();
+                        resizeObserver.unobserve(container); // Stop observing once initialized
+                        break;
+                    }
+                }
+            });
+            resizeObserver.observe(container);
+        }
+    }
+
+    // Call for the first block
+    if (document.getElementById('genArtBlock1')) {
+        initGenerativeArtBlock('genArtBlock1');
     }
 });

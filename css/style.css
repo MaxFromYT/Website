@@ -66,7 +66,7 @@ main[tabindex="-1"]:focus {
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: -1;
+    z-index: -2; /* Deepest background */
     pointer-events: none;
 }
 
@@ -302,6 +302,9 @@ header nav ul li a:hover::before {
     padding-right: 20px;
     box-sizing: border-box; /* ensure padding is included in height */
     scroll-snap-align: start; /* Crucial for scroll snapping */
+    background-color: #f5f5f7; /* Or your desired section background, was transparent before for some */
+    position: relative; /* Needed if z-index is to be applied, or to ensure it creates a stacking context */
+    z-index: 1; /* Above the persistent network canvas */
 }
 
 /* If content within a feature section should not always be centered: */
@@ -334,7 +337,7 @@ header nav ul li a:hover::before {
 }
 
 /* Refined h2 for feature sections */
-.content-section.feature-section h2 {
+.content-section.feature-section h2 { /* Also applies to #new-features-container > .feature-section > h2 */
     font-size: 2.8rem; /* Or Apple's standard for such titles */
     font-weight: 600; /* Semibold */
     color: #1d1d1f;
@@ -343,6 +346,7 @@ header nav ul li a:hover::before {
     border-bottom: 1px solid #d2d2d7; /* Apple often uses a slightly lighter gray for dividers */
     text-align: center; /* Apple often centers these titles */
     letter-spacing: -0.01em;
+    will-change: transform, opacity; /* For their entrance animations */
 }
 
 /* Refined direct child section description */
@@ -656,6 +660,7 @@ footer p {
     /* box-shadow: 0 1px 3px rgba(0,0,0,0.03); (Replaced by more subtle Apple-like shadow) */
     border-radius: 12px; /* Consistent rounding */
     box-shadow: 0 2px 8px rgba(0,0,0,0.06); /* Subtle shadow */
+    will-change: transform, box-shadow, border-color; /* border-color for hover state */
 }
 .dashboard-widget h4 { color: #1d1d1f; font-weight: 500; text-align: left;}
 .widget-profile .profile-avatar-placeholder { background-color: #e0e0e0; }
@@ -774,6 +779,7 @@ footer p {
     border-radius: 12px; /* Current is good */
     padding: 1.5rem;
     transition: transform 0.25s ease-out, box-shadow 0.25s ease-out;
+    will-change: transform, box-shadow;
 }
 .recommendation-card:hover {
     transform: translateY(-5px);
@@ -899,6 +905,20 @@ footer p {
     /* width: 40px; height: 40px; are from HTML, ensure they are good */
 }
 .username-ugc { color: #1d1d1f; }
+
+/* Generative Art Placeholder */
+.generative-art-placeholder {
+    position: relative; /* For canvas positioning if needed */
+    /* width and height will be set by inline style or class */
+    border-radius: 8px; /* Match other imagery */
+    overflow: hidden; /* Keep animation contained */
+    background-color: #222; /* Dark background for the art */
+}
+.generative-art-placeholder canvas {
+    display: block;
+    width: 100% !important; /* Override Three.js inline style if necessary */
+    height: 100% !important;
+}
 .post-timestamp-ugc { color: #777777; }
 .ugc-post-content p { color: #333333; }
 .ugc-shared-image { border: 1px solid #e9e9ed; }
@@ -980,6 +1000,41 @@ body {
     scrollbar-color: #a0a0a5 rgba(0,0,0,0.05);
 }
 
+#persistent-network-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;  /* Below liquid metal */
+    pointer-events: none;
+}
+
+#liquid-metal-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0; /* Above persistent-network, below actual content */
+    pointer-events: none;
+    opacity: 0; /* Start hidden, fade in with JS */
+    will-change: opacity; /* JS fades this in */
+}
+
+#data-stream-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 4; /* Above hero foreground (3), below chat & other high-level UI */
+    pointer-events: none;
+    opacity: 0; /* Start hidden, fade in */
+    will-change: opacity; /* JS fades this in */
+}
+
+
 /* --- New Hero Section Styles --- */
 .hero-section-new {
     display: flex; /* Use flex to center content on canvas */
@@ -1003,9 +1058,19 @@ body {
     z-index: 1; /* Canvas behind content */
 }
 
+#hero-foreground-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2; /* Above hero-canvas (z-index: 1) but below hero-content-overlay */
+    pointer-events: none; /* Ensure it doesn't interfere with mouse interactions for the sculpture or text */
+}
+
 .hero-content-overlay {
     position: relative; /* Ensure it's above the canvas */
-    z-index: 2;
+    z-index: 3; /* Was 2, needs to be above hero-foreground-canvas */
     display: flex;
     flex-direction: column;
     align-items: center;

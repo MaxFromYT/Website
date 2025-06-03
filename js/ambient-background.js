@@ -15,7 +15,13 @@ function initAmbientBackground() {
     camera.position.z = 500;
 
     // Renderer
-    renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+    renderer = new THREE.WebGLRenderer({
+        canvas: canvas,
+        alpha: true,
+        antialias: true,
+        powerPreference: "low-power",
+        stencil: false
+    });
     renderer.setSize(viewWidth, viewHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
@@ -77,6 +83,32 @@ function initAmbientBackground() {
     dust = new THREE.Points(dustGeometry, dustMaterial);
     scene.add(dust);
 
+    // Secondary Particle Layer (dust2)
+    let dust2;
+    const dustParticleCount2 = 150;
+    const dustOriginalY2 = new Float32Array(dustParticleCount2);
+    const dustGeometry2 = new THREE.BufferGeometry();
+    const dustVertices2 = [];
+    for (let i = 0; i < dustParticleCount2; i++) {
+        const x = Math.random() * 1500 - 750; // More spread out
+        const y = Math.random() * 1500 - 750;
+        const z = Math.random() * 800 - 400;
+        dustVertices2.push(x, y, z);
+        dustOriginalY2[i] = y;
+    }
+    dustGeometry2.setAttribute('position', new THREE.Float32BufferAttribute(dustVertices2, 3));
+    const dustMaterial2 = new THREE.PointsMaterial({
+        color: 0x007aff, // Apple Blue particles
+        size: 1.5,       // Slightly larger
+        transparent: true,
+        opacity: 0.0,    // Start transparent, fade in
+        blending: THREE.AdditiveBlending,
+        depthWrite: false
+    });
+    dust2 = new THREE.Points(dustGeometry2, dustMaterial2);
+    scene.add(dust2);
+
+
     // Resize listener
     window.addEventListener('resize', onWindowResize, false);
 
@@ -84,13 +116,17 @@ function initAmbientBackground() {
     function animate() {
         requestAnimationFrame(animate);
 
-        const time = Date.now() * 0.0001;
-        const fastTime = Date.now() * 0.0005;
+        const currentTime = Date.now(); // Cache Date.now()
+        const time = currentTime * 0.0001;
+        const fastTime = currentTime * 0.0005; // For things needing faster changes
+
 
         // Generative Grid Behavior
         if (gridLines) {
             gridLines.rotation.y = time * 0.1;
-            gridLines.material.opacity = 0.06 + Math.sin(fastTime * 0.5) * 0.04; // More subtle
+            // gridLines.material.opacity = 0.06 + Math.sin(fastTime * 0.5) * 0.04; // More subtle // Old
+            const gridPulse = (Math.sin(currentTime * 0.002) + 1) / 2; // 0 to 1 over time, use currentTime
+            gridLines.material.opacity = 0.03 + gridPulse * 0.07; // Base opacity 0.03, pulse up to 0.1
         }
 
         // Enhanced Generative Dust Particle Behavior
@@ -116,6 +152,25 @@ function initAmbientBackground() {
             }
             dust.geometry.attributes.position.needsUpdate = true;
         }
+
+        if (dust2) {
+            dust2.rotation.y = time * 0.03; // Slower rotation
+            dust2.material.opacity = Math.max(0, (Math.sin(fastTime * 0.4 + 0.5) + 1) / 2 * 0.3); // Slower, distinct pulse for opacity
+
+            const positions2 = dust2.geometry.attributes.position.array;
+            for (let i = 0; i < dustParticleCount2; i++) {
+                 positions2[i * 3] += (Math.random() - 0.5) * 0.3; // Slower drift
+                 positions2[i * 3 + 1] = dustOriginalY2[i] + Math.sin(fastTime * 0.2 + i * 0.9) * 20 + (Math.random() - 0.5) * 3;
+                 positions2[i * 3 + 2] += (Math.random() - 0.5) * 0.3;
+                // Basic wrapping logic (can be improved)
+                if (positions2[i * 3] > 750) positions2[i * 3] = -750; if (positions2[i * 3] < -750) positions2[i * 3] = 750;
+                if (positions2[i * 3 + 1] > 750) positions2[i * 3 + 1] = dustOriginalY2[i] - (750 - dustOriginalY2[i]);
+                if (positions2[i * 3 + 1] < -750) positions2[i * 3 + 1] = dustOriginalY2[i] + (750 + dustOriginalY2[i]);
+                if (positions2[i * 3 + 2] > 400) positions2[i * 3 + 2] = -400; if (positions2[i * 3 + 2] < -400) positions2[i * 3 + 2] = 400;
+            }
+            dust2.geometry.attributes.position.needsUpdate = true;
+        }
+
 
         renderer.render(scene, camera);
     }
