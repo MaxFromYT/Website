@@ -13,6 +13,12 @@
 </head>
 <body>
     <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <canvas id="ambient-bg-canvas" aria-hidden="true"></canvas> <!-- z-index: -2 (will be set in CSS) -->
+    <canvas id="persistent-network-canvas" aria-hidden="true"></canvas> <!-- z-index: -1 (will be set in CSS) -->
+    <canvas id="liquid-metal-canvas" aria-hidden="true"></canvas> <!-- z-index: 0 (will be set in CSS) -->
+    <canvas id="data-stream-canvas" aria-hidden="true"></canvas> <!-- New Canvas (z-index: 4) -->
+
     <header role="banner">
         <div class="container">
             <!-- Logo: ensure it's properly described if it were an image -->
@@ -110,11 +116,12 @@
         </div>
     </header>
 
-    <canvas id="ambient-bg-canvas" aria-hidden="true"></canvas>
+    <!-- <canvas id="ambient-bg-canvas" aria-hidden="true"></canvas> --> <!-- Moved up -->
 
     <main id="main-content" role="main" tabindex="-1"> <!-- tabindex -1 allows JS to focus it -->
         <section id="home" class="fullpage-canvas hero-section-new" role="region" aria-labelledby="hero-main-title">
             <canvas id="hero-canvas" aria-hidden="true"></canvas>
+            <canvas id="hero-foreground-canvas" aria-hidden="true"></canvas>
             <div class="hero-content-overlay">
                 <h1 id="hero-main-title">Power. Redefined.</h1>
                 <p class="hero-tagline">Experience the pinnacle of performance and design.</p>
@@ -129,6 +136,7 @@
 
             <!-- New Feature Sections Will Go Here -->
             <div id="new-features-container">
+                <!-- <canvas id="persistent-network-canvas" aria-hidden="true"></canvas> --> <!-- Moved up -->
                 <section id="user-authentication" class="content-section feature-section">
                     <h2>Developer & Pro Access</h2>
                     <p class="section-description">Login or register to access exclusive Mac Pro resources, configurations, and support.</p>
@@ -219,7 +227,9 @@
                     <article class="cms-content-block">
                         <h3>Optimizing Final Cut Pro on Mac Pro</h3>
                         <p class="meta-info">Published on: <span class="date">November 15, 2023</span> by <span class="author">Pro Apps Team</span></p>
-                        <img src="https://via.placeholder.com/800x300/e0e0e0/969696?Text=Mac+Pro+with+Final+Cut+Pro+UI" alt="Mac Pro running Final Cut Pro" class="cms-image-placeholder">
+                        <div class="generative-art-placeholder" id="genArtBlock1" style="width: 100%; height: 300px; margin-bottom: 1.5rem;">
+                            <!-- Canvas will be added here by JS -->
+                        </div>
                         <p>Unlock unparalleled performance in Final Cut Pro with the new Mac Pro. This article explores best practices for configuring your system and workflow for maximum efficiency in 8K editing and complex color grading.</p>
                         <a href="#" class="btn btn-secondary">Read More</a>
                     </article>
@@ -701,6 +711,9 @@
 
     <!-- Main interaction logic -->
     <script src="js/main.js"></script>
+    <script src="js/persistent-network.js" defer></script>
+    <script src="js/liquid-metal-background.js" defer></script>
+    <script src="js/data-stream-overlay.js" defer></script>
 
     <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
 

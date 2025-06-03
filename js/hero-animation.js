@@ -23,7 +23,12 @@ function initHeroAnimation() {
     camera = new THREE.PerspectiveCamera(60, viewWidth / viewHeight, 0.1, 2000); // Adjusted FOV and far plane
     camera.position.z = 600; // Camera position to view the sculpture
 
-    renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+    renderer = new THREE.WebGLRenderer({
+        canvas: canvas,
+        alpha: true,
+        antialias: true,
+        stencil: false
+    });
     renderer.setSize(viewWidth, viewHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     // renderer.outputEncoding = THREE.sRGBEncoding; // For more accurate colors with PBR
@@ -50,12 +55,19 @@ function initHeroAnimation() {
     const baseGeometry = new THREE.SphereGeometry(30, 32, 32); // Base geometry for spheres
 
     for (let i = 0; i < 25; i++) { // Create a cluster of spheres
+        const currentSphereColorHex = Math.random() > 0.7 ? 0x0071e3 : (Math.random() > 0.5 ? 0xbbbbbb : 0xdddddd);
+        const currentSphereColor = new THREE.Color(currentSphereColorHex);
         const material = new THREE.MeshStandardMaterial({
-            color: Math.random() > 0.7 ? 0x0071e3 : (Math.random() > 0.5 ? 0xbbbbbb : 0xdddddd), // More varied grays, less frequent blue
+            color: currentSphereColor,
             metalness: 0.85, // Slightly less mirror-like
             roughness: Math.random() * 0.3 + 0.2, // Range from fairly smooth to moderately rough
-            flatShading: false
+            flatShading: false,
+            emissive: currentSphereColor, // Initialize emissive with the sphere's color
+            emissiveIntensity: 0 // Start with 0 intensity unless it's a blue one meant to pulse from start
         });
+        if (currentSphereColor.getHexString() === '0071e3') {
+            material.emissiveIntensity = 0.1; // Initial small glow for blue ones
+        }
 
         const sphere = new THREE.Mesh(baseGeometry, material); // Reuse baseGeometry
 
@@ -91,14 +103,19 @@ function initHeroAnimation() {
     }
 
     function render() {
-        const time = Date.now() * 0.0001;
+        const currentTime = Date.now(); // Cache Date.now()
+        const time = currentTime * 0.0001;
 
-        camera.position.x += (mouseX * 0.5 - camera.position.x) * 0.02;
-        camera.position.y += (-mouseY * 0.5 - camera.position.y) * 0.02;
+        camera.position.x += (mouseX * 0.8 - camera.position.x) * 0.03; // Increased reactivity
+        camera.position.y += (-mouseY * 0.8 - camera.position.y) * 0.03; // Increased reactivity
         camera.lookAt(scene.position);
 
-        sculptureGroup.rotation.x = time * 0.3;
+        // Added sculptureGroup tilt based on mouse
+        sculptureGroup.rotation.z = (mouseX * 0.0002);
+        const targetRotationX = time * 0.3 + (mouseY * 0.0002); // Base rotation + mouse influence
+        sculptureGroup.rotation.x = sculptureGroup.rotation.x * 0.98 + targetRotationX * 0.02; // Smooth transition
         sculptureGroup.rotation.y = time * 0.2;
+
 
         sculptureGroup.children.forEach((child, index) => {
             const k = Math.sin(time * 2 + index * 0.5);
@@ -106,6 +123,17 @@ function initHeroAnimation() {
             if (child.userData.originalScale) { // Check if originalScale was stored
                  child.scale.set(child.userData.originalScale * scaleFactor, child.userData.originalScale * scaleFactor, child.userData.originalScale*scaleFactor);
             }
+
+            // New: Add a subtle emissive pulse for blue spheres
+            if (child.material.color.getHexString() === '0071e3') { // If it's a blue sphere
+                child.material.emissiveIntensity = (Math.sin(currentTime * 0.003 + index * 0.7) + 1) / 2 * 0.3 + 0.1; // Use currentTime
+                // Ensure emissive color is set (already done at material creation)
+            }
+            // New: Add a slight individual bobbing motion
+            // To prevent drifting from continuous addition, we'll bob around the initial Y position if stored,
+            // or make it relative to the Fibonacci placement which is complex.
+            // For simplicity, this additive bobbing is small. If drifting is observed, store initial child.position.y.
+            child.position.y += Math.sin(currentTime * 0.0015 + index * 0.3) * 0.05; // Use currentTime
         });
 
         renderer.render(scene, camera);
