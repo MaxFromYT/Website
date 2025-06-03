@@ -8,8 +8,8 @@
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
     line-height: 1.6;
-    background-color: #1d1d1f; /* Dark background similar to Mac Pro aesthetic */
-    color: #f5f5f7; /* Light text color */
+    background-color: #f5f5f7; /* NEW: Apple off-white */
+    color: #1d1d1f; /* NEW: Dark text color */
 }
 
 /* Accessibility - Skip Link */
@@ -17,8 +17,8 @@ body {
     position: absolute;
     top: -40px; /* Hide off-screen */
     left: 0;
-    background: #0071e3; /* Apple Blue */
-    color: white;
+    background: #0071e3; /* Apple Blue - still okay */
+    color: #ffffff; /* White text on blue bg */
     padding: 10px 15px;
     z-index: 10000; /* Highest z-index */
     transition: top 0.3s ease;
@@ -51,25 +51,28 @@ main[tabindex="-1"]:focus {
     position: fixed;
     width: 20px;
     height: 20px;
-    background-color: rgba(0, 113, 227, 0.5); /* Apple Blue, semi-transparent */
+    background-color: rgba(0, 113, 227, 0.6); /* Apple Blue, slightly more opaque */
     border-radius: 50%;
     pointer-events: none; /* So it doesn't interfere with mouse events on other elements */
     z-index: 9999; /* High z-index */
     left: 0;
     top: 0;
     transform: translate(-50%, -50%) scale(0); /* Initially hidden and centered */
-    transition: transform 0.2s ease-out, background-color 0.2s ease; /* Smooth transitions */
-    mix-blend-mode: difference; /* Interesting visual effect with colors behind it */
-    will-change: transform, background-color; /* Continuously updated */
+    transition: transform 0.2s ease-out, background-color 0.2s ease, opacity 0.2s ease-out; /* Smooth transitions */
+    mix-blend-mode: normal; /* NEW: Changed from difference */
+    will-change: transform, background-color, opacity; /* Continuously updated */
+    opacity: 0.7; /* NEW: Base opacity */
 }
 
 body:hover .cursor-follower { /* Show when mouse is over body */
     transform: translate(-50%, -50%) scale(1);
+    opacity: 0.7; /* Ensure it's visible */
 }
 
 .cursor-follower.hover-link {
     transform: translate(-50%, -50%) scale(2.5);
-    background-color: rgba(255, 255, 255, 0.7);
+    background-color: rgba(0, 113, 227, 0.25); /* NEW: Light, semi-transparent Apple Blue */
+    opacity: 1; /* Full opacity on hover */
 }
 
 
@@ -89,9 +92,10 @@ body:hover .cursor-follower { /* Show when mouse is over body */
 
 /* Header Styles */
 header {
-    background-color: #2c2c2e; /* Slightly lighter dark gray for header */
+    background-color: #ffffff; /* NEW: White header */
     padding: 1rem 0;
-    border-bottom: 1px solid #424245; /* Subtle border */
+    border-bottom: 1px solid #e0e0e0; /* NEW: Light gray border */
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04); /* Subtle shadow for depth */
 }
 
 header .container {
@@ -99,28 +103,38 @@ header .container {
     max-width: 1200px; /* Max width for content */
     margin: 0 auto;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-between; /* Remains useful for logo vs (nav + search) */
     align-items: center;
+    gap: 1rem; /* Add some gap between items */
 }
 
 header .logo {
     font-size: 1.8rem;
     font-weight: 600;
-    color: #f5f5f7;
+    color: #1d1d1f; /* NEW: Dark logo text */
 }
 
 header nav ul {
     list-style: none;
     display: flex;
+    align-items: center; /* Align nav items with search form if they are different heights */
 }
 
 header nav ul li {
     margin-left: 20px;
 }
 
+/* New container for nav and search to group them */
+.header-nav-search-group {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem; /* Space between nav and search */
+}
+
+
 header nav ul li a {
     text-decoration: none;
-    color: #f5f5f7;
+    color: #1d1d1f; /* NEW: Dark nav link text */
     font-size: 1rem;
     padding: 0.5rem 0.75rem;
     border-radius: 5px;
@@ -150,8 +164,8 @@ header nav ul li a::after { /* Shine element */
 }
 
 header nav ul li a:hover {
-    background-color: #0071e3; /* Apple Blue for hover/active */
-    color: #fff;
+    background-color: #0071e3; /* Apple Blue for hover/active - RETAINED */
+    color: #ffffff; /* NEW: Ensure white text for contrast on blue bg */
     transform: translateY(-2px) scale(1.05); /* Subtle lift and scale */
 }
 
@@ -161,8 +175,8 @@ header nav ul li a:hover::after {
 
 /* Active state for navigation (Scroll-spy) */
 header nav ul li a.active {
-    background-color: #0071e3;
-    color: #fff;
+    background-color: #0071e3; /* Apple Blue for hover/active - RETAINED */
+    color: #ffffff; /* NEW: Ensure white text for contrast on blue bg */
 }
 
 header nav ul li a.active::before,
@@ -174,7 +188,7 @@ header nav ul li a:hover::before { /* Also show on hover for consistency */
     transform: translateX(-50%);
     width: 0%; /* Start with 0 width */
     height: 2px;
-    background-color: #0071e3; /* Apple Blue */
+    background-color: #0071e3; /* Apple Blue - RETAINED */
     transition: width 0.3s ease-out;
 }
 header nav ul li a.active::before {
@@ -195,20 +209,21 @@ main .container {
 
 /* General Content Section Styling */
 .content-section {
-    background-color: #2c2c2e; /* Slightly lighter dark gray for content panels */
+    background-color: #ffffff; /* NEW: White for content panels */
     padding: 2rem;
     margin-bottom: 2rem;
     border-radius: 8px; /* Subtle rounded corners */
-    border: 1px solid #424245; /* Subtle border */
+    border: 1px solid #e0e0e0; /* NEW: Light gray border */
+    box-shadow: 0 2px 8px rgba(0,0,0,0.03); /* Optional: very subtle shadow for sections */
     will-change: transform, opacity;
 }
 
 .content-section h2 {
     font-size: 2.5rem;
     font-weight: 600;
-    color: #f5f5f7;
+    color: #1d1d1f; /* NEW: Dark heading text */
     margin-bottom: 1.5rem;
-    border-bottom: 2px solid #0071e3; /* Apple Blue accent for headings */
+    border-bottom: 2px solid #0071e3; /* Apple Blue accent for headings - RETAINED */
     padding-bottom: 0.5rem;
     display: inline-block; /* To make border only as wide as text */
 }
@@ -217,11 +232,13 @@ main .container {
     margin-bottom: 1rem;
     font-size: 1.1rem;
     line-height: 1.8;
+    color: #333333; /* NEW: Darker gray for paragraph text */
 }
 
 .content-section ul {
     list-style-position: inside;
     padding-left: 0; /* Resetting default padding if any */
+    color: #333333; /* NEW: Ensure list text is also dark */
 }
 
 .content-section ul li {
@@ -229,7 +246,7 @@ main .container {
 }
 
 .content-section a {
-    color: #0071e3; /* Apple Blue for links */
+    color: #0071e3; /* Apple Blue for links - RETAINED */
     text-decoration: none;
 }
 
@@ -240,20 +257,20 @@ main .container {
 /* Review Quotes in Biography */
 .review-quotes {
     margin-top: 1.5rem;
-    border-left: 3px solid #0071e3; /* Apple Blue accent line */
+    border-left: 3px solid #0071e3; /* Apple Blue accent line - RETAINED */
     padding-left: 1rem;
 }
 .review-quotes .quote {
     font-style: italic;
     font-size: 1.05rem;
-    color: #c7c7c7; /* Slightly muted from main text */
+    color: #555555; /* NEW: Darker gray for quote text */
     margin-bottom: 0.75rem;
 }
 .review-quotes .quote span {
     display: block;
     font-style: normal;
     font-size: 0.9rem;
-    color: #a0a0a5; /* Muted source */
+    color: #1d1d1f; /* NEW: Dark text for source/author */
     margin-top: 0.25rem;
 }
 
@@ -261,7 +278,7 @@ main .container {
 .hero-section {
     text-align: center;
     padding: 3rem 2rem;
-    background-color: #1d1d1f; /* Match body background for a more seamless hero */
+    background-color: #f5f5f7; /* NEW: Light background, matches body */
     border: none; /* No border for hero */
     border-radius: 0; /* No radius for hero if it's full-width feel */
     position: relative; /* Needed for absolute positioning of canvas */
@@ -299,13 +316,13 @@ main .container {
     margin-bottom: 1rem;
     position: relative; /* Ensure text is above the canvas */
     z-index: 1; /* Adjusted from original to ensure it's above SVG if SVG had higher z-index */
-    color: #f5f5f7; /* Ensure text color is set, might need adjustment for contrast */
+    color: #1d1d1f; /* NEW: Dark text color */
     will-change: transform, opacity; /* Animated by GSAP */
 }
 
 .hero-section p {
     font-size: 1.5rem;
-    color: #c7c7c7; /* Slightly muted text for hero tagline */
+    color: #333333; /* NEW: Dark gray for hero tagline */
     margin-bottom: 2rem;
     position: relative; /* Ensure text is above the canvas */
     z-index: 1; /* Adjusted from original */
@@ -315,16 +332,17 @@ main .container {
 .hero-image-placeholder {
     width: 100%;
     height: 400px;
-    background-color: #38383a;
+    background-color: #e0e0e0; /* NEW: Very light gray placeholder */
     margin-top: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 8px;
-    color: #666;
+    color: #555555; /* NEW: Medium gray text for placeholder */
     font-size: 1.2rem;
     position: relative;
     z-index: 1; /* Ensure this is also above SVG if it were to be kept */
+    border: 1px solid #d0d0d0; /* Optional: subtle border for placeholder */
 }
 
 /* Media Section Placeholders - This class is now replaced by Swiper structure. */
@@ -335,7 +353,7 @@ main .container {
 #performances h3 {
     font-size: 1.5rem;
     font-weight: 500;
-    color: #f5f5f7;
+    color: #1d1d1f; /* NEW: Dark text */
     margin-top: 1.5rem;
     margin-bottom: 0.75rem;
 }
@@ -343,18 +361,19 @@ main .container {
 #performances ul {
     list-style-type: none;
     padding-left: 0;
+    /* Paragraph text color already changed in .content-section p, ul */
 }
 
 #performances ul li strong {
-    color: #0071e3;
+    color: #0071e3; /* RETAINED: Apple Blue accent */
 }
 
 /* Footer Styles */
 footer {
-    background-color: #1d1d1f;
-    color: #a0a0a5;
+    background-color: #ffffff; /* NEW: White footer */
+    color: #555555; /* NEW: Darker gray for footer text */
     padding: 2rem 0;
-    border-top: 1px solid #424245;
+    border-top: 1px solid #e0e0e0; /* NEW: Light gray border */
     text-align: center;
 }
 
@@ -377,7 +396,7 @@ footer p {
 }
 
 .footer-links a {
-    color: #a0a0a5;
+    color: #555555; /* NEW: Darker gray for links */
     text-decoration: none;
     font-size: 0.9rem;
     margin: 0 0.5rem;
@@ -385,11 +404,11 @@ footer p {
 }
 
 .footer-links a:hover {
-    color: #0071e3;
+    color: #0071e3; /* RETAINED: Apple Blue on hover */
 }
 
 .social-media a {
-    color: #a0a0a5;
+    color: #555555; /* NEW: Darker gray for social icons */
     text-decoration: none;
     font-size: 1.2rem;
     margin: 0 0.75rem;
@@ -397,17 +416,17 @@ footer p {
 }
 
 .social-media a:hover {
-    color: #0071e3;
+    color: #0071e3; /* RETAINED: Apple Blue on hover */
 }
 
 /* Media Showcase General */
 .media-showcase h3 {
     font-size: 1.8rem;
     font-weight: 500;
-    color: #f5f5f7;
+    color: #1d1d1f; /* NEW: Dark text */
     margin-top: 2rem;
     margin-bottom: 1rem;
-    border-bottom: 1px solid #424245;
+    border-bottom: 1px solid #e0e0e0; /* NEW: Light gray border */
     padding-bottom: 0.5rem;
 }
 
@@ -427,18 +446,20 @@ footer p {
     margin: 20px auto;
     border-radius: 8px;
     overflow: hidden;
-    border: 1px solid #424245;
-    background-color: #222;
+    border: 1px solid #e0e0e0; /* NEW: Light border */
+    background-color: #f9f9f9; /* NEW: Light background for carousel area */
 }
 
 .advanced-carousel .swiper-slide {
     text-align: center;
-    font-size: 18px;
-    background: #1c1c1e;
+    font-size: 18px; /* This might need adjustment if text is added directly to slide */
+    background: #ffffff; /* NEW: White background for slides */
     display: flex;
     justify-content: center;
     align-items: center;
     position: relative;
+    color: #1d1d1f; /* NEW: Dark text for any direct slide content */
+    border: 1px solid #ededed; /* NEW: Very light border for slides themselves */
 }
 
 .advanced-carousel .swiper-slide img {
@@ -454,8 +475,8 @@ footer p {
     bottom: 0;
     left: 0;
     width: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
-    color: #f5f5f7;
+    background-color: rgba(255, 255, 255, 0.85); /* NEW: Light semi-transparent background */
+    color: #1d1d1f; /* NEW: Dark text for caption */
     padding: 15px;
     font-size: 0.9rem;
     text-align: center;
@@ -464,17 +485,18 @@ footer p {
 
 .advanced-carousel .swiper-button-prev,
 .advanced-carousel .swiper-button-next {
-    color: #0071e3;
-    background-color: rgba(28, 28, 31, 0.5);
+    color: #0071e3; /* RETAINED: Blue icon color */
+    background-color: rgba(245, 245, 247, 0.7); /* NEW: Light semi-transparent background */
     border-radius: 50%;
     width: 44px;
     height: 44px;
     transition: background-color 0.3s ease, color 0.3s ease;
+    border: 1px solid rgba(0,0,0,0.05); /* NEW: Subtle border for buttons */
 }
 .advanced-carousel .swiper-button-prev:hover,
 .advanced-carousel .swiper-button-next:hover {
-    background-color: rgba(0, 113, 227, 0.8);
-    color: #fff;
+    background-color: rgba(235, 235, 237, 0.9); /* NEW: Slightly more opaque on hover */
+    color: #0056b3; /* Darker blue on hover */
 }
 .advanced-carousel .swiper-button-prev::after,
 .advanced-carousel .swiper-button-next::after {
@@ -483,13 +505,13 @@ footer p {
 }
 
 .advanced-carousel .swiper-pagination-bullet {
-    background-color: #888;
+    background-color: #cccccc; /* NEW: Light gray inactive bullet */
     opacity: 0.7;
     transition: background-color 0.3s ease, opacity 0.3s ease;
 }
 
 .advanced-carousel .swiper-pagination-bullet-active {
-    background-color: #0071e3;
+    background-color: #0071e3; /* RETAINED: Active bullet Apple Blue */
     opacity: 1;
 }
 
@@ -520,10 +542,10 @@ footer p {
 
 
 .video-player-placeholder {
-    background-color: #1a1a1c;
+    background-color: #e9e9ed; /* NEW: Light gray background */
     border-radius: 8px;
     text-align: center;
-    border: 1px solid #333;
+    border: 1px solid #dcdcdc; /* NEW: Light gray border */
     position: relative;
     overflow: hidden;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -531,7 +553,7 @@ footer p {
 
 .video-player-placeholder:hover {
     transform: translateY(-5px) scale(1.02);
-    box-shadow: 0 10px 30px rgba(0, 113, 227, 0.3);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); /* NEW: Softer shadow for light theme */
 }
 
 .video-player-placeholder img {
@@ -549,8 +571,8 @@ footer p {
     left: 50%;
     transform: translate(-50%, -50%);
     font-size: 2.5rem;
-    color: rgba(255, 255, 255, 0.9);
-    background-color: rgba(0,0,0,0.4);
+    color: #ffffff; /* NEW: White icon on semi-transparent bg */
+    background-color: rgba(80, 80, 80, 0.4); /* NEW: Darker semi-transparent bg for better visibility of white icon */
     border-radius: 50%;
     width: 70px;
     height: 70px;
@@ -563,20 +585,21 @@ footer p {
 }
 
 .video-player-placeholder:hover .play-button-overlay {
-    background-color: rgba(0,113,227,0.9);
-    color: #fff;
+    background-color: rgba(0,113,227,0.9); /* RETAINED: Blue on hover */
+    color: #ffffff; /* RETAINED: White icon */
     transform: translate(-50%, -50%) scale(1.1);
 }
 
 .video-player-placeholder p {
     font-size: 1rem;
-    color: #f5f5f7;
+    color: #1d1d1f; /* NEW: Dark text */
     margin: 0;
     padding: 0.75rem 1rem;
-    background-color: #232325;
+    background-color: #f8f8f8; /* NEW: Very light gray for title background */
     border-bottom-left-radius: 7px;
     border-bottom-right-radius: 7px;
     text-align: left;
+    border-top: 1px solid #dedede; /* NEW: subtle top border for title bar */
 }
 
 /* Fake Controls Styling */
@@ -586,7 +609,7 @@ footer p {
     left: 0;
     width: 100%;
     height: 35px;
-    background-color: rgba(20, 20, 22, 0.85);
+    background-color: rgba(248, 248, 248, 0.85); /* NEW: Light semi-transparent */
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
     display: flex;
@@ -598,6 +621,7 @@ footer p {
     transform: translateY(100%);
     transition: opacity 0.3s ease, transform 0.3s ease;
     will-change: opacity, transform;
+    border-top: 1px solid rgba(0,0,0,0.05); /* NEW: Subtle border for controls bar */
 }
 
 .video-player-placeholder:hover .fake-controls {
@@ -606,13 +630,13 @@ footer p {
 }
 
 .fake-controls .control-icon {
-    color: #b0b0b0;
+    color: #333333; /* NEW: Dark gray icons */
     font-size: 0.9rem;
     margin: 0 6px;
     cursor: default;
 }
 .fake-controls .control-icon:hover {
-    color: #fff;
+    color: #0071e3; /* NEW: Blue on hover for icons */
 }
 
 .fake-controls .play-pause-icon {
@@ -622,7 +646,7 @@ footer p {
 .fake-progress-bar-container {
     flex-grow: 1;
     height: 6px;
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: rgba(0, 0, 0, 0.1); /* NEW: Light gray for progress bar background */
     border-radius: 3px;
     margin: 0 10px;
     overflow: hidden;
@@ -631,7 +655,7 @@ footer p {
 .fake-progress-bar-filled {
     width: 30%;
     height: 100%;
-    background-color: #0071e3;
+    background-color: #0071e3; /* RETAINED: Apple Blue for progress fill */
     border-radius: 3px;
 }
 
@@ -639,6 +663,7 @@ footer p {
     font-size: 0.8rem;
     min-width: 70px;
     text-align: center;
+    color: #333333; /* NEW: Dark gray text for time */
 }
 
 
@@ -646,7 +671,7 @@ footer p {
 .timeline-title {
     font-size: 1.8rem;
     font-weight: 500;
-    color: #f5f5f7;
+    color: #1d1d1f; /* NEW: Dark text */
     margin-top: 2.5rem;
     margin-bottom: 1.5rem;
     text-align: center;
@@ -717,7 +742,7 @@ footer p {
 .timeline-date {
     font-size: 1.1rem;
     font-weight: 600;
-    color: #0071e3;
+    color: #0071e3; /* RETAINED: Apple Blue for date */
     margin-bottom: 0.5rem;
     display: block;
 }
@@ -731,23 +756,24 @@ footer p {
 
 
 .timeline-content {
-    background-color: #3a3a3c;
+    background-color: #ffffff; /* NEW: White background */
     padding: 1rem;
     border-radius: 6px;
-    border: 1px solid #4a4a4c;
+    border: 1px solid #e0e0e0; /* NEW: Light gray border */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05); /* NEW: Subtle shadow */
 }
 
 .timeline-content h4 {
     font-size: 1.2rem;
     font-weight: 500;
-    color: #f5f5f7;
+    color: #1d1d1f; /* NEW: Dark text for timeline heading */
     margin-bottom: 0.5rem;
 }
 
 .timeline-content p {
     font-size: 0.95rem;
     line-height: 1.6;
-    color: #c7c7c7;
+    color: #333333; /* NEW: Dark gray for timeline paragraph */
     margin-bottom: 0;
 }
 
@@ -759,7 +785,7 @@ footer p {
 
 #legacy-dataviz .viz-description {
     font-size: 1.1rem;
-    color: #c7c7c7;
+    color: #333333; /* NEW: Dark gray for description */
     max-width: 700px;
     margin: 0 auto 1.5rem auto; /* Center description */
 }
@@ -770,9 +796,9 @@ footer p {
     height: 500px; /* Adjust as needed */
     margin: 1rem auto;
     position: relative; /* If needed for overlays or tooltips later */
-    background-color: rgba(0,0,0,0.1); /* Faint background for canvas area */
+    background-color: #f9f9f9; /* NEW: Off-white background for canvas area */
     border-radius: 8px;
-    border: 1px solid #424245;
+    border: 1px solid #e0e0e0; /* NEW: Light gray border */
 }
 
 #dataviz-canvas {
@@ -878,6 +904,466 @@ footer p {
     opacity: 0;
 }
 
+/* User Authentication Forms */
+.auth-forms-container {
+    display: flex;
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    gap: 2rem; /* Space between forms */
+    justify-content: space-around; /* Distribute forms nicely */
+}
+
+.auth-form {
+    background-color: #f9f9f9; /* Slightly off-white for form background */
+    padding: 2rem;
+    border: 1px solid #dcdcdc; /* Light border for forms */
+    border-radius: 8px;
+    flex: 1 1 400px; /* Flex properties for side-by-side layout, allows shrinking and growing, base width 400px */
+    max-width: 500px; /* Max width for a single form */
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+
+.auth-form h3 {
+    font-size: 1.8rem;
+    color: #1d1d1f;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #333333;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"] {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid #d0d0d0; /* Light gray border */
+    border-radius: 5px;
+    background-color: #ffffff; /* White input background */
+    color: #1d1d1f; /* Dark text */
+    font-size: 1rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="email"]:focus,
+.form-group input[type="password"]:focus {
+    outline: none;
+    border-color: #0071e3; /* Apple Blue border on focus */
+    box-shadow: 0 0 0 2px rgba(0, 113, 227, 0.2); /* Subtle blue glow, similar to macOS focus */
+}
+
+.btn { /* General button styling, can be expanded */
+    display: inline-block;
+    font-weight: 500;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    user-select: none;
+    background-color: transparent;
+    border: 1px solid transparent;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: 5px;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.btn-primary {
+    color: #ffffff;
+    background-color: #0071e3; /* Apple Blue */
+    border-color: #0071e3;
+}
+
+.btn-primary:hover {
+    background-color: #005bb5; /* Darker Apple Blue */
+    border-color: #005bb5;
+}
+
+.btn-primary:focus, .btn-primary.focus {
+  box-shadow: 0 0 0 0.2rem rgba(0, 113, 227, 0.5);
+}
+
+.btn-primary:active, .btn-primary.active {
+    background-color: #0052a3; /* Even darker for active state */
+    border-color: #0052a3;
+}
+
+.form-switch-text {
+    text-align: center;
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
+    color: #555555;
+}
+
+.form-switch-text a {
+    color: #0071e3; /* Apple Blue for the link */
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.form-switch-text a:hover {
+    text-decoration: underline;
+}
+
+/* CMS Placeholder Area Styles */
+.section-description {
+    font-size: 1.1rem;
+    color: #555555; /* Slightly lighter than main paragraph for intro text */
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.cms-content-block {
+    background-color: #ffffff; /* Ensure blocks are white if section bg is off-white */
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    border: 1px solid #e0e0e0; /* Light gray border for each block */
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+}
+
+.cms-content-block h3 {
+    font-size: 1.7rem;
+    color: #1d1d1f;
+    margin-bottom: 0.5rem;
+}
+
+.cms-content-block .meta-info {
+    font-size: 0.9rem;
+    color: #777777; /* Muted color for meta information */
+    margin-bottom: 1rem;
+}
+
+.cms-content-block .meta-info .date,
+.cms-content-block .meta-info .author {
+    font-weight: 500;
+}
+
+.cms-image-placeholder {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 1rem;
+    background-color: #e0e0e0; /* Fallback if image fails, matches placeholder URL */
+    border-radius: 6px;
+    display: block; /* Ensure it behaves as a block for margin */
+}
+
+.cms-content-block p { /* Paragraphs within cms-content-block */
+    font-size: 1rem; /* Slightly smaller than general .content-section p if needed, or keep consistent */
+    color: #333333;
+    line-height: 1.7;
+    margin-bottom: 1rem;
+}
+.cms-content-block p:last-of-type {
+    margin-bottom: 1.5rem; /* More space before "Read More" button */
+}
+
+
+.cms-editable-block {
+    background-color: #f9f9f9; /* Slightly different background for distinction */
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    border: 1px solid #dcdcdc;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+}
+
+.cms-editable-block h4 {
+    font-size: 1.3rem;
+    color: #1d1d1f;
+    margin-bottom: 0.75rem;
+}
+
+.cms-editable-block p {
+    font-size: 1rem;
+    color: #333333;
+    line-height: 1.6;
+    margin-bottom: 0; /* No margin if it's the only paragraph */
+}
+
+/* Secondary Button Style */
+.btn-secondary {
+    color: #333333;
+    background-color: #e9e9ed; /* Light gray background */
+    border: 1px solid #dcdcdc; /* Border to match inputs/light theme elements */
+}
+
+.btn-secondary:hover {
+    background-color: #dcdcdc; /* Darker gray on hover */
+    color: #1d1d1f;
+    border-color: #c0c0c0;
+}
+
+.btn-secondary:focus, .btn-secondary.focus {
+  box-shadow: 0 0 0 0.2rem rgba(200, 200, 200, 0.5); /* Grayish focus shadow */
+}
+
+.btn-secondary:active, .btn-secondary.active {
+    background-color: #c0c0c0; /* Even darker for active state */
+    border-color: #b0b0b0;
+}
+
+/* WYSIWYG Editor Placeholder Styles */
+.wysiwyg-editor-placeholder-container {
+    margin: 2.5rem auto; /* More vertical margin to space it out */
+    padding: 1.5rem;
+    border: 1px solid #d0d0d0; /* Slightly more prominent border for a tool area */
+    border-radius: 8px;
+    background-color: #fdfdfd; /* Very light, almost white, to differentiate from section bg */
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05); /* Subtle shadow */
+}
+
+.wysiwyg-editor-placeholder-container h4 {
+    font-size: 1.4rem; /* Specific size for this title */
+    color: #1d1d1f;
+    margin-bottom: 0.5rem; /* Less margin than section description above it */
+    text-align: left; /* Align to left, not center like .section-description */
+}
+
+.wysiwyg-editor-placeholder-container .section-description {
+    text-align: left; /* Override general centered .section-description for this context */
+    margin-bottom: 1rem; /* Less margin for this specific description */
+    font-size: 1rem; /* Slightly smaller for this context */
+}
+
+.wysiwyg-toolbar-placeholder {
+    background-color: #f0f0f0; /* Light gray toolbar background */
+    padding: 0.75rem;
+    border-bottom: 1px solid #d0d0d0;
+    border-top-left-radius: 6px; /* Rounded corners for the toolbar top */
+    border-top-right-radius: 6px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem; /* Spacing for buttons */
+}
+
+.toolbar-button-placeholder {
+    padding: 0.4rem 0.6rem;
+    margin: 0; /* Gap property handles spacing */
+    background-color: #e7e7e7; /* Lighter gray for buttons */
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    color: #333333;
+    cursor: default; /* Indicates they are not interactive */
+    transition: background-color 0.2s ease;
+}
+
+.toolbar-button-placeholder:hover {
+    background-color: #dddddd; /* Slight darken on hover */
+}
+
+.wysiwyg-content-area-placeholder {
+    min-height: 200px;
+    padding: 1rem;
+    border: 1px solid #d0d0d0;
+    border-top: none; /* Toolbar border acts as top border */
+    background-color: #ffffff; /* White content editing area */
+    color: #1d1d1f;
+    font-size: 1rem;
+    line-height: 1.6;
+    border-bottom-left-radius: 6px; /* Rounded corners for the content area bottom */
+    border-bottom-right-radius: 6px;
+}
+
+.wysiwyg-content-area-placeholder p {
+    margin-bottom: 1rem;
+}
+.wysiwyg-content-area-placeholder p:last-child {
+    margin-bottom: 0;
+}
+
+/* User Dashboard Styles */
+.dashboard-widgets-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem; /* 20px is approx 1.25rem, using 1.5rem for consistency */
+}
+
+.dashboard-widget {
+    background-color: #ffffff; /* White background for widgets */
+    border: 1px solid #e0e0e0; /* Light gray border */
+    border-radius: 8px;
+    padding: 1.5rem;
+    flex: 1 1 calc(50% - 1.5rem); /* Two columns, accounting for gap */
+    min-width: 280px; /* Minimum width before stacking to single column */
+    box-shadow: 0 1px 3px rgba(0,0,0,0.03); /* Subtle shadow consistent with other elements */
+}
+
+.dashboard-widget h4 {
+    font-size: 1.3rem; /* Consistent with .cms-editable-block h4 */
+    color: #1d1d1f;
+    margin-bottom: 1rem; /* Space below widget title */
+}
+
+.widget-content {
+    /* Additional specific styling for widget content areas if needed */
+}
+
+/* Profile Widget Specifics */
+.widget-profile .profile-avatar-placeholder {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin: 0 auto 1rem auto; /* Centered avatar */
+    display: block;
+    background-color: #e0e0e0; /* Fallback color */
+}
+
+.widget-profile p {
+    font-size: 0.95rem;
+    color: #333333;
+    margin-bottom: 0.5rem;
+    line-height: 1.6;
+}
+
+.widget-profile p strong {
+    font-weight: 500;
+    color: #1d1d1f;
+}
+
+.widget-profile .btn-small { /* Potentially create a .btn-small class */
+    padding: 0.4rem 0.8rem;
+    font-size: 0.85rem;
+    margin-top: 0.5rem; /* Space above the button */
+}
+
+/* List styles for other widgets */
+.dashboard-widget ul {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 0; /* Remove default bottom margin from ul */
+}
+
+.dashboard-widget li {
+    font-size: 0.95rem;
+    color: #333333;
+    padding: 0.5rem 0; /* Vertical padding for list items */
+    border-bottom: 1px solid #f0f0f0; /* Very light separator for list items */
+}
+
+.dashboard-widget li:last-child {
+    border-bottom: none;
+}
+
+.dashboard-widget li a {
+    text-decoration: none;
+    color: #0071e3; /* Apple Blue for links */
+    transition: color 0.2s ease;
+}
+
+.dashboard-widget li a:hover {
+    color: #005bb5; /* Darker Apple Blue on hover */
+    text-decoration: underline;
+}
+
+/* Responsive adjustments for widgets */
+@media (max-width: 768px) {
+    .dashboard-widget {
+        flex: 1 1 100%; /* Stack to single column on smaller tablets/mobile */
+    }
+}
+
+/* API Data Display Area Styles */
+.data-display-area {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 1.5rem;
+    min-height: 100px;
+    margin-top: 1rem; /* Space below the section description */
+    box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+}
+
+.data-display-area h3 { /* Styling for potential headings injected by JS */
+    font-size: 1.5rem;
+    color: #1d1d1f;
+    margin-bottom: 1rem;
+}
+.data-display-area h4 { /* Styling for potential sub-headings injected by JS */
+    font-size: 1.2rem;
+    color: #1d1d1f;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.data-display-area p {
+    font-size: 1rem;
+    color: #333333;
+    line-height: 1.6;
+    margin-bottom: 0.5rem;
+}
+
+.data-display-area p strong {
+    font-weight: 500;
+    color: #1d1d1f;
+}
+
+
+/* Header Search Styles */
+.header-search-container {
+    /* Adjust flex properties if needed, or rely on parent's flex properties */
+}
+
+.search-form {
+    display: flex;
+    align-items: center;
+    border: 1px solid #d0d0d0; /* Light gray border, consistent with inputs */
+    border-radius: 20px; /* Pill shape */
+    background-color: #f0f0f0; /* Very light gray background */
+    overflow: hidden; /* To contain children within border-radius */
+    padding-left: 0.5rem; /* Small padding before input */
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.search-form:focus-within {
+    border-color: #0071e3; /* Apple Blue border on focus */
+    box-shadow: 0 0 0 2px rgba(0, 113, 227, 0.2); /* Subtle blue glow */
+}
+
+#header-search-input {
+    border: none;
+    outline: none;
+    padding: 0.5rem 0.75rem; /* 8px 12px */
+    background-color: transparent;
+    color: #1d1d1f; /* Dark text */
+    font-size: 0.9rem;
+    flex-grow: 1;
+    min-width: 150px; /* Prevent it from becoming too small */
+}
+
+#header-search-input::placeholder {
+    color: #888888; /* Lighter placeholder text */
+    opacity: 1; /* Firefox fix */
+}
+
+.search-button {
+    border: none;
+    background-color: transparent;
+    padding: 0.5rem 0.75rem; /* 8px 10px */
+    cursor: pointer;
+    display: flex; /* To center SVG icon if needed */
+    align-items: center;
+    justify-content: center;
+    color: #555555; /* Icon color */
+}
+
+.search-button svg {
+    display: block; /* Remove extra space below SVG if any */
+}
+
+.search-button:hover {
+    color: #0071e3; /* Apple Blue on hover for icon */
+}
 [end of css/style.css]
 
 [end of css/style.css]
