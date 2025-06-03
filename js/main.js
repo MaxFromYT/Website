@@ -436,4 +436,28 @@ document.addEventListener('DOMContentLoaded', () => {
     if (document.getElementById('api-data-placeholder')) {
         fetchAndDisplayMockData();
     }
+
+    // Conditional Logic for Advanced Form (Contact/Survey)
+    const enquiryTypeSelect = document.getElementById('form-enquiry-type');
+    const otherEnquiryGroup = document.getElementById('other-enquiry-type-group');
+    const otherEnquiryInput = document.getElementById('form-other-enquiry-specify');
+
+    if (enquiryTypeSelect && otherEnquiryGroup) {
+        enquiryTypeSelect.addEventListener('change', function() {
+            if (this.value === 'other') {
+                otherEnquiryGroup.style.display = 'block';
+                if(otherEnquiryInput) otherEnquiryInput.required = true; // Optionally make it required
+            } else {
+                otherEnquiryGroup.style.display = 'none';
+                if(otherEnquiryInput) {
+                    otherEnquiryInput.required = false; // Optionally remove required
+                    otherEnquiryInput.value = ''; // Clear the value
+                }
+            }
+        });
+        // Trigger change event on load in case 'other' is pre-selected (though not in current HTML)
+        if (enquiryTypeSelect.value === 'other') {
+            enquiryTypeSelect.dispatchEvent(new Event('change'));
+        }
+    }
 });

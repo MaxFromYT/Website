@@ -131,6 +131,12 @@ header nav ul li {
     gap: 1.5rem; /* Space between nav and search */
 }
 
+/* Updated to header-right-group to include notifications */
+.header-right-group {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem; /* Space between search and notifications bell */
+}
 
 header nav ul li a {
     text-decoration: none;
@@ -1231,6 +1237,112 @@ footer p {
     color: #1d1d1f;
 }
 
+/* Admin Panel Styles */
+.admin-panel-layout {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start; /* Align items to the top */
+}
+
+.admin-sidebar {
+    flex: 0 0 250px; /* Fixed width for sidebar */
+    background-color: #f9f9f9; /* Slightly off-white */
+    padding: 1.5rem; /* More padding for sidebar */
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+}
+
+.admin-sidebar h3 {
+    font-size: 1.4rem; /* Consistent with WYSIWYG title */
+    color: #1d1d1f;
+    margin-bottom: 1rem;
+}
+
+.admin-nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.admin-nav-list li a {
+    display: block;
+    padding: 0.75rem 1rem;
+    text-decoration: none;
+    color: #333333;
+    border-radius: 5px;
+    margin-bottom: 0.5rem; /* Space between links */
+    transition: background-color 0.2s ease, color 0.2s ease;
+    font-weight: 500; /* Slightly bolder nav links */
+}
+
+.admin-nav-list li a:hover {
+    background-color: #e7e7e7; /* Light hover effect */
+    color: #1d1d1f;
+}
+
+.admin-nav-list li a.active-admin-link {
+    background-color: #0071e3; /* Apple Blue for active link */
+    color: #ffffff;
+}
+
+.admin-main-content {
+    flex-grow: 1; /* Takes remaining space */
+    background-color: #ffffff; /* White background for main content area */
+    padding: 1.5rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+}
+
+.admin-content-area h4 {
+    font-size: 1.5rem; /* Similar to data-display-area h3 */
+    color: #1d1d1f;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #e9e9e9; /* Subtle separator for title */
+    padding-bottom: 0.75rem;
+}
+.admin-content-area p {
+    font-size: 1rem;
+    color: #333333;
+    line-height: 1.6;
+}
+
+.admin-overview-widgets {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem; /* More space above widgets */
+    flex-wrap: wrap;
+}
+
+.overview-widget {
+    background-color: #e9e9ed; /* Light gray consistent with btn-secondary */
+    padding: 1.25rem; /* Generous padding */
+    border-radius: 6px;
+    flex: 1 1 200px; /* Allow growing, base size, allow shrinking */
+    min-width: 180px; /* Prevent from becoming too narrow */
+    text-align: center;
+    font-size: 1rem;
+    color: #333333;
+    border: 1px solid #dcdcdc;
+}
+
+.overview-widget span {
+    font-weight: 500;
+    display: block;
+}
+
+/* Responsive adjustments for Admin Panel */
+@media (max-width: 992px) { /* Tablet breakpoint */
+    .admin-panel-layout {
+        flex-direction: column; /* Stack sidebar and main content */
+    }
+    .admin-sidebar {
+        flex: 0 0 auto; /* Reset flex basis */
+        width: 100%; /* Full width for sidebar */
+        margin-bottom: 1.5rem; /* Space when stacked */
+    }
+}
 .widget-profile .btn-small { /* Potentially create a .btn-small class */
     padding: 0.4rem 0.8rem;
     font-size: 0.85rem;
@@ -1273,6 +1385,160 @@ footer p {
     }
 }
 
+/* Styled Form (Contact/Survey) */
+.styled-form {
+    max-width: 700px; /* Limit width for better readability */
+    margin: 1rem auto; /* Centering the form if section is wider */
+    background-color: #f9f9f9; /* Similar to auth-form background */
+    padding: 2rem;
+    border: 1px solid #dcdcdc;
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+
+/* Reusing .form-group, input styles from .auth-form which are already themed */
+
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid #d0d0d0; /* Light gray border */
+    border-radius: 5px;
+    background-color: #ffffff; /* White input background */
+    color: #1d1d1f; /* Dark text */
+    font-size: 1rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    font-family: inherit; /* Ensure select and textarea inherit body font */
+    line-height: 1.5; /* Consistent line height */
+}
+
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #0071e3; /* Apple Blue border on focus */
+    box-shadow: 0 0 0 2px rgba(0, 113, 227, 0.2); /* Subtle blue glow */
+}
+
+.form-group textarea {
+    resize: vertical; /* Allow vertical resize, not horizontal */
+    min-height: 120px; /* Decent minimum height */
+}
+
+/* Styling for select dropdown arrow (browser default is often fine for minimalist) */
+.form-group select {
+    appearance: none; /* Remove default system appearance if custom arrow is desired */
+    /* If custom arrow: background-image: url('custom-arrow.svg'); background-repeat: no-repeat; background-position: right 1rem center; background-size: 1em; */
+    /* For now, rely on default browser arrow which is usually fine for Mac-like themes */
+}
+
+.form-group .checkbox-label { /* For custom styling of checkbox line */
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: normal; /* Override if label has a general bold style */
+    color: #333333; /* Ensure text color */
+    cursor: pointer;
+}
+
+.form-group input[type="checkbox"] {
+    width: auto; /* Override 100% width from general input styles if any conflict */
+    margin-right: 0.5rem; /* Spacing between checkbox and text, if not using gap */
+    accent-color: #0071e3; /* Modern way to color checkbox, good for Apple themes */
+    /* For older browser support, more complex styling would be needed for custom checkbox */
+    height: 1em; /* Align better with text */
+    width: 1em;
+    vertical-align: middle;
+}
+
+/* Conditional field styling is handled by inline style display:none/block */
+/* .conditional-field {} */
+
+/* Social Login Styles */
+.social-login-container {
+    margin-top: 2.5rem; /* More spacing from forms above */
+    text-align: center;
+}
+
+.social-login-divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #888888; /* Muted text for divider */
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem; /* More space below divider */
+}
+
+.social-login-divider span {
+    padding: 0 12px; /* Slightly more padding */
+    white-space: nowrap; /* Prevent "Or continue with" from wrapping */
+}
+
+.social-login-divider::before,
+.social-login-divider::after {
+    content: '';
+    flex-grow: 1;
+    background-color: #e0e0e0; /* Light line color */
+    height: 1px;
+}
+
+.social-login-buttons {
+    display: flex;
+    flex-direction: column; /* Stack buttons by default for mobile */
+    gap: 0.75rem;
+    align-items: center; /* Center buttons when stacked */
+}
+
+.btn-social {
+    display: inline-flex; /* Use inline-flex for better alignment with icon and text */
+    align-items: center;
+    justify-content: center; /* Center content within button */
+    gap: 0.75rem; /* Space between icon and text */
+    padding: 0.6rem 1rem;
+    border: 1px solid #d0d0d0; /* Standard light border */
+    border-radius: 5px; /* Consistent with other buttons/inputs */
+    background-color: #ffffff; /* White background */
+    color: #333333; /* Dark text */
+    font-size: 0.95rem;
+    text-decoration: none;
+    min-width: 230px; /* Ensure buttons have a decent minimum width */
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.03); /* Subtle shadow for buttons */
+}
+
+.btn-social svg {
+    /* width and height are set inline in SVG, this is a fallback or override if needed */
+    width: 18px;
+    height: 18px;
+}
+
+.btn-social:hover {
+    border-color: #bbbbbb;
+    background-color: #f9f9f9; /* Very slight darken on hover */
+}
+
+/* Optional: Vendor-specific hover styles if desired for brand recognition */
+/* Keep them subtle to align with Mac Pro theme */
+.btn-social.btn-google:hover {
+    border-color: #C8D9F5; /* Lighter Google blue for border */
+    color: #2a75f3; /* Darker Google blue for text/icon */
+    background-color: #F8FAFF;
+}
+
+.btn-social.btn-facebook:hover {
+    border-color: #C2D4F2; /* Lighter Facebook blue for border */
+    color: #1267E0; /* Darker Facebook blue for text/icon */
+    background-color: #F5F8FF;
+}
+
+
+/* Responsive adjustments for social login buttons */
+@media (min-width: 480px) { /* For wider screens, place buttons side-by-side */
+    .social-login-buttons {
+        flex-direction: row;
+        justify-content: center; /* Center buttons in the row */
+    }
+}
 /* API Data Display Area Styles */
 .data-display-area {
     background-color: #ffffff;
@@ -1357,12 +1623,267 @@ footer p {
     color: #555555; /* Icon color */
 }
 
+/* Header Notifications Styles */
+.header-notifications-container {
+    position: relative; /* For positioning the dropdown panel */
+}
+
+.notification-bell-button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    padding: 0.5rem; /* Clickable area */
+    color: #555555; /* Icon color */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%; /* Make it round for hover effect */
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.notification-bell-button:hover {
+    color: #0071e3; /* Apple Blue on hover */
+    background-color: rgba(0, 113, 227, 0.1); /* Subtle blue background */
+}
+
+.notification-bell-button svg {
+    display: block; /* Prevents small extra space */
+}
+
+.notification-badge {
+    position: absolute;
+    top: 2px;  /* Fine-tune position */
+    right: 2px; /* Fine-tune position */
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    font-size: 0.65rem; /* Smaller font for badge */
+    padding: 2px 4px;  /* Small padding */
+    line-height: 1;
+    text-align: center;
+    pointer-events: none; /* So it doesn't interfere with button click */
+}
+
+.notifications-panel {
+    position: absolute;
+    top: calc(100% + 10px); /* Position below button with a small gap */
+    right: 0;
+    background-color: #ffffff;
+    border: 1px solid #d0d0d0; /* Slightly softer border than e0e0e0 */
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.12); /* Softer shadow */
+    width: 360px; /* Slightly wider */
+    z-index: 1010; /* Higher than header's z-index if sticky */
+    opacity: 0; /* Hidden by default, JS will toggle */
+    transform: translateY(10px);
+    transition: opacity 0.2s ease-out, transform 0.2s ease-out;
+    pointer-events: none; /* Hidden by default */
+}
+
+.notifications-panel.active { /* JS will add this class */
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+
+.notifications-header {
+    padding: 0.75rem 1rem; /* Slightly reduced padding */
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.notifications-header h4 {
+    margin: 0;
+    font-size: 1.1rem; /* Smaller heading for panel */
+    color: #1d1d1f;
+}
+
+.notifications-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 320px; /* Adjusted max height */
+    overflow-y: auto;
+}
+
+.notification-item {
+    display: flex;
+    align-items: flex-start;
+    padding: 0.75rem 1rem;
+    text-decoration: none;
+    color: inherit;
+    border-bottom: 1px solid #f0f0f0; /* Lighter separator */
+    transition: background-color 0.15s ease;
+}
+.notification-item:last-child {
+    border-bottom: none;
+}
+
+.notification-item:hover {
+    background-color: #f5f5f7; /* Consistent light hover */
+}
+
+.notification-item.notification-unread {
+    background-color: #e9f0f8; /* Lighter, less saturated blue for unread */
+}
+.notification-item.notification-unread:hover {
+    background-color: #dde8f3;
+}
+
+
+.notification-icon {
+    margin-right: 0.85rem; /* Slightly more margin */
+    margin-top: 0.15rem; /* Align icon better with text block */
+    font-size: 1.1rem; /* Slightly smaller icon if emoji */
+    color: #555555;
+    width: 24px; /* Fixed width for icon area */
+    text-align: center;
+}
+
+.notification-content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.notification-title {
+    font-weight: 600; /* Bolder title */
+    color: #1d1d1f; /* Darker title */
+    font-size: 0.95rem; /* Slightly adjusted size */
+    margin-bottom: 0.1rem;
+}
+
+.notification-text {
+    font-size: 0.85rem; /* Slightly smaller text */
+    color: #444444; /* Slightly darker than time */
+    line-height: 1.4;
+    margin: 0.1rem 0; /* Adjusted margin */
+}
+
+.notification-time {
+    font-size: 0.75rem; /* Smaller time text */
+    color: #777777;
+    margin-top: 0.15rem;
+}
+
+.notifications-footer {
+    padding: 0.75rem;
+    text-align: center;
+    border-top: 1px solid #e0e0e0;
+    background-color: #f9f9f9; /* Slight bg for footer */
+    border-bottom-left-radius: 7px; /* Match panel rounding */
+    border-bottom-right-radius: 7px;
+}
+
+.notifications-footer a {
+    text-decoration: none;
+    color: #0071e3; /* Apple Blue */
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.notifications-footer a:hover {
+    text-decoration: underline;
+}
+
 .search-button svg {
     display: block; /* Remove extra space below SVG if any */
 }
 
 .search-button:hover {
     color: #0071e3; /* Apple Blue on hover for icon */
+}
+
+/* Theme Switcher Styles */
+.theme-switcher-container {
+    margin-top: 1rem; /* Space above the toggle button */
+}
+
+.btn-theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem; /* Increased gap slightly */
+    padding: 0.6rem 1.2rem; /* Slightly more padding for a more clickable feel */
+    border: 1px solid #d0d0d0; /* Consistent light border */
+    border-radius: 20px; /* Pill shape */
+    background-color: #f0f0f0; /* Light gray background */
+    color: #333333; /* Dark text */
+    font-size: 0.9rem;
+    font-weight: 500; /* Make text slightly bolder */
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04); /* Subtle shadow */
+}
+
+.btn-theme-toggle:hover {
+    border-color: #bbbbbb;
+    background-color: #e7e7e7; /* Slightly darker on hover */
+    color: #1d1d1f; /* Darken text on hover slightly */
+}
+
+.btn-theme-toggle:focus { /* Basic focus style for accessibility */
+    outline: none;
+    border-color: #0071e3;
+    box-shadow: 0 0 0 2px rgba(0, 113, 227, 0.2);
+}
+
+.toggle-icon {
+    font-size: 1.1rem; /* Adjust icon size */
+    line-height: 1; /* Ensure icons align well with text */
+}
+/* .sun-icon and .moon-icon are used by JS to toggle visibility */
+
+/* Dashboard Chart Placeholder Styles */
+.dashboard-chart-container { /* This is a .content-section-panel in HTML */
+    margin-top: 1.5rem;
+    padding: 1.5rem;
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+}
+
+.dashboard-chart-container h4 { /* Title specific to this container */
+    font-size: 1.3rem; /* Consistent with widget titles */
+    color: #1d1d1f;
+    margin-bottom: 1rem;
+}
+
+.chart-placeholder-area { /* This is the #chart-placeholder div */
+    width: 100%;
+    height: 300px;
+    background-color: #f0f0f0; /* Light gray to indicate chart area */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 1px dashed #cccccc; /* Dashed border for placeholder */
+    border-radius: 6px;
+    color: #777777;
+    font-style: italic;
+    text-align: center; /* Ensure text inside is centered */
+}
+
+.chart-icon-placeholder {
+    font-size: 3rem;
+    margin-top: 0.5rem;
+    opacity: 0.5;
+}
+
+/* General Content Section Panel Style (can be reused, e.g. for dashboard-chart-container) */
+.content-section-panel {
+    margin-top: 1.5rem;
+    padding: 1.5rem;
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+}
+.content-section-panel h4 { /* Default h4 style for these panels */
+    font-size: 1.3rem;
+    color: #1d1d1f;
+    margin-bottom: 1rem;
 }
 [end of css/style.css]
 
