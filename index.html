@@ -20,10 +20,11 @@
             <nav role="navigation" aria-label="Main Navigation">
                 <ul>
                     <li><a href="#home">Home</a></li>
-                    <li><a href="#biography">Biography</a></li>
-                    <li><a href="#performances">Performances</a></li>
-                    <li><a href="#media">Media</a></li>
-                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="#new-features-container">Features</a></li>
+                    <li><a href="#user-dashboard">Dashboard</a></li>
+                    <li><a href="#ugc-feed-section">Community</a></li>
+                    <li><a href="#advanced-form-section">Support</a></li>
+                    <li><a href="#advanced-form-section">Contact</a></li>
                 </ul>
             </nav>
             <div class="header-right-group"> <!-- Renamed for clarity, groups search and notifications -->
@@ -112,205 +113,19 @@
     <canvas id="ambient-bg-canvas" aria-hidden="true"></canvas>
 
     <main id="main-content" role="main" tabindex="-1"> <!-- tabindex -1 allows JS to focus it -->
+        <section id="home" class="fullpage-canvas hero-section-new" role="region" aria-labelledby="hero-main-title">
+            <canvas id="hero-canvas" aria-hidden="true"></canvas>
+            <div class="hero-content-overlay">
+                <h1 id="hero-main-title">Power. Redefined.</h1>
+                <p class="hero-tagline">Experience the pinnacle of performance and design.</p>
+                <a href="#new-features-container" class="btn btn-primary hero-cta-button">Explore Features</a>
+            </div>
+        </section>
         <div class="container">
-            <!--
-            Hero Section
-            <section id="home" class="hero-section" role="region" aria-labelledby="hero-title">
-                <canvas id="hero-canvas" aria-hidden="true"></canvas>
-                <svg id="hero-decorative-svg" viewBox="0 0 200 200" width="150" height="150" aria-hidden="true">
-                    <defs>
-                        <linearGradient id="svgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" style="stop-color:rgba(0,113,227,0.8); stop-opacity:1" />
-                            <stop offset="100%" style="stop-color:rgba(0,50,100,0.5); stop-opacity:1" />
-                        </linearGradient>
-                    </defs>
-                    <path id="svgPath1" d="M50 50 Q100 20 150 50 T250 50" stroke="url(#svgGrad)" stroke-width="4" fill="none" />
-                    <path id="svgPath2" d="M50 100 Q100 70 150 100 T250 100" stroke="url(#svgGrad)" stroke-width="3" fill="none" opacity="0.7"/>
-                    <path id="svgPath3" d="M50 150 Q100 120 150 150 T250 150" stroke="url(#svgGrad)" stroke-width="2" fill="none" opacity="0.4"/>
-                </svg>
-                <h2 id="hero-title">Welcome</h2>
-                <p>Experience dynamic artistry, passionate interpretations, profound musical insight, and an electrifying stage presence that captivates audiences worldwide.</p>
-                <div class="hero-image-placeholder"><span>[Hero Image Placeholder]</span></div>
-            </section>
-
-            <!-- Biography Section (Original content removed/genericized) -->
-            <section id="biography" class="content-section" role="region" aria-labelledby="bio-title">
-                <h2 id="bio-title">About Us</h2>
-                <p>Born from a passion for performance and artistry, this project showcases dedication to musical excellence. Early studies and tutelage under legendary mentors honed an innate understanding of orchestral color and rhythmic vitality.</p>
-                <p>A recipient of prestigious awards, further studies at renowned institutions absorbed wisdom from iconic figures, graduating with top honors and a reputation for fiery intellect and profound musicality. The approach is a mesmerizing blend of intellectual rigor and raw emotional power; seeking to illuminate the architectural grandeur of each score while fostering a collaborative spirit.</p>
-                <p>"Music," it is often said, "is the ultimate dialogue – between composer and performer, performer and audience, soul and the universe. Our role is to be faithful interpreters and passionate communicators of these timeless human stories."</p>
-                <div class="review-quotes">
-                    <p class="quote">"A force of nature on the podium." - <span>New York Classical Review (Fictional)</span></p>
-                    <p class="quote">"The music is lived, breathed, and made overwhelmingly present." - <span>The Guardian (Fictional attribution)</span></p>
-                </div>
-                <h3 class="timeline-title">Career Milestones</h3>
-                <div class="timeline">
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-date">1988</div>
-                        <div class="timeline-content">
-                            <h4>Karajan Conducting Competition Winner</h4>
-                            <p>Wins the coveted (fictional) Karajan Conducting Competition in Berlin, leading to immediate international attention and debut opportunities.</p>
-                        </div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-date">1995-2002</div>
-                        <div class="timeline-content">
-                            <h4>Music Director, Royal Flemish Philharmonic</h4>
-                            <p>Appointed Music Director of the (fictional) Royal Flemish Philharmonic, significantly raising its international profile with critically acclaimed recordings of Shostakovich and Mahler.</p>
-                        </div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-date">2005</div>
-                        <div class="timeline-content">
-                            <h4>Berlin Philharmonic Debut</h4>
-                            <p>Makes a triumphant debut with the Berlin Philharmonic. "A revelatory performance," acclaims The Times (fictional attribution).</p>
-                        </div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-date">2010 - Present</div>
-                        <div class="timeline-content">
-                            <h4>Chief Conductor, San Francisco Global Symphony</h4>
-                            <p>Leads the (fictional) San Francisco Global Symphony, lauded for innovative programming, electrifying performances, and extensive community engagement initiatives.</p>
-                        </div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-date">2018</div>
-                        <div class="timeline-content">
-                            <h4>Chevalier de l'Ordre des Arts et des Lettres</h4>
-                            <p>Awarded 'Chevalier de l'Ordre des Arts et des Lettres' by the French Ministry of Culture for significant contributions to music.</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Performances Section (Original content removed/genericized) -->
-            <section id="performances" class="content-section" role="region" aria-labelledby="perf-title">
-                <h2 id="perf-title">Events</h2>
-                <h3>Upcoming Events</h3>
-                <ul>
-                    <li><strong>Event Title 1:</strong> January 15, 2024, Venue Name, City with Guest Artist. <a href="#">A monumental journey through shadow and light, this event leads a transcendent performance. Presented by the Arts Foundation.</a></li>
-                    <li><strong>Event Title 2:</strong> February 22, 2024, Venue Name, City with Guest Artist. <a href="#">Experience timeless genius, including a majestic concerto. A study in heroic struggle and ultimate triumph.</a></li>
-                </ul>
-                <h3>Past Events</h3>
-                <ul>
-                    <li><strong>Stravinsky's Rite of Spring:</strong> October 5, 2023, Philharmonie de Paris, with Orchestre de Paris. A groundbreaking rendition praised for its primal energy and clarity.</li>
-                    <li><strong>Brahms Cycle Part I:</strong> June 12, 2023, Musikverein, Vienna with the Vienna Philharmonic. The commencement of a celebrated Brahms symphony cycle.</li>
-                </ul>
-            </section>
-
-            <!-- Media Section (Original content removed/genericized) -->
-            <section id="media" class="content-section" role="region" aria-labelledby="media-title">
-                <h2 id="media-title">Media Showcase</h2>
-                <p>Explore photos and videos of our projects and events.</p>
-                <div class="media-showcase">
-                    <h3>Photo Gallery</h3>
-
-                    <div class="swiper advanced-carousel" role="region" aria-roledescription="carousel" aria-label="Photo Gallery of Projects and Events">
-                        <div class="swiper-wrapper">
-                            <div class="swiper-slide">
-                                <img src="https://via.placeholder.com/800x450/2a2a2a/FFFFFF?Text=Vienna+Philharmonic+Dynamic+Gestures+Mid-Crescendo+Stage-Lit+Lens+Flare+Concert+Photography" alt="Conducting performance with dynamic, fluid gestures, caught mid-crescendo. View from slightly below, capturing the energy and the grandeur of a historic concert hall. Lighting is warm, stage-lit, with a slight lens flare. Style: High-impact concert photography.">
-                                <div class="swiper-caption">Performance at a historic venue, 2023.</div>
-                            </div>
-                            <div class="swiper-slide">
-                                <img src="https://via.placeholder.com/800x450/3a3a3a/FFFFFF?Text=Rehearsal+Close-up+Expressive+Hands+Sheet+Music+Soft+Window+Light+Photojournalistic" alt="Intense rehearsal with a focused team. Close-up on expressive face and hands, documents visible. Natural, soft window light from the side, creating depth. Atmosphere of deep concentration and collaboration. Style: Candid, photojournalistic.">
-                                <div class="swiper-caption">Rehearsal for the Summer Festival.</div>
-                            </div>
-                            <div class="swiper-slide">
-                                <img src="https://via.placeholder.com/800x450/4a4a4a/FFFFFF?Text=Carnegie+Hall+Ovation+Hand+on+Heart+Golden+Lighting+Iconic+Performance+Moment" alt="Acknowledging a roaring ovation at a grand hall, slight smile, hand to heart. View from the audience, capturing the vastness of the hall and the warmth of the reception. Golden lighting, sense of triumph. Style: Iconic performance moment.">
-                                <div class="swiper-caption">Post-event ovation at a grand hall.</div>
-                            </div>
-                            <div class="swiper-slide">
-                                <img src="https://via.placeholder.com/800x450/2d2d2d/FFFFFF?Text=Studio+Portrait+Authoritative+Presence+Minimalist+Setting+Clean+Lighting+Contemporary" alt="Studio portrait, looking directly at the camera with a calm, authoritative presence. Modern, minimalist setting. Lighting is clean and even, emphasizing a sharp, tailored suit. Style: Contemporary corporate/artistic portrait.">
-                                <div class="swiper-caption">Studio Portrait, 2024.</div>
-                            </div>
-                        </div>
-
-                        <div class="swiper-pagination"></div>
-
-                        <div class="swiper-button-prev" role="button" aria-label="Previous slide"></div>
-                        <div class="swiper-button-next" role="button" aria-label="Next slide"></div>
 
 
-                    </div>
 
-                    <h3>Videos</h3>
-                    <div class="video-gallery-wrapper">
-                        <div class="video-gallery-track">
 
-                            <div class="video-player-placeholder">
-                                <img src="https://via.placeholder.com/400x225/222/FFFFFF?Text=Thumb:Brahms+Symph1+Abstract+Visual+Swirling+Colors+Motion+Graphics" alt="Video Thumbnail: Abstract visual representing Brahms Symphony No. 1 - perhaps swirling dark blues and passionate reds, with a hint of classical instruments. Style: Motion graphics, artistic interpretation.">
-                                <div class="play-button-overlay" role="button" tabindex="0" aria-label="Play video: Excerpt: Brahms Symphony No. 1">▶</div>
-                                <div class="fake-controls">
-                                    <span class="control-icon play-pause-icon">❚❚</span>
-                                    <div class="fake-progress-bar-container"><div class="fake-progress-bar-filled"></div></div>
-                                    <span class="control-icon time-display">0:00 / 0:00</span>
-                                    <span class="control-icon volume-icon">🔊</span>
-                                    <span class="control-icon settings-icon">⚙</span>
-                                    <span class="control-icon fullscreen-icon">⛶</span>
-                                </div>
-                                <p>Excerpt: Brahms Symphony No. 1</p>
-                            </div>
-                            <div class="video-player-placeholder">
-                                <img src="https://via.placeholder.com/400x225/222/FFFFFF?Text=Thumb:Interview+Thoughtful+Cinematic+Study+Background" alt="Video Thumbnail: Person in a thoughtful interview setting, subtly lit, looking off-camera as if in deep conversation. Background is a library or study. Style: Cinematic interview still.">
-                                <div class="play-button-overlay" role="button" tabindex="0" aria-label="Play video: Interview: The Role of Leadership">▶</div>
-                                <div class="fake-controls">
-                                    <span class="control-icon play-pause-icon">❚❚</span>
-                                    <div class="fake-progress-bar-container"><div class="fake-progress-bar-filled" style="width: 60%;"></div></div>
-                                    <span class="control-icon time-display">0:00 / 0:00</span>
-                                    <span class="control-icon volume-icon">🔊</span>
-                                    <span class="control-icon settings-icon">⚙</span>
-                                    <span class="control-icon fullscreen-icon">⛶</span>
-                                </div>
-                                <p>Interview: The Role of Leadership</p>
-                            </div>
-
-                            <div class="video-player-placeholder">
-                                <img src="https://via.placeholder.com/400x225/222/FFFFFF?Text=Thumb:Major+Festival+Live+Performance+Energetic+Stage+Lights" alt="Video Thumbnail: A dynamic shot from a live performance at a major festival, capturing the energy under bright stage lights. Style: Energetic live event still.">
-                                <div class="play-button-overlay" role="button" tabindex="0" aria-label="Play video: Live from Major Festival">▶</div>
-                                <div class="fake-controls">
-                                    <span class="control-icon play-pause-icon">❚❚</span>
-                                    <div class="fake-progress-bar-container"><div class="fake-progress-bar-filled" style="width: 20%;"></div></div>
-                                    <span class="control-icon time-display">0:00 / 0:00</span>
-                                    <span class="control-icon volume-icon">🔊</span>
-                                    <span class="control-icon settings-icon">⚙</span>
-                                    <span class="control-icon fullscreen-icon">⛶</span>
-                                </div>
-                                <p>Live from Major Festival</p>
-                            </div>
-                            <div class="video-player-placeholder">
-                                <img src="https://via.placeholder.com/400x225/222/FFFFFF?Text=Thumb:Behind+Scenes+Rehearsal+Candid+Laughter+Documentary" alt="Video Thumbnail: Behind-the-scenes glimpse of a team in rehearsal, laughing together. Casual, warm, and human moment. Style: Documentary, candid.">
-                                <div class="play-button-overlay" role="button" tabindex="0" aria-label="Play video: A Day in Rehearsal">▶</div>
-                                <div class="fake-controls">
-                                    <span class="control-icon play-pause-icon">❚❚</span>
-                                    <div class="fake-progress-bar-container"><div class="fake-progress-bar-filled" style="width: 75%;"></div></div>
-                                    <span class="control-icon time-display">0:00 / 0:00</span>
-                                    <span class="control-icon volume-icon">🔊</span>
-                                    <span class="control-icon settings-icon">⚙</span>
-                                    <span class="control-icon fullscreen-icon">⛶</span>
-                                </div>
-                                <p>A Day in Rehearsal</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Legacy Dataviz Section (Original content removed/genericized) -->
-            <section id="legacy-dataviz" class="content-section" role="region" aria-labelledby="dataviz-title">
-                <div class="container">
-                    <h2 id="dataviz-title">Our Journey in Motion</h2>
-                    <p class="viz-description">An abstract representation of our journey through landmark achievements and pivotal collaborations over the decades.</p>
-                    <div class="dataviz-canvas-container">
-                        <canvas id="dataviz-canvas" role="img" aria-label="Abstract 3D network graph visualizing career milestones, connections between years, events, and collaborations, animated to show growth and evolution."></canvas>
-                    </div>
-                </div>
-            </section>
-            -->
 
             <!-- New Feature Sections Will Go Here -->
             <div id="new-features-container">
@@ -844,7 +659,7 @@
                 <div class="container">
                     <p>&copy; 2024 Mac Pro Hub. All Rights Reserved. (Fan Showcase)</p>
             <div class="footer-links">
-                <a href="#">Privacy Policy</a> | <a href="#">Terms of Use</a> | <a href="#contact">Contact</a>
+                <a href="#">Privacy Policy</a> | <a href="#">Terms of Use</a> | <a href="#advanced-form-section">Contact</a>
             </div>
             <div class="social-media">
                 <!-- Placeholders for social media icons/links -->
@@ -886,9 +701,6 @@
 
     <!-- Main interaction logic -->
     <script src="js/main.js"></script>
-
-    <!-- Feature-specific, could be candidates for deferred loading or code splitting -->
-    <script src="js/dataviz-animation.js" defer></script>
 
     <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
 

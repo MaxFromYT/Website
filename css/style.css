@@ -94,7 +94,8 @@ main[tabindex="-1"]:focus {
     z-index: 9999; /* Below dot */
     transform: translate(-50%, -50%);
     opacity: 0; /* Initially hidden, shown by JS */
-    transition: transform 0.2s ease-out, width 0.3s ease-out, height 0.3s ease-out, border-color 0.3s ease-out, opacity 0.2s ease-out;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle default shadow */
+    transition: transform 0.2s ease-out, width 0.3s ease-out, height 0.3s ease-out, border-color 0.3s ease-out, opacity 0.2s ease-out, box-shadow 0.3s ease-out; /* Add box-shadow to transition */
 }
 
 body.cursor-visible #cursor-dot,
@@ -103,8 +104,9 @@ body.cursor-visible #cursor-outline {
 }
 
 #cursor-outline.cursor-hover-link {
-    transform: translate(-50%, -50%) scale(1.5); /* Scale up outline on link hover */
-    border-color: rgba(0, 113, 227, 0.5); /* Apple blue for outline on hover */
+    transform: translate(-50%, -50%) scale(1.5);
+    border-color: rgba(0, 113, 227, 0.7); /* Slightly more opaque border on hover */
+    box-shadow: 0 0 15px rgba(0, 113, 227, 0.3); /* Blueish shadow on hover */
 }
 
 #cursor-dot.cursor-hover-link {
@@ -281,21 +283,42 @@ header nav ul li a:hover::before {
 /* General Content Section Styling (for feature sections within canvases) */
 .content-section.feature-section {
     background-color: transparent;
-    padding: 1rem;
-    margin-bottom: 1.5rem;
+    /* padding: 1rem; (Replaced by more specific padding below) */
+    margin-bottom: 1.5rem; /* This might be less relevant if sections are full height */
     border: none;
     box-shadow: none;
-    text-align: left;
-    max-width: 1024px;
-    margin-left: auto;
-    margin-right: auto;
+    text-align: left; /* Default, but h2 and description will center */
+    /* max-width: 1024px; (This will be applied to child elements instead) */
+    /* margin-left: auto; (Applied to child elements) */
+    /* margin-right: auto; (Applied to child elements) */
     width: 100%;
+    min-height: 90vh; /* Example, adjust as needed */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Vertically center content if section is tall */
+    padding-top: 80px; /* Generous top/bottom padding */
+    padding-bottom: 80px;
+    padding-left: 20px;
+    padding-right: 20px;
+    box-sizing: border-box; /* ensure padding is included in height */
+    scroll-snap-align: start; /* Crucial for scroll snapping */
 }
+
+/* If content within a feature section should not always be centered: */
+/* This targets direct children of .feature-section, except for h2 and p.section-description which have their own centering */
+.content-section.feature-section > *:not(h2):not(p.section-description) {
+     margin-left: auto; /* Center the content blocks like forms, grids etc. */
+     margin-right: auto;
+     max-width: 1024px; /* Typical content width */
+     width: 100%; /* Ensure it uses the max-width */
+}
+
+
 .fullpage-canvas .content-section.feature-section:last-child {
     margin-bottom: 0;
 }
 .fullpage-canvas > .content-section.feature-section:only-child {
-    padding-top: 2rem;
+    padding-top: 2rem; /* This might need review if it's inside a .fullpage-canvas that itself has padding */
     padding-bottom: 2rem;
 }
 
@@ -310,21 +333,41 @@ header nav ul li a:hover::before {
     text-align: left;
 }
 
-.content-section.feature-section .section-description { /* Description paragraph directly under canvas title or section H2 */
-    font-size: 1.1rem; /* Larger for primary descriptions */
-    max-width: 750px;
+/* Refined h2 for feature sections */
+.content-section.feature-section h2 {
+    font-size: 2.8rem; /* Or Apple's standard for such titles */
+    font-weight: 600; /* Semibold */
+    color: #1d1d1f;
+    margin-bottom: 1.5rem; /* Existing */
+    padding-bottom: 1rem; /* Existing, or adjust */
+    border-bottom: 1px solid #d2d2d7; /* Apple often uses a slightly lighter gray for dividers */
+    text-align: center; /* Apple often centers these titles */
+    letter-spacing: -0.01em;
+}
+
+/* Refined direct child section description */
+.content-section.feature-section > p.section-description {
+    font-size: 1.2rem; /* Slightly larger */
+    max-width: 720px; /* Apple often constrains line length for readability */
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 3rem; /* More space after it */
+    color: #333333; /* Slightly softer than pure black */
+    text-align: center; /* Typically centered */
+    line-height: 1.65;
+}
+
+/* Fallback for other section descriptions if not direct child (less emphasis) */
+.content-section.feature-section .section-description {
+    font-size: 1.1rem;
+    max-width: 750px; /* Original constraint */
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 2.5rem;
-    color: #555; /* Slightly lighter than main text */
-    text-align: center; /* Center descriptions if they are direct children of canvas or section */
+    color: #555;
+    text-align: center;
 }
-.content-section.feature-section > p.section-description {
-     text-align: left;
-     margin-left: 0;
-     margin-right: 0;
-     max-width: none; /* Allow it to follow feature-section width */
-}
+
 
 .content-section p, .content-section ul {
     margin-bottom: 1.5rem;
@@ -345,19 +388,26 @@ header nav ul li a:hover::before {
 /* Other specific H3, H4 used within components */
 .content-section h3, #performances h3, .media-showcase h3, .timeline-title { /* Existing H3s and similar titles */
     font-size: 1.6rem;
-    font-weight: 500;
-    color: #1d1d1f;
+    font-weight: 500; /* Medium */
+    color: #1d1d1f; /* Ensure this is consistent */
     margin-top: 1.5rem;
     margin-bottom: 1rem;
 }
-.timeline-content h4, .dashboard-widget h4, .admin-sidebar h3, .admin-content-area h4, .chart-wrapper h4, .content-section-panel h4 {
-    font-size: 1.3rem;
-    font-weight: 500;
-    color: #1d1d1f;
-    margin-bottom: 1rem;
-    text-align: left;
+
+/* Titles for smaller components/widgets within a feature section */
+.timeline-content h4, /* Keep existing timeline style separate if it's very specific */
+.dashboard-widget h4,
+.admin-sidebar h3, /* Already quite specific, review if needed */
+.admin-main-content h4,
+.chart-wrapper h4,
+.content-section-panel h4 { /* e.g., from gamification, map controls */
+    font-size: 1.3rem; /* Existing, or adjust if needed */
+    font-weight: 500; /* Medium */
+    color: #1d1d1f; /* Ensure this is consistent */
+    margin-bottom: 1rem; /* Existing */
+    text-align: left; /* Existing */
 }
-.live-stream-info h4 { font-size: 1.4rem; text-align: left;}
+.live-stream-info h4 { font-size: 1.4rem; text-align: left; font-weight: 500; /* Medium */}
 .cms-content-block h3 { font-size: 1.5rem; font-weight:500; margin-bottom: 0.75rem;}
 .auth-form h3 { font-size: 1.8rem; text-align: center;}
 
@@ -402,24 +452,8 @@ footer p {
 }
 
 /* Re-theme components that had specific dark theme styles */
-.review-quotes {
-    border-left: 3px solid #c0c0c0; /* Medium Gray accent line */
-}
-.review-quotes .quote {
-    color: #555555;
-}
-.review-quotes .quote span {
-    color: #1d1d1f;
-}
-
-.hero-section { /* This was an old section, likely removed or commented out, but style for completeness */
-    background-color: #f5f5f7;
-}
-.hero-section h2 { color: #1d1d1f; }
-.hero-section p { color: #333333; }
-.hero-image-placeholder { background-color: #e0e0e0; color: #555555; border: 1px solid #d0d0d0; }
-
-#performances ul li strong { color: #0071e3; } /* Accent */
+/* .review-quotes and .hero-section (old) styles removed as the sections are gone. */
+/* #performances styles removed as the section is gone. */
 
 /* Advanced Carousel (Swiper) Styles */
 .advanced-carousel {
@@ -484,43 +518,8 @@ footer p {
 .fake-progress-bar-filled { background-color: #0071e3; }
 .fake-controls .time-display { color: #333333; }
 
-/* Timeline */
-.timeline-dot { background-color: #f5f5f7; border: 3px solid #0071e3; }
-.timeline-date { color: #0071e3; }
-.timeline-content {
-    background-color: #ffffff;
-    border: 1px solid #e0e0e0;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-}
-.timeline-content h4 { color: #1d1d1f; }
-.timeline-content p { color: #333333; }
-
-/* Timeline container and central line */
-.timeline {
-    position: relative; /* Needed for absolute positioning of ::before */
-    margin: 2rem auto; /* Centering timeline if it has a max-width */
-    padding: 1rem 0;
-    list-style: none; /* Assuming timeline items are list items if .timeline is a UL/OL */
-    max-width: 800px; /* Optional: constrain width for readability */
-}
-
-.timeline::before {
-    content: '';
-    position: absolute;
-    left: 20px;
-    top: 0;
-    bottom: 0;
-    width: 3px;
-    background-color: #0071e3; /* Apple Blue */
-    z-index: 0;
-}
-
-/* Data Viz */
-#legacy-dataviz .viz-description { color: #333333; }
-.dataviz-canvas-container {
-    background-color: #f9f9f9;
-    border: 1px solid #e0e0e0;
-}
+/* Timeline styles removed as the section is gone. */
+/* Data Viz (legacy-dataviz) styles removed as the section is gone. */
 
 /* Form Elements General */
 .form-group label {
@@ -536,9 +535,9 @@ footer p {
 .form-group textarea {
     width: 100%;
     padding: 0.85rem 1rem;
-    border: 1px solid #c5c5c7;
-    border-radius: 6px;
-    background-color: #fdfdfd;
+    border: 1px solid #d2d2d7; /* Standard Apple light gray border */
+    border-radius: 8px; /* Match buttons */
+    background-color: #f5f5f7; /* Or #ffffff, Apple uses both */
     color: #1d1d1f;
     font-size: 0.95rem;
     line-height: 1.5;
@@ -551,9 +550,9 @@ footer p {
 .form-group select:focus,
 .form-group textarea:focus {
     outline: none;
-    border-color: #0071e3;
-    box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.25);
-    background-color: #ffffff;
+    border-color: #0077ed; /* Slightly brighter blue for focus border */
+    box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.25); /* Existing good focus */
+    background-color: #ffffff; /* Ensure background is white on focus */
 }
 .form-group input[type="search"] { /* Specific for search inputs if needed */
     -webkit-appearance: textfield; /* Fix for Safari search input styling */
@@ -573,52 +572,60 @@ footer p {
 /* Buttons General */
 .btn {
     display: inline-block;
-    font-weight: 400;
+    font-weight: 500; /* Medium weight */
     text-align: center;
     vertical-align: middle;
     cursor: pointer;
     user-select: none;
     background-color: transparent;
     border: 1px solid transparent;
-    padding: 0.75rem 1.5rem;
-    font-size: 0.95rem;
-    line-height: 1.5;
-    border-radius: 6px;
+    padding: 0.75rem 1.5rem; /* Existing good padding */
+    font-size: 0.95rem; /* Existing */
+    line-height: 1.5; /* Existing */
+    border-radius: 8px; /* Slightly more rounded */
     transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
     text-decoration: none;
+    text-transform: none; /* Apple buttons are typically not all caps */
 }
 .btn:hover { text-decoration: none; }
 
 .btn-primary {
     color: #ffffff;
-    background-color: #0071e3;
+    background-color: #0071e3; /* Standard Apple blue */
     border-color: #0071e3;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05); /* Subtle shadow */
 }
 .btn-primary:hover {
-    background-color: #005bb5;
-    border-color: #005bb5;
+    background-color: #0066cc; /* Darken Apple blue on hover */
+    border-color: #0066cc;
 }
 .btn-primary:focus, .btn-primary.focus {
-  box-shadow: 0 0 0 0.2rem rgba(0, 113, 227, 0.5);
+  box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.25); /* Consistent focus shadow */
 }
 .btn-primary:active, .btn-primary.active {
-    background-color: #0052a3;
-    border-color: #0052a3;
+    background-color: #005bb5; /* Slightly darker for active */
+    border-color: #005bb5;
 }
 
 .btn-secondary {
     color: #1d1d1f;
-    background-color: #e9e9ed;
-    border: 1px solid #dcdcdc;
+    background-color: #e9e9ed; /* Existing light gray */
+    border: 1px solid #dcdcdc; /* Existing light gray border */
 }
 .btn-secondary:hover {
-    background-color: #dcdcdc;
+    background-color: #d9d9de; /* Slightly darker gray */
+    border-color: #c5c5c7; /* Slightly darker border */
     color: #1d1d1f;
-    border-color: #c0c0c0;
 }
 
 /* Specific components light theme adjustments */
-.auth-form { background-color: #f9f9f9; border: 1px solid #dcdcdc; box-shadow: 0 1px 4px rgba(0,0,0,0.04); }
+.auth-form {
+    background-color: #f9f9f9;
+    border: 1px solid #dcdcdc;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    border-radius: 18px; /* Apple often uses larger radius for modal-like forms */
+    padding: 2.5rem; /* More padding */
+}
 .auth-form h3 { color: #1d1d1f; }
 .form-switch-text { color: #555555; }
 .form-switch-text a { color: #0071e3; }
@@ -643,7 +650,13 @@ footer p {
 .toolbar-button-placeholder:hover { background-color: #dddddd; }
 .wysiwyg-content-area-placeholder { border: 1px solid #d0d0d0; border-top: none; background-color: #ffffff; color: #1d1d1f; }
 
-.dashboard-widget { background-color: #ffffff; border: 1px solid #e0e0e0; box-shadow: 0 1px 3px rgba(0,0,0,0.03); }
+.dashboard-widget {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    /* box-shadow: 0 1px 3px rgba(0,0,0,0.03); (Replaced by more subtle Apple-like shadow) */
+    border-radius: 12px; /* Consistent rounding */
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06); /* Subtle shadow */
+}
 .dashboard-widget h4 { color: #1d1d1f; font-weight: 500; text-align: left;}
 .widget-profile .profile-avatar-placeholder { background-color: #e0e0e0; }
 .widget-profile p { color: #333333; }
@@ -689,8 +702,23 @@ footer p {
 .search-button { color: #555555; }
 .search-button:hover { color: #0071e3; }
 
-.predictive-search-dropdown { background-color: #ffffff; border: 1px solid #e0e0e0; border-top: none; box-shadow: 0 5px 12px rgba(0,0,0,0.1); }
+.predictive-search-dropdown {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-top: none;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12); /* Refined shadow */
+    border-radius: 8px; /* Match input fields */
+}
 .suggestion-item { color: #333333; border-bottom: 1px solid #f0f0f0; }
+.suggestion-item:first-child {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+.suggestion-item:last-child {
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-bottom: none;
+}
 .suggestion-icon { color: #777777; }
 .suggestion-item:hover { background-color: #f5f5f7; color: #0071e3; }
 .suggestion-item:hover .suggestion-icon { color: #0071e3; }
@@ -715,16 +743,49 @@ footer p {
 
 .chart-wrapper { background: #ffffff; border: 1px solid #e0e0e0; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
 .chart-wrapper h4 { color: #1d1d1f; font-weight: 500; text-align:left; }
+.chart-wrapper {
+    /* ... existing ... */
+    border-radius: 16px;
+    padding: 2rem;
+}
 .chart-placeholder-detailed { background-color: #f9f9f9; }
 .mock-axis { color: #555555; }
 .mock-y-axis { border-right: 1px solid #cccccc; }
 .mock-x-axis { border-top: 1px solid #cccccc; }
+.mock-line-chart .mock-line-1 {
+    stroke: #007aff; /* Apple Blue */
+    stroke-width: 3px;
+}
+.mock-line-chart .mock-line-2 {
+    stroke: #34c759; /* Apple Green */
+    stroke-width: 3px;
+}
+.mock-tooltip-point {
+    fill: #007aff; /* Match line color */
+}
 .mock-tooltip { background: rgba(29,29,31,0.85); color: white; box-shadow: 0 2px 6px rgba(0,0,0,0.2); }
 .mock-legend { border-top: 1px solid #f0f0f0; }
 .legend-item { color: #333333; }
 
-.recommendation-card { background-color: #ffffff; border: 1px solid #e0e0e0; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border-radius: 12px; padding: 1.5rem;}
-.recommendation-card:hover { box-shadow: 0 4px 10px rgba(0,0,0,0.08); }
+.recommendation-card {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    border-radius: 12px; /* Current is good */
+    padding: 1.5rem;
+    transition: transform 0.25s ease-out, box-shadow 0.25s ease-out;
+}
+.recommendation-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08); /* More pronounced shadow on hover */
+}
+.rec-card-img {
+    width: 100%;
+    aspect-ratio: 16/9; /* Or another desired ratio */
+    object-fit: cover;
+    border-radius: 8px; /* Rounded image corners */
+    margin-bottom: 1rem;
+}
 .rec-card-title { color: #1d1d1f; font-weight: 500; /* Medium for card titles */ }
 .rec-card-category { color: #777777; }
 
@@ -737,22 +798,45 @@ footer p {
 .dashboard-chart-container h4 { color: #1d1d1f; font-weight: 500; text-align: left;}
 .chart-placeholder-area { background-color: #f0f0f0; border: 1px dashed #cccccc; color: #777777; }
 
-.content-section-panel { background-color: #ffffff; border: 1px solid #e0e0e0; box-shadow: 0 2px 4px rgba(0,0,0,0.03); border-radius: 12px; padding: 2rem;}
+.content-section-panel { /* This class is also used in map section, ensure consistency */
+    background-color: #fdfdfd; /* Slightly off-white for a softer panel */
+    border: 1px solid #e0e0e0;
+    border-radius: 18px; /* Consistent larger rounding for panels */
+    padding: 2.5rem;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.05); /* Refined shadow */
+}
 .content-section-panel h4 { color: #1d1d1f; font-weight: 500; text-align: left; font-size: 1.5rem; }
 
 
 /* Chat panels */
-#chat-bubble-toggle { background-color: #0071e3; color: white; box-shadow: 0 4px 12px rgba(0,0,0,0.25); }
-#chat-bubble-toggle:hover { background-color: #005bb5; }
+#chat-bubble-toggle {
+    background-color: #0071e3;
+    color: white;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
+#chat-bubble-toggle:hover {
+    background-color: #005bb5; /* Already there */
+    transform: scale(1.1); /* Add slight scale on hover */
+}
 #chat-selection-popup { background-color: #ffffff; box-shadow: 0 3px 10px rgba(0,0,0,0.2); }
 .btn-chat-select { background-color: #f0f0f0; color: #333; border: 1px solid #d0d0d0; }
 .btn-chat-select:hover { background-color: #e0e0e0; color: #000; }
-.chat-panel { background-color: #ffffff; border: 1px solid #d0d0d0; box-shadow: 0 8px 25px rgba(0,0,0,0.15); }
+.chat-panel {
+    background-color: #ffffff;
+    border: 1px solid #d0d0d0;
+    border-radius: 16px; /* Apple-like rounded panel */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2); /* More pronounced shadow */
+}
 .chat-panel-header { background-color: #f5f5f7; border-bottom: 1px solid #e0e0e0; }
-.chat-panel-header h3 { color: #1d1d1f; }
+.chat-panel-header h3 { color: #1d1d1f; font-weight: 500; /* Medium weight consistent with other sub-titles */ }
 .btn-close-chat { color: #777777; }
 .btn-close-chat:hover { color: #1d1d1f; background-color: rgba(0,0,0,0.05); }
 .chat-messages-area { background-color: #f9f9f9; }
+.chat-message {
+    border-radius: 18px; /* Increased border-radius for message bubbles */
+    padding: 0.6rem 1rem; /* Adjust padding if needed */
+}
 .chat-message.sent { background-color: #007aff; color: white; }
 .chat-message.received { background-color: #e5e5ea; color: #1d1d1f; }
 .chat-message .timestamp { color: #8e8e93; }
@@ -763,19 +847,57 @@ footer p {
 .chat-input-area .btn-send-message:hover { background-color: #005bb5; }
 
 /* Media Hub */
-.main-video-player-placeholder { background-color: #1d1d1f; /* Keep video player dark */ box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+.main-video-player-placeholder {
+    background-color: #1d1d1f; /* Keep video player dark */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    border-radius: 12px; /* Rounded player */
+    overflow: hidden; /* Ensure child elements like img conform to rounding */
+}
+.video-player-img { /* Assuming this is the placeholder image */
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
 .video-playlist-thumbs { background-color: #f0f0f0; border: 1px solid #e0e0e0; }
-.thumb-item { background-color: #ffffff; box-shadow: 0 1px 3px rgba(0,0,0,0.07); }
+.thumb-item {
+    background-color: #ffffff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.07);
+    border-radius: 8px;
+    padding: 0.5rem;
+}
+.thumb-img {
+    border-radius: 6px; /* Slightly smaller radius for image within thumb */
+}
 .thumb-item:hover { border-color: #c0c0c0; background-color: #f9f9f9; }
 .thumb-item.active-thumb { border-color: #0071e3; background-color: #e9f5ff; }
 .thumb-title { color: #1d1d1f; }
 .live-stream-info { background-color: #ffffff; border: 1px solid #e0e0e0; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
 .live-stream-info h4 { color: #1d1d1f; }
 .live-stream-description { color: #333333; }
+.live-indicator-overlay .live-badge { /* Basic styling for live badge */
+    background-color: #ff3b30; /* Apple Red */
+    color: white;
+    padding: 0.25rem 0.6rem;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
 
 /* UGC Feed */
-.ugc-post { background-color: #ffffff; border: 1px solid #e0e0e0; box-shadow: 0 2px 4px rgba(0,0,0,0.04); }
+.ugc-post {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 16px; /* More prominent rounding for posts */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.07);
+}
 .ugc-post-header { border-bottom: 1px solid #f0f0f0; }
+.user-avatar-ugc { /* Ensure it's circular and nicely sized if not already */
+    border-radius: 50%;
+    /* width: 40px; height: 40px; are from HTML, ensure they are good */
+}
 .username-ugc { color: #1d1d1f; }
 .post-timestamp-ugc { color: #777777; }
 .ugc-post-content p { color: #333333; }
@@ -797,12 +919,30 @@ footer p {
 .score { color: #34A853; }
 
 /* File Upload */
-.drag-drop-zone { background-color: #f9f9f9; border: 3px dashed #0071e3; }
-.drag-drop-zone.dragover { background-color: #e9f5ff; border-color: #005bb5; }
+.drag-drop-zone {
+    background-color: #f9f9f9;
+    border-radius: 12px;
+    border: 2px dashed #d2d2d7; /* Lighter default dash */
+    transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+}
+.drag-drop-zone.dragover {
+    background-color: #e9f5ff; /* Existing */
+    border-color: #0071e3; /* Brighter border on dragover */
+}
 .drag-drop-prompt .upload-icon { color: #0071e3; }
 .drag-drop-prompt p { color: #555555; }
 .drag-drop-prompt .small-text { color: #777777; }
-.file-preview-item { border: 1px solid #e0e0e0; background-color: #ffffff; box-shadow: 0 1px 2px rgba(0,0,0,0.04); }
+.file-preview-item {
+    border: 1px solid #e0e0e0;
+    background-color: #ffffff;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    transition: background-color 0.15s ease-in-out;
+}
+.file-preview-item:hover {
+    background-color: #f0f0f0;
+}
 .file-icon-preview { color: #0071e3; }
 .file-name { color: #333333; }
 .file-size { color: #777777; }
@@ -838,5 +978,88 @@ footer p {
 body {
     scrollbar-width: thin;
     scrollbar-color: #a0a0a5 rgba(0,0,0,0.05);
+}
+
+/* --- New Hero Section Styles --- */
+.hero-section-new {
+    display: flex; /* Use flex to center content on canvas */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 90vh; /* Slightly less than full viewport to encourage scroll hint */
+    position: relative; /* For positioning overlay content */
+    text-align: center;
+    overflow: hidden; /* Ensure canvas doesn't cause unexpected scroll */
+    background-color: #000; /* Dark background for the hero canvas to pop */
+    color: #fff; /* Default text color for hero content */
+}
+
+#hero-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1; /* Canvas behind content */
+}
+
+.hero-content-overlay {
+    position: relative; /* Ensure it's above the canvas */
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background: rgba(0,0,0,0.1); /* Very subtle dark overlay to help text pop if canvas is bright */
+    border-radius: 12px; /* Optional: slight rounding for the content backdrop */
+}
+
+#hero-main-title {
+    font-size: 4.5rem; /* Large, impactful title */
+    font-weight: 600; /* Apple uses semibold/bold for big titles */
+    color: #ffffff;
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em; /* Common Apple typography detail */
+    text-shadow: 0 2px 10px rgba(0,0,0,0.3); /* Subtle shadow for readability */
+}
+
+.hero-tagline {
+    font-size: 1.75rem;
+    font-weight: 400; /* Regular weight for taglines */
+    color: rgba(255, 255, 255, 0.85); /* Slightly muted white */
+    margin-bottom: 2.5rem;
+    max-width: 600px;
+    line-height: 1.5;
+    text-shadow: 0 1px 5px rgba(0,0,0,0.2);
+}
+
+.hero-cta-button {
+    padding: 1rem 2.5rem;
+    font-size: 1.1rem;
+    font-weight: 500; /* Medium weight for CTA */
+    border-radius: 8px; /* Apple-like rounded corners */
+    text-transform: none; /* Apple buttons are usually sentence case */
+    box-shadow: 0 4px 15px rgba(0, 113, 227, 0.3); /* Subtle glow for primary button */
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+}
+
+.hero-cta-button:hover {
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 6px 20px rgba(0, 113, 227, 0.4);
+}
+
+/* Adjustments for smaller screens */
+@media (max-width: 768px) {
+    #hero-main-title {
+        font-size: 3rem;
+    }
+    .hero-tagline {
+        font-size: 1.25rem;
+        margin-bottom: 2rem;
+    }
+    .hero-section-new {
+        min-height: 80vh;
+    }
 }
 >>>>>>> REPLACE
