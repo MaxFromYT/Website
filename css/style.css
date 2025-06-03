@@ -7,26 +7,44 @@
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-    line-height: 1.6;
-    background-color: #f5f5f7; /* NEW: Apple off-white */
-    color: #1d1d1f; /* NEW: Dark text color */
+    line-height: 1.65; /* Increased for better readability */
+    background-color: #f5f5f7; /* Light theme base */
+    color: #1d1d1f; /* Dark text for light theme */
+    scroll-behavior: smooth;
+    font-weight: 400; /* Regular weight for body text */
+    -webkit-font-smoothing: antialiased; /* Smoother fonts on Webkit */
+    -moz-osx-font-smoothing: grayscale; /* Smoother fonts on Firefox */
 }
+
+/* General link styling */
+a {
+    color: #0066cc; /* Apple's standard link blue */
+    text-decoration: none;
+    transition: color 0.2s ease-in-out, opacity 0.2s ease-in-out;
+}
+a:hover, a:focus {
+    text-decoration: underline;
+    color: #00509e; /* Darker blue on hover/focus */
+    outline: none; /* Remove default focus outline if custom is applied or not needed */
+}
+
 
 /* Accessibility - Skip Link */
 .skip-link {
     position: absolute;
-    top: -40px; /* Hide off-screen */
+    top: -40px;
     left: 0;
-    background: #0071e3; /* Apple Blue - still okay */
-    color: #ffffff; /* White text on blue bg */
+    background: #0071e3;
+    color: white;
     padding: 10px 15px;
-    z-index: 10000; /* Highest z-index */
+    z-index: 10000;
     transition: top 0.3s ease;
     text-decoration: none;
     border-bottom-right-radius: 5px;
 }
 .skip-link:focus {
-    top: 0; /* Bring into view on focus */
+    top: 0;
+    text-decoration: underline;
 }
 
 /* Ensure main content can receive focus for skip link */
@@ -51,28 +69,25 @@ main[tabindex="-1"]:focus {
     position: fixed;
     width: 20px;
     height: 20px;
-    background-color: rgba(0, 113, 227, 0.6); /* Apple Blue, slightly more opaque */
+    background-color: rgba(0, 113, 227, 0.5); /* Apple Blue, semi-transparent */
     border-radius: 50%;
     pointer-events: none; /* So it doesn't interfere with mouse events on other elements */
     z-index: 9999; /* High z-index */
     left: 0;
     top: 0;
     transform: translate(-50%, -50%) scale(0); /* Initially hidden and centered */
-    transition: transform 0.2s ease-out, background-color 0.2s ease, opacity 0.2s ease-out; /* Smooth transitions */
-    mix-blend-mode: normal; /* NEW: Changed from difference */
-    will-change: transform, background-color, opacity; /* Continuously updated */
-    opacity: 0.7; /* NEW: Base opacity */
+    transition: transform 0.2s ease-out, background-color 0.2s ease; /* Smooth transitions */
+    mix-blend-mode: difference; /* Interesting visual effect with colors behind it */
+    will-change: transform, background-color; /* Continuously updated */
 }
 
 body:hover .cursor-follower { /* Show when mouse is over body */
     transform: translate(-50%, -50%) scale(1);
-    opacity: 0.7; /* Ensure it's visible */
 }
 
 .cursor-follower.hover-link {
     transform: translate(-50%, -50%) scale(2.5);
-    background-color: rgba(0, 113, 227, 0.25); /* NEW: Light, semi-transparent Apple Blue */
-    opacity: 1; /* Full opacity on hover */
+    background-color: rgba(255, 255, 255, 0.7);
 }
 
 
@@ -92,59 +107,49 @@ body:hover .cursor-follower { /* Show when mouse is over body */
 
 /* Header Styles */
 header {
-    background-color: #ffffff; /* NEW: White header */
-    padding: 1rem 0;
-    border-bottom: 1px solid #e0e0e0; /* NEW: Light gray border */
-    box-shadow: 0 1px 3px rgba(0,0,0,0.04); /* Subtle shadow for depth */
+    background-color: #ffffff; /* White header */
+    padding: 0.75rem 0; /* Slightly reduced padding */
+    border-bottom: 1px solid #e0e0e0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    position: sticky; /* Make header sticky */
+    top: 0;
+    z-index: 1000; /* Ensure it's above other content */
 }
 
 header .container {
     width: 90%;
-    max-width: 1200px; /* Max width for content */
+    max-width: 1280px; /* Slightly wider max-width for header content */
     margin: 0 auto;
     display: flex;
-    justify-content: space-between; /* Remains useful for logo vs (nav + search) */
+    justify-content: space-between;
     align-items: center;
-    gap: 1rem; /* Add some gap between items */
+    gap: 1rem;
 }
 
 header .logo {
-    font-size: 1.8rem;
-    font-weight: 600;
-    color: #1d1d1f; /* NEW: Dark logo text */
+    font-size: 1.5rem; /* Slightly smaller logo text */
+    font-weight: 600; /* Semibold */
+    color: #1d1d1f;
 }
 
 header nav ul {
     list-style: none;
     display: flex;
-    align-items: center; /* Align nav items with search form if they are different heights */
+    align-items: center;
 }
 
 header nav ul li {
-    margin-left: 20px;
-}
-
-/* New container for nav and search to group them */
-.header-nav-search-group {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem; /* Space between nav and search */
-}
-
-/* Updated to header-right-group to include notifications */
-.header-right-group {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem; /* Space between search and notifications bell */
+    margin-left: 1.25rem; /* Adjusted spacing */
 }
 
 header nav ul li a {
     text-decoration: none;
-    color: #1d1d1f; /* NEW: Dark nav link text */
-    font-size: 1rem;
+    color: #333333; /* Darker gray for nav links for better contrast on white */
+    font-size: 0.95rem; /* Slightly smaller nav links */
+    font-weight: 400; /* Regular weight for nav links */
     padding: 0.5rem 0.75rem;
     border-radius: 5px;
-    position: relative; /* Needed for pseudo-element positioning */
+    position: relative;
     overflow: hidden; /* To contain the shine */
     transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease; /* Add transform */
     display: inline-block; /* Ensures perspective works correctly if not already block/inline-block */
@@ -170,8 +175,8 @@ header nav ul li a::after { /* Shine element */
 }
 
 header nav ul li a:hover {
-    background-color: #0071e3; /* Apple Blue for hover/active - RETAINED */
-    color: #ffffff; /* NEW: Ensure white text for contrast on blue bg */
+    background-color: #0071e3; /* Apple Blue for hover/active */
+    color: #fff;
     transform: translateY(-2px) scale(1.05); /* Subtle lift and scale */
 }
 
@@ -181,8 +186,8 @@ header nav ul li a:hover::after {
 
 /* Active state for navigation (Scroll-spy) */
 header nav ul li a.active {
-    background-color: #0071e3; /* Apple Blue for hover/active - RETAINED */
-    color: #ffffff; /* NEW: Ensure white text for contrast on blue bg */
+    background-color: #0071e3;
+    color: #fff;
 }
 
 header nav ul li a.active::before,
@@ -194,7 +199,7 @@ header nav ul li a:hover::before { /* Also show on hover for consistency */
     transform: translateX(-50%);
     width: 0%; /* Start with 0 width */
     height: 2px;
-    background-color: #0071e3; /* Apple Blue - RETAINED */
+    background-color: #0071e3; /* Apple Blue */
     transition: width 0.3s ease-out;
 }
 header nav ul li a.active::before {
@@ -215,68 +220,83 @@ main .container {
 
 /* General Content Section Styling */
 .content-section {
-    background-color: #ffffff; /* NEW: White for content panels */
-    padding: 2rem;
-    margin-bottom: 2rem;
-    border-radius: 8px; /* Subtle rounded corners */
-    border: 1px solid #e0e0e0; /* NEW: Light gray border */
-    box-shadow: 0 2px 8px rgba(0,0,0,0.03); /* Optional: very subtle shadow for sections */
-    will-change: transform, opacity;
+    background-color: transparent; /* Canvas provides background */
+    padding: 1.5rem; /* Adjusted padding */
+    margin-bottom: 2rem; /* Spacing within canvas */
+    border-radius: 12px; /* More rounded for panels inside canvases */
+    border: none; /* Remove individual borders */
+    box-shadow: none; /* Remove individual shadows */
+    text-align: left;
+    max-width: 1024px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+}
+.fullpage-canvas .content-section.feature-section:last-child {
+    margin-bottom: 0;
+}
+/* For feature sections that are the *only* main content in a canvas, allow more vertical space */
+.fullpage-canvas > .content-section.feature-section:only-child {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
 }
 
-.content-section h2 {
-    font-size: 2.5rem;
-    font-weight: 600;
-    color: #1d1d1f; /* NEW: Dark heading text */
-    margin-bottom: 1.5rem;
-    border-bottom: 2px solid #0071e3; /* Apple Blue accent for headings - RETAINED */
-    padding-bottom: 0.5rem;
-    display: inline-block; /* To make border only as wide as text */
+
+.content-section h2 { /* Titles for feature sections within canvases */
+    font-size: 2rem;
+    font-weight: 500; /* Medium weight */
+    color: #1d1d1f;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid #d0d0d0; /* Subtler border */
+    padding-bottom: 0.75rem;
+    display: block;
+    text-align: left;
 }
 
 .content-section p, .content-section ul {
-    margin-bottom: 1rem;
-    font-size: 1.1rem;
-    line-height: 1.8;
-    color: #333333; /* NEW: Darker gray for paragraph text */
+    margin-bottom: 1.5rem;
+    font-size: 1rem; /* Standardized body text */
+    line-height: 1.7;
+    color: #3a3a3a; /* Slightly lighter dark gray for body text */
 }
 
 .content-section ul {
     list-style-position: inside;
-    padding-left: 0; /* Resetting default padding if any */
-    color: #333333; /* NEW: Ensure list text is also dark */
+    padding-left: 0;
+    color: #3a3a3a;
 }
 
 .content-section ul li {
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.6rem; /* Slightly more space for list items */
 }
 
-.content-section a {
-    color: #0071e3; /* Apple Blue for links - RETAINED */
-    text-decoration: none;
+.content-section a { /* Links within content sections already inherit color from general 'a' */
+    /* text-decoration: none; Already handled by general 'a' */
 }
 
-.content-section a:hover {
-    text-decoration: underline;
+.content-section a:hover,
+.content-section a:focus {
+    /* text-decoration: underline; Already handled by general 'a:hover' */
+    /* color: #005bb5; Already handled by general 'a:hover' */
 }
 
 /* Review Quotes in Biography */
 .review-quotes {
     margin-top: 1.5rem;
-    border-left: 3px solid #c0c0c0; /* NEW: Medium Gray accent line */
+    border-left: 3px solid #0071e3; /* Apple Blue accent line */
     padding-left: 1rem;
 }
 .review-quotes .quote {
     font-style: italic;
     font-size: 1.05rem;
-    color: #555555; /* NEW: Darker gray for quote text */
+    color: #c7c7c7; /* Slightly muted from main text */
     margin-bottom: 0.75rem;
 }
 .review-quotes .quote span {
     display: block;
     font-style: normal;
     font-size: 0.9rem;
-    color: #1d1d1f; /* NEW: Dark text for source/author */
+    color: #a0a0a5; /* Muted source */
     margin-top: 0.25rem;
 }
 
@@ -284,7 +304,7 @@ main .container {
 .hero-section {
     text-align: center;
     padding: 3rem 2rem;
-    background-color: #f5f5f7; /* NEW: Light background, matches body */
+    background-color: #1d1d1f; /* Match body background for a more seamless hero */
     border: none; /* No border for hero */
     border-radius: 0; /* No radius for hero if it's full-width feel */
     position: relative; /* Needed for absolute positioning of canvas */
@@ -322,13 +342,13 @@ main .container {
     margin-bottom: 1rem;
     position: relative; /* Ensure text is above the canvas */
     z-index: 1; /* Adjusted from original to ensure it's above SVG if SVG had higher z-index */
-    color: #1d1d1f; /* NEW: Dark text color */
+    color: #f5f5f7; /* Ensure text color is set, might need adjustment for contrast */
     will-change: transform, opacity; /* Animated by GSAP */
 }
 
 .hero-section p {
     font-size: 1.5rem;
-    color: #333333; /* NEW: Dark gray for hero tagline */
+    color: #c7c7c7; /* Slightly muted text for hero tagline */
     margin-bottom: 2rem;
     position: relative; /* Ensure text is above the canvas */
     z-index: 1; /* Adjusted from original */
@@ -338,17 +358,16 @@ main .container {
 .hero-image-placeholder {
     width: 100%;
     height: 400px;
-    background-color: #e0e0e0; /* NEW: Very light gray placeholder */
+    background-color: #38383a;
     margin-top: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 8px;
-    color: #555555; /* NEW: Medium gray text for placeholder */
+    color: #666;
     font-size: 1.2rem;
     position: relative;
     z-index: 1; /* Ensure this is also above SVG if it were to be kept */
-    border: 1px solid #d0d0d0; /* Optional: subtle border for placeholder */
 }
 
 /* Media Section Placeholders - This class is now replaced by Swiper structure. */
@@ -359,7 +378,7 @@ main .container {
 #performances h3 {
     font-size: 1.5rem;
     font-weight: 500;
-    color: #1d1d1f; /* NEW: Dark text */
+    color: #f5f5f7;
     margin-top: 1.5rem;
     margin-bottom: 0.75rem;
 }
@@ -367,19 +386,18 @@ main .container {
 #performances ul {
     list-style-type: none;
     padding-left: 0;
-    /* Paragraph text color already changed in .content-section p, ul */
 }
 
 #performances ul li strong {
-    color: #0071e3; /* RETAINED: Apple Blue accent */
+    color: #0071e3;
 }
 
 /* Footer Styles */
 footer {
-    background-color: #ffffff; /* NEW: White footer */
-    color: #555555; /* NEW: Darker gray for footer text */
-    padding: 2rem 0;
-    border-top: 1px solid #e0e0e0; /* NEW: Light gray border */
+    background-color: #1d1d1f;
+    color: #555555; /* Darker gray for footer text */
+    padding: 2.5rem 0; /* Increased padding */
+    border-top: 1px solid #e0e0e0;
     text-align: center;
 }
 
@@ -390,49 +408,53 @@ footer .container {
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 0.75rem; /* Added gap for footer items */
 }
 
 footer p {
-    margin-bottom: 0.5rem;
-    font-size: 0.9rem;
+    margin-bottom: 0; /* Remove default if using gap */
+    font-size: 0.85rem; /* Slightly smaller footer text */
 }
 
 .footer-links {
-    margin-bottom: 0.5rem;
+    margin-bottom: 0;
 }
 
 .footer-links a {
-    color: #555555; /* NEW: Darker gray for links */
+    color: #555555;
     text-decoration: none;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     margin: 0 0.5rem;
     transition: color 0.3s ease;
 }
 
-.footer-links a:hover {
-    color: #0071e3; /* RETAINED: Apple Blue on hover */
+.footer-links a:hover,
+.footer-links a:focus {
+    color: #0071e3;
+    text-decoration: underline;
 }
 
 .social-media a {
-    color: #555555; /* NEW: Darker gray for social icons */
+    color: #555555;
     text-decoration: none;
-    font-size: 1.2rem;
-    margin: 0 0.75rem;
+    font-size: 1.1rem; /* Slightly smaller social icons */
+    margin: 0 0.6rem; /* Adjusted margin */
     transition: color 0.3s ease;
 }
 
-.social-media a:hover {
-    color: #0071e3; /* RETAINED: Apple Blue on hover */
+.social-media a:hover,
+.social-media a:focus {
+    color: #0071e3;
 }
 
 /* Media Showcase General */
 .media-showcase h3 {
     font-size: 1.8rem;
     font-weight: 500;
-    color: #1d1d1f; /* NEW: Dark text */
+    color: #f5f5f7;
     margin-top: 2rem;
     margin-bottom: 1rem;
-    border-bottom: 1px solid #e0e0e0; /* NEW: Light gray border */
+    border-bottom: 1px solid #424245;
     padding-bottom: 0.5rem;
 }
 
@@ -452,20 +474,18 @@ footer p {
     margin: 20px auto;
     border-radius: 8px;
     overflow: hidden;
-    border: 1px solid #e0e0e0; /* NEW: Light border */
-    background-color: #f9f9f9; /* NEW: Light background for carousel area */
+    border: 1px solid #424245;
+    background-color: #222;
 }
 
 .advanced-carousel .swiper-slide {
     text-align: center;
-    font-size: 18px; /* This might need adjustment if text is added directly to slide */
-    background: #ffffff; /* NEW: White background for slides */
+    font-size: 18px;
+    background: #1c1c1e;
     display: flex;
     justify-content: center;
     align-items: center;
     position: relative;
-    color: #1d1d1f; /* NEW: Dark text for any direct slide content */
-    border: 1px solid #ededed; /* NEW: Very light border for slides themselves */
 }
 
 .advanced-carousel .swiper-slide img {
@@ -481,8 +501,8 @@ footer p {
     bottom: 0;
     left: 0;
     width: 100%;
-    background-color: rgba(255, 255, 255, 0.85); /* NEW: Light semi-transparent background */
-    color: #1d1d1f; /* NEW: Dark text for caption */
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #f5f5f7;
     padding: 15px;
     font-size: 0.9rem;
     text-align: center;
@@ -491,18 +511,17 @@ footer p {
 
 .advanced-carousel .swiper-button-prev,
 .advanced-carousel .swiper-button-next {
-    color: #0071e3; /* RETAINED: Blue icon color */
-    background-color: rgba(245, 245, 247, 0.7); /* NEW: Light semi-transparent background */
+    color: #0071e3;
+    background-color: rgba(28, 28, 31, 0.5);
     border-radius: 50%;
     width: 44px;
     height: 44px;
     transition: background-color 0.3s ease, color 0.3s ease;
-    border: 1px solid rgba(0,0,0,0.05); /* NEW: Subtle border for buttons */
 }
 .advanced-carousel .swiper-button-prev:hover,
 .advanced-carousel .swiper-button-next:hover {
-    background-color: rgba(235, 235, 237, 0.9); /* NEW: Slightly more opaque on hover */
-    color: #0056b3; /* Darker blue on hover */
+    background-color: rgba(0, 113, 227, 0.8);
+    color: #fff;
 }
 .advanced-carousel .swiper-button-prev::after,
 .advanced-carousel .swiper-button-next::after {
@@ -511,13 +530,13 @@ footer p {
 }
 
 .advanced-carousel .swiper-pagination-bullet {
-    background-color: #cccccc; /* NEW: Light gray inactive bullet */
+    background-color: #888;
     opacity: 0.7;
     transition: background-color 0.3s ease, opacity 0.3s ease;
 }
 
 .advanced-carousel .swiper-pagination-bullet-active {
-    background-color: #0071e3; /* RETAINED: Active bullet Apple Blue */
+    background-color: #0071e3;
     opacity: 1;
 }
 
@@ -548,10 +567,10 @@ footer p {
 
 
 .video-player-placeholder {
-    background-color: #e9e9ed; /* NEW: Light gray background */
+    background-color: #1a1a1c;
     border-radius: 8px;
     text-align: center;
-    border: 1px solid #dcdcdc; /* NEW: Light gray border */
+    border: 1px solid #333;
     position: relative;
     overflow: hidden;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -559,7 +578,7 @@ footer p {
 
 .video-player-placeholder:hover {
     transform: translateY(-5px) scale(1.02);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); /* NEW: Softer shadow for light theme */
+    box-shadow: 0 10px 30px rgba(0, 113, 227, 0.3);
 }
 
 .video-player-placeholder img {
@@ -577,8 +596,8 @@ footer p {
     left: 50%;
     transform: translate(-50%, -50%);
     font-size: 2.5rem;
-    color: #ffffff; /* NEW: White icon on semi-transparent bg */
-    background-color: rgba(80, 80, 80, 0.4); /* NEW: Darker semi-transparent bg for better visibility of white icon */
+    color: rgba(255, 255, 255, 0.9);
+    background-color: rgba(0,0,0,0.4);
     border-radius: 50%;
     width: 70px;
     height: 70px;
@@ -591,21 +610,20 @@ footer p {
 }
 
 .video-player-placeholder:hover .play-button-overlay {
-    background-color: rgba(0,113,227,0.9); /* RETAINED: Blue on hover */
-    color: #ffffff; /* RETAINED: White icon */
+    background-color: rgba(0,113,227,0.9);
+    color: #fff;
     transform: translate(-50%, -50%) scale(1.1);
 }
 
 .video-player-placeholder p {
     font-size: 1rem;
-    color: #1d1d1f; /* NEW: Dark text */
+    color: #f5f5f7;
     margin: 0;
     padding: 0.75rem 1rem;
-    background-color: #f8f8f8; /* NEW: Very light gray for title background */
+    background-color: #232325;
     border-bottom-left-radius: 7px;
     border-bottom-right-radius: 7px;
     text-align: left;
-    border-top: 1px solid #dedede; /* NEW: subtle top border for title bar */
 }
 
 /* Fake Controls Styling */
@@ -615,7 +633,7 @@ footer p {
     left: 0;
     width: 100%;
     height: 35px;
-    background-color: rgba(248, 248, 248, 0.85); /* NEW: Light semi-transparent */
+    background-color: rgba(20, 20, 22, 0.85);
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
     display: flex;
@@ -627,7 +645,6 @@ footer p {
     transform: translateY(100%);
     transition: opacity 0.3s ease, transform 0.3s ease;
     will-change: opacity, transform;
-    border-top: 1px solid rgba(0,0,0,0.05); /* NEW: Subtle border for controls bar */
 }
 
 .video-player-placeholder:hover .fake-controls {
@@ -636,13 +653,13 @@ footer p {
 }
 
 .fake-controls .control-icon {
-    color: #333333; /* NEW: Dark gray icons */
+    color: #b0b0b0;
     font-size: 0.9rem;
     margin: 0 6px;
     cursor: default;
 }
 .fake-controls .control-icon:hover {
-    color: #0071e3; /* NEW: Blue on hover for icons */
+    color: #fff;
 }
 
 .fake-controls .play-pause-icon {
@@ -652,7 +669,7 @@ footer p {
 .fake-progress-bar-container {
     flex-grow: 1;
     height: 6px;
-    background-color: rgba(0, 0, 0, 0.1); /* NEW: Light gray for progress bar background */
+    background-color: rgba(255, 255, 255, 0.2);
     border-radius: 3px;
     margin: 0 10px;
     overflow: hidden;
@@ -661,7 +678,7 @@ footer p {
 .fake-progress-bar-filled {
     width: 30%;
     height: 100%;
-    background-color: #0071e3; /* RETAINED: Apple Blue for progress fill */
+    background-color: #0071e3;
     border-radius: 3px;
 }
 
@@ -669,7 +686,6 @@ footer p {
     font-size: 0.8rem;
     min-width: 70px;
     text-align: center;
-    color: #333333; /* NEW: Dark gray text for time */
 }
 
 
@@ -677,7 +693,7 @@ footer p {
 .timeline-title {
     font-size: 1.8rem;
     font-weight: 500;
-    color: #1d1d1f; /* NEW: Dark text */
+    color: #f5f5f7;
     margin-top: 2.5rem;
     margin-bottom: 1.5rem;
     text-align: center;
@@ -748,7 +764,7 @@ footer p {
 .timeline-date {
     font-size: 1.1rem;
     font-weight: 600;
-    color: #0071e3; /* RETAINED: Apple Blue for date */
+    color: #0071e3;
     margin-bottom: 0.5rem;
     display: block;
 }
@@ -762,24 +778,23 @@ footer p {
 
 
 .timeline-content {
-    background-color: #ffffff; /* NEW: White background */
+    background-color: #3a3a3c;
     padding: 1rem;
     border-radius: 6px;
-    border: 1px solid #e0e0e0; /* NEW: Light gray border */
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05); /* NEW: Subtle shadow */
+    border: 1px solid #4a4a4c;
 }
 
 .timeline-content h4 {
     font-size: 1.2rem;
     font-weight: 500;
-    color: #1d1d1f; /* NEW: Dark text for timeline heading */
+    color: #f5f5f7;
     margin-bottom: 0.5rem;
 }
 
 .timeline-content p {
     font-size: 0.95rem;
     line-height: 1.6;
-    color: #333333; /* NEW: Dark gray for timeline paragraph */
+    color: #c7c7c7;
     margin-bottom: 0;
 }
 
@@ -791,7 +806,7 @@ footer p {
 
 #legacy-dataviz .viz-description {
     font-size: 1.1rem;
-    color: #333333; /* NEW: Dark gray for description */
+    color: #c7c7c7;
     max-width: 700px;
     margin: 0 auto 1.5rem auto; /* Center description */
 }
@@ -802,9 +817,9 @@ footer p {
     height: 500px; /* Adjust as needed */
     margin: 1rem auto;
     position: relative; /* If needed for overlays or tooltips later */
-    background-color: #f9f9f9; /* NEW: Off-white background for canvas area */
+    background-color: rgba(0,0,0,0.1); /* Faint background for canvas area */
     border-radius: 8px;
-    border: 1px solid #e0e0e0; /* NEW: Light gray border */
+    border: 1px solid #424245;
 }
 
 #dataviz-canvas {
@@ -910,3241 +925,6 @@ footer p {
     opacity: 0;
 }
 
-/* User Authentication Forms */
-.auth-forms-container {
-    display: flex;
-    flex-wrap: wrap; /* Allow wrapping on smaller screens */
-    gap: 2rem; /* Space between forms */
-    justify-content: space-around; /* Distribute forms nicely */
-}
-
-.auth-form {
-    background-color: #f9f9f9; /* Slightly off-white for form background */
-    padding: 2rem;
-    border: 1px solid #dcdcdc; /* Light border for forms */
-    border-radius: 8px;
-    flex: 1 1 400px; /* Flex properties for side-by-side layout, allows shrinking and growing, base width 400px */
-    max-width: 500px; /* Max width for a single form */
-    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
-}
-
-.auth-form h3 {
-    font-size: 1.8rem;
-    color: #1d1d1f;
-    margin-bottom: 1.5rem;
-    text-align: center;
-}
-
-.form-group {
-    margin-bottom: 1.5rem;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: 500;
-    color: #333333;
-}
-
-.form-group input[type="text"],
-.form-group input[type="email"],
-.form-group input[type="password"] {
-    width: 100%;
-    padding: 0.75rem 1rem;
-    border: 1px solid #d0d0d0; /* Light gray border */
-    border-radius: 5px;
-    background-color: #ffffff; /* White input background */
-    color: #1d1d1f; /* Dark text */
-    font-size: 1rem;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-.form-group input[type="text"]:focus,
-.form-group input[type="email"]:focus,
-.form-group input[type="password"]:focus {
-    outline: none;
-    border-color: #0071e3; /* Apple Blue border on focus */
-    box-shadow: 0 0 0 2px rgba(0, 113, 227, 0.2); /* Subtle blue glow, similar to macOS focus */
-}
-
-.btn { /* General button styling, can be expanded */
-    display: inline-block;
-    font-weight: 500;
-    text-align: center;
-    vertical-align: middle;
-    cursor: pointer;
-    user-select: none;
-    background-color: transparent;
-    border: 1px solid transparent;
-    padding: 0.75rem 1.5rem;
-    font-size: 1rem;
-    line-height: 1.5;
-    border-radius: 5px;
-    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-}
-
-.btn-primary {
-    color: #ffffff;
-    background-color: #0071e3; /* Apple Blue */
-    border-color: #0071e3;
-}
-
-.btn-primary:hover {
-    background-color: #005bb5; /* Darker Apple Blue */
-    border-color: #005bb5;
-}
-
-.btn-primary:focus, .btn-primary.focus {
-  box-shadow: 0 0 0 0.2rem rgba(0, 113, 227, 0.5);
-}
-
-.btn-primary:active, .btn-primary.active {
-    background-color: #0052a3; /* Even darker for active state */
-    border-color: #0052a3;
-}
-
-.form-switch-text {
-    text-align: center;
-    margin-top: 1.5rem;
-    font-size: 0.9rem;
-    color: #555555;
-}
-
-.form-switch-text a {
-    color: #0071e3; /* Apple Blue for the link */
-    text-decoration: none;
-    font-weight: 500;
-}
-
-/* Immersive Tech Placeholders Styles */
-.immersive-showcase-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid */
-    gap: 2rem; /* Increased gap for better separation */
-    margin-top: 1.5rem;
-}
-
-.immersive-card {
-    background-color: #ffffff;
-    border: 1px solid #e0e0e0;
-    border-radius: 12px; /* More rounded cards */
-    padding: 2rem 1.5rem; /* Adjusted padding */
-    text-align: center;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.06); /* Slightly more pronounced shadow */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between; /* Pushes button to bottom if content height varies */
-    transition: transform 0.25s ease-out, box-shadow 0.25s ease-out;
-}
-
-.immersive-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 18px rgba(0,0,0,0.1); /* Enhanced shadow on hover */
-}
-
-.immersive-card-icon-container {
-    margin-bottom: 1.5rem; /* More space below icon */
-}
-
-.immersive-card-icon {
-    font-size: 4rem; /* Larger icon */
-    color: #0071e3; /* Apple Blue */
-    background-color: #e9f5ff; /* Very light blue background */
-    padding: 1.5rem; /* More padding for icon background */
-    border-radius: 50%;
-    display: inline-block;
-    line-height: 1;
-    box-shadow: 0 3px 6px rgba(0,113,227,0.15); /* Subtle shadow for icon */
-}
-
-.immersive-card-content h4 {
-    font-size: 1.4rem; /* Slightly larger title */
-    color: #1d1d1f;
-    margin-bottom: 0.75rem;
-    font-weight: 600; /* Bolder card title */
-}
-
-.immersive-card-content p {
-    font-size: 0.95rem; /* Standard paragraph size */
-    color: #555555;
-    margin-bottom: 1.5rem; /* Space before button */
-    line-height: 1.6;
-    max-width: 320px; /* Limit text width for readability in card */
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.btn-immersive { /* Uses .btn and .btn-primary styles */
-    margin-top: auto; /* Ensure button is at the bottom */
-    padding: 0.75rem 1.75rem; /* Larger padding for these main action buttons */
-    font-size: 1rem; /* Standard button font size */
-}
-
-.form-switch-text a:hover {
-    text-decoration: underline;
-}
-
-/* CMS Placeholder Area Styles */
-.section-description {
-    font-size: 1.1rem;
-    color: #555555; /* Slightly lighter than main paragraph for intro text */
-    margin-bottom: 2rem;
-    text-align: center;
-}
-
-.cms-content-block {
-    background-color: #ffffff; /* Ensure blocks are white if section bg is off-white */
-    padding: 1.5rem;
-    margin-bottom: 2rem;
-    border: 1px solid #e0e0e0; /* Light gray border for each block */
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.03);
-}
-
-.cms-content-block h3 {
-    font-size: 1.7rem;
-    color: #1d1d1f;
-    margin-bottom: 0.5rem;
-}
-
-.cms-content-block .meta-info {
-    font-size: 0.9rem;
-    color: #777777; /* Muted color for meta information */
-    margin-bottom: 1rem;
-}
-
-/* Chat Bubble and Panel Styles */
-#chat-bubble-container {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    z-index: 1020; /* Higher than notifications panel */
-}
-
-#chat-bubble-toggle {
-    background-color: #0071e3; /* Apple Blue */
-    color: white;
-    border: none;
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.25); /* Slightly stronger shadow */
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.2s ease, transform 0.2s ease;
-}
-
-#chat-bubble-toggle:hover {
-    background-color: #005bb5; /* Darker blue */
-    transform: scale(1.05);
-}
-#chat-bubble-toggle:focus {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.4);
-}
-
-#chat-selection-popup {
-    position: absolute;
-    bottom: calc(100% + 10px); /* Above bubble with a gap */
-    right: 0;
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
-    padding: 0.75rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    width: 200px; /* Set a width for the popup */
-    z-index: 1021; /* Above bubble */
-}
-
-.btn-chat-select {
-    background-color: #f0f0f0;
-    color: #333;
-    border: 1px solid #d0d0d0;
-    padding: 0.6rem 1rem;
-    border-radius: 5px;
-    text-align: left; /* Align text left */
-    cursor: pointer;
-    font-weight: 500;
-    font-size: 0.95rem;
-    transition: background-color 0.2s ease, color 0.2s ease;
-}
-
-.btn-chat-select:hover {
-    background-color: #e0e0e0;
-    color: #000;
-}
-
-.chat-panel {
-    position: fixed;
-    bottom: 90px; /* Initial position above bubble, can be adjusted by JS */
-    right: 20px;
-    width: 370px; /* Slightly wider */
-    max-height: 70vh; /* Max height relative to viewport */
-    min-height: 300px; /* Minimum sensible height */
-    background-color: #ffffff;
-    border: 1px solid #d0d0d0; /* Softer border */
-    border-radius: 12px; /* More rounded corners */
-    box-shadow: 0 8px 25px rgba(0,0,0,0.15); /* More prominent shadow */
-    z-index: 1019; /* Below bubble container but above most content */
-    display: flex;
-    flex-direction: column;
-    overflow: hidden; /* Ensure children conform to border radius */
-    opacity: 0;
-    transform: translateY(20px) scale(0.95);
-    transition: opacity 0.25s ease-out, transform 0.25s ease-out;
-    pointer-events: none;
-}
-.chat-panel.active { /* JS will toggle this */
-    opacity: 1;
-    transform: translateY(0) scale(1);
-    pointer-events: auto;
-}
-
-/* Interactive Charts Section Styles */
-.chart-showcase-container {
-    /* Can add flex/grid if multiple charts are to be laid out */
-    margin-top: 1rem;
-}
-
-.chart-wrapper {
-    background: #ffffff;
-    padding: 1.5rem;
-    border-radius: 8px;
-    border: 1px solid #e0e0e0;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-    margin-bottom: 1.5rem;
-}
-
-.chart-wrapper h4 {
-    font-size: 1.3rem;
-    color: #1d1d1f;
-    margin-bottom: 1rem;
-    text-align: center;
-}
-
-.chart-placeholder-detailed {
-    position: relative;
-    min-height: 300px;
-    display: flex; /* Main container for Y-axis | (Chart + X-axis) */
-    background-color: #f9f9f9; /* Light bg for the chart area */
-    border-radius: 6px;
-    padding: 1rem;
-}
-
-.mock-axis {
-    display: flex;
-    color: #555555; /* Darker gray for axis text */
-    font-size: 0.75rem; /* Smaller axis labels */
-}
-
-.mock-y-axis {
-    flex-direction: column;
-    justify-content: space-between;
-    padding-right: 0.75rem; /* Increased padding */
-    border-right: 1px solid #cccccc;
-    text-align: right;
-}
-.mock-y-axis span {
-    display: block;
-}
-
-.mock-x-axis {
-    justify-content: space-around;
-    padding-top: 0.75rem; /* Increased padding */
-    border-top: 1px solid #cccccc;
-    width: 100%; /* Make X-axis take full width of its container */
-}
-
-.mock-chart-area {
-    flex-grow: 1;
-    position: relative; /* For positioning tooltip and SVG absolutely if needed */
-    display: flex; /* To help manage SVG if it doesn't take full height */
-    flex-direction: column; /* Stack SVG and X-axis */
-}
-
-.mock-line-chart {
-    width: 100%;
-    height: 100%; /* Make SVG take available space in .mock-chart-area */
-    flex-grow: 1;
-}
-
-.mock-line-1 {
-    fill: none;
-    stroke: #0071e3; /* Apple Blue */
-    stroke-width: 2.5px; /* Slightly thicker */
-}
-
-.mock-line-2 {
-    fill: none;
-    stroke: #34A853; /* Green */
-    stroke-width: 2.5px;
-}
-
-.mock-tooltip-point {
-    fill: #EA4335; /* Red */
-    stroke: white;
-    stroke-width: 2px;
-    r: 6px; /* Larger point */
-}
-
-.mock-tooltip {
-    background: rgba(29,29,31,0.85); /* Darker, more Mac-like tooltip */
-    color: white;
-    padding: 6px 10px; /* Adjusted padding */
-    border-radius: 5px;
-    font-size: 0.85rem;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-    pointer-events: none; /* So it doesn't interfere with chart interactions */
-}
-
-.mock-legend {
-    text-align: center;
-    padding-top: 1rem;
-    margin-top: 0.5rem; /* Space above legend */
-    border-top: 1px solid #f0f0f0; /* Light separator for legend */
-}
-
-.legend-item {
-    display: inline-flex; /* Align color swatch and text */
-    align-items: center;
-    font-size: 0.85rem;
-    color: #333333;
-    margin: 0 0.75rem;
-    cursor: default;
-}
-
-.legend-item::before {
-    content: '';
-    display: inline-block;
-    width: 12px;
-    height: 12px;
-    border-radius: 3px; /* Slightly rounded square */
-    margin-right: 0.5rem;
-}
-
-.legend-item.product-a::before { background-color: #0071e3; }
-.legend-item.product-b::before { background-color: #34A853; }
-
-
-/* Personalized Recommendations Section Styles */
-.recommendations-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 1.5rem;
-    margin-top: 1rem; /* Space below section description */
-}
-
-.recommendation-card {
-    background-color: #ffffff;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    overflow: hidden; /* To ensure img respects border-radius */
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-    display: flex;
-    flex-direction: column; /* Ensure content flows top-to-bottom */
-    transition: box-shadow 0.2s ease-out, transform 0.2s ease-out;
-}
-.recommendation-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-}
-
-
-.rec-card-img {
-    width: 100%;
-    height: 180px;
-    object-fit: cover; /* Crop image to fit, or use 'contain' if preferred */
-    display: block; /* Remove any extra space below image */
-}
-
-.rec-card-content {
-    padding: 1rem;
-    flex-grow: 1; /* Allows this area to take up remaining space */
-    display: flex;
-    flex-direction: column; /* To push button to bottom */
-}
-
-.rec-card-title {
-    font-size: 1.15rem; /* Slightly larger title */
-    margin-bottom: 0.35rem; /* Adjusted margin */
-    color: #1d1d1f; /* Darker title */
-    font-weight: 600;
-}
-
-/* Advanced File Upload Styles */
-.drag-drop-zone {
-    background-color: #f9f9f9;
-    border: 3px dashed #0071e3; /* Prominent dashed border */
-    border-radius: 12px; /* More rounded */
-    padding: 2.5rem;
-    text-align: center;
-    min-height: 220px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.2s ease-out, border-color 0.2s ease-out;
-    cursor: pointer; /* Indicate it's interactive */
-}
-
-.drag-drop-zone.dragover {
-    background-color: #e9f5ff; /* Light blue feedback */
-    border-color: #005bb5; /* Darker blue */
-    border-style: solid; /* Solid border on drag over */
-}
-
-.drag-drop-prompt .upload-icon {
-    font-size: 3.5rem;
-    color: #0071e3;
-    margin-bottom: 0.75rem;
-    display: block; /* Ensure margin bottom works */
-}
-
-.drag-drop-prompt p {
-    margin-bottom: 0.75rem;
-    color: #555555;
-    font-size: 1.1rem;
-    font-weight: 500; /* Slightly bolder prompt text */
-}
-
-.drag-drop-prompt .small-text {
-    font-size: 0.9rem;
-    margin-bottom: 1rem; /* More space before button */
-    color: #777777;
-}
-
-/* Fallback input is hidden, label is styled as btn btn-secondary */
-#file-upload-fallback { /* Visually hidden but accessible */
-    width: 0.1px;
-    height: 0.1px;
-    opacity: 0;
-    overflow: hidden;
-    position: absolute;
-    z-index: -1;
-}
-#file-upload-fallback + label { /* Style the label like a button */
-    cursor: pointer;
-}
-
-
-.file-preview-list {
-    margin-top: 1.5rem;
-    text-align: left;
-    width: 100%;
-    max-height: 200px; /* Limit height for many files */
-    overflow-y: auto; /* Scroll if needed */
-    padding-right: 10px; /* Space for scrollbar */
-}
-
-.file-preview-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0.6rem 0.8rem;
-    border: 1px solid #e0e0e0;
-    border-radius: 6px; /* More rounded items */
-    background-color: #ffffff;
-    margin-bottom: 0.6rem;
-    font-size: 0.9rem;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.04); /* Subtle shadow */
-}
-
-.file-icon-preview { /* For a generic file icon if added by JS */
-    font-size: 1.5rem;
-    margin-right: 0.75rem;
-    color: #0071e3; /* Use accent color for icon */
-}
-
-.file-name {
-    flex-grow: 1;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    margin-right: 1rem;
-    color: #333333; /* Darker file name */
-}
-
-.file-size {
-    color: #777777;
-    margin-right: 1rem;
-    font-size: 0.85rem;
-    flex-shrink: 0; /* Prevent shrinking */
-}
-
-.remove-file-btn {
-    background: transparent;
-    border: none;
-    color: #e74c3c; /* Red remove button */
-    cursor: pointer;
-    font-size: 1.2rem; /* Make icon slightly larger */
-    padding: 0.25rem;
-    transition: color 0.2s ease;
-}
-.remove-file-btn:hover {
-    color: #c0392b; /* Darker red on hover */
-}
-
-.upload-status-area {
-    margin-top: 1.5rem;
-    padding: 1rem;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    border: 1px solid #e0e0e0;
-}
-
-.upload-status-area h4 {
-    margin-top: 0; /* Remove default h4 margin if any */
-    margin-bottom: 0.75rem;
-    font-size: 1.1rem; /* Adjusted size */
-    color: #333333;
-    font-weight: 500;
-}
-
-.progress-bar-upload {
-    width: 100%;
-    background-color: #e0e0e0; /* Slightly darker background for progress bar */
-    border-radius: 8px; /* More rounded */
-    height: 24px; /* Taller progress bar */
-    overflow: hidden;
-    margin-bottom: 0.75rem; /* Space below progress bar */
-    box-shadow: inset 0 1px 2px rgba(0,0,0,0.1); /* Inner shadow */
-}
-
-.progress-filled-upload {
-    height: 100%;
-    background-color: #34A853; /* Green for success/progress */
-    color: white;
-    text-align: center;
-    line-height: 24px; /* Match height */
-    font-size: 0.85rem;
-    font-weight: 500;
-    transition: width 0.3s ease-out; /* Smoother transition */
-    border-radius: 8px 0 0 8px; /* Match parent, but only left side if not full */
-}
-.progress-filled-upload.full { /* Class when 100% */
-    border-radius: 8px;
-}
-
-
-#upload-feedback {
-    font-size: 0.9rem;
-    margin-top: 0.5rem;
-    color: #333333; /* Default feedback color */
-}
-#upload-feedback.success {
-    color: #34A853; /* Green for success */
-    font-weight: 500;
-}
-#upload-feedback.error {
-    color: #e74c3c; /* Red for error */
-    font-weight: 500;
-}
-/* Media Hub Section Styles */
-.media-subsection {
-    margin-bottom: 2.5rem; /* Increased margin */
-    padding-bottom: 2rem; /* Increased padding */
-    border-bottom: 1px solid #e9e9ed; /* Softer border */
-}
-.media-subsection:last-child {
-    border-bottom: none;
-    margin-bottom: 0;
-    padding-bottom: 0.5rem; /* Less padding if it's the last one */
-}
-
-.media-subsection h3 {
-    font-size: 1.8rem; /* Consistent title size */
-    color: #1d1d1f;
-    margin-bottom: 1.5rem;
-    text-align: left; /* Align subsection titles left */
-}
-
-.video-streaming-layout,
-.live-streaming-layout {
-    display: grid;
-    grid-template-columns: 1fr; /* Default to single column */
-    gap: 1.5rem;
-}
-
-@media (min-width: 992px) { /* Desktop layout for video streaming */
-    .video-streaming-layout {
-        grid-template-columns: 2fr 1fr; /* Player takes 2/3, playlist 1/3 */
-    }
-    .live-streaming-layout { /* Player and info side-by-side */
-        grid-template-columns: 2fr 1fr;
-    }
-}
-
-.main-video-player-placeholder {
-    position: relative;
-    background-color: #1c1c1e; /* Darker background for video player */
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1); /* Softer shadow for player */
-    /* margin-bottom: 1rem; /* Removed as gap is handled by grid */
-}
-
-.video-player-img { /* Class for the actual <img> tag */
-    display: block;
-    width: 100%;
-    height: auto;
-    aspect-ratio: 16 / 9;
-    object-fit: cover; /* Ensure image covers the area */
-    /* border-radius: 8px; /* Removed, parent overflow:hidden handles it */
-}
-
-.video-controls-overlay {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.3) 60%, rgba(0,0,0,0) 100%);
-    padding: 0.75rem 1rem;
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    opacity: 0;
-    transition: opacity 0.3s ease-in-out;
-    box-sizing: border-box;
-    /* border-bottom-left-radius and right already handled by parent overflow:hidden */
-}
-
-.main-video-player-placeholder:hover .video-controls-overlay {
-    opacity: 1;
-}
-
-.control-btn {
-    background: transparent;
-    border: none;
-    color: white;
-    font-size: 1.3rem; /* Good size for player controls */
-    cursor: pointer;
-    padding: 0.35rem; /* Slightly more padding */
-    line-height: 1; /* Ensure consistent vertical alignment */
-    opacity: 0.85;
-    transition: opacity 0.2s ease, transform 0.2s ease;
-}
-.control-btn:hover {
-    opacity: 1;
-    transform: scale(1.1);
-}
-
-.progress-bar-mock {
-    flex-grow: 1;
-    height: 10px; /* Thicker progress bar */
-    background-color: rgba(255,255,255,0.35); /* Lighter base for progress */
-    border-radius: 5px;
-    overflow: hidden;
-    cursor: pointer;
-}
-
-.progress-filled-mock {
-    height: 100%;
-    background-color: #0071e3; /* Apple Blue for progress */
-    border-radius: 5px;
-    transition: width 0.1s linear; /* Smooth progress change */
-}
-
-.video-playlist-thumbs {
-    display: flex;
-    flex-direction: column; /* Stack thumbnails vertically */
-    gap: 0.75rem;
-    overflow-y: auto; /* Scroll if many thumbs */
-    max-height: 450px; /* Corresponds to 16:9 player height roughly on desktop */
-    padding: 0.25rem; /* Small padding around thumbs area */
-    background-color: #f9f9f9; /* Light background for playlist area */
-    border-radius: 8px;
-    border: 1px solid #e0e0e0;
-}
-
-.thumb-item {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    border: 2px solid transparent;
-    border-radius: 6px;
-    cursor: pointer;
-    padding: 0.5rem;
-    background-color: #ffffff;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.07);
-    transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
-    flex-shrink: 0; /* Prevent items from shrinking if container is too small (though overflow-y handles this) */
-}
-
-.thumb-item:hover {
-    transform: translateY(-2px);
-    border-color: #c0c0c0;
-    background-color: #f0f0f0; /* Slightly lighter hover */
-}
-
-.thumb-item.active-thumb {
-    border-color: #0071e3;
-    background-color: #e9f5ff; /* Light blue tint for active */
-    box-shadow: 0 2px 5px rgba(0,113,227,0.2);
-}
-
-.thumb-img {
-    width: 120px;
-    height: 67.5px; /* 16:9 aspect ratio */
-    border-radius: 4px;
-    object-fit: cover;
-    flex-shrink: 0;
-}
-
-.thumb-title {
-    font-size: 0.9rem;
-    color: #333;
-    line-height: 1.3;
-    white-space: normal;
-    overflow: hidden;
-    /* For multi-line ellipsis (optional) */
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-}
-
-
-/* Live Streaming Specifics */
-.live-player-placeholder {
-    /* Can add specific styles if it needs to differ from regular video player */
-}
-
-.live-indicator-overlay {
-    position: absolute;
-    top: 15px;
-    left: 15px;
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    z-index: 5; /* Ensure it's above video but below controls if they overlap */
-}
-
-.live-badge {
-    background-color: #e74c3c; /* Bright Red */
-    color: white;
-    padding: 0.3rem 0.6rem;
-    font-size: 0.9rem;
-    font-weight: bold;
-    border-radius: 4px;
-    text-transform: uppercase;
-    line-height: 1;
-}
-
-.viewer-count {
-    background-color: rgba(28, 28, 30, 0.85);
-    color: white;
-    padding: 0.3rem 0.6rem;
-    font-size: 0.9rem;
-    border-radius: 4px;
-    line-height: 1;
-}
-
-.live-stream-info {
-    padding: 1.5rem;
-    background-color: #ffffff; /* White background for info panel */
-    border-radius: 8px;
-    border: 1px solid #e0e0e0;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-    display: flex; /* Added for better internal alignment */
-    flex-direction: column; /* Stack content vertically */
-}
-@media (max-width: 991px) {
-    .live-stream-info {
-        margin-top: 0; /* Grid gap handles spacing */
-    }
-}
-
-.live-stream-info h4 {
-    font-size: 1.4rem;
-    color: #1d1d1f;
-    margin-bottom: 0.75rem;
-}
-
-.live-stream-description {
-    font-size: 1rem;
-    color: #333333;
-    margin-bottom: 1.25rem;
-    line-height: 1.6;
-    flex-grow: 1; /* Allow description to take available space */
-}
-
-.btn-join-chat {
-    width: 100%;
-    padding-top: 0.75rem;
-    padding-bottom: 0.75rem;
-    font-size: 1.05rem;
-    margin-top: auto; /* Push to bottom if content above is short */
-}
-
-/* User-Generated Content (UGC) Feed Styles */
-.ugc-posts-container {
-    max-width: 700px; /* Readable width for a feed */
-    margin: 30px auto; /* Centering and spacing from description */
-}
-
-.ugc-post {
-    background-color: #ffffff;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    margin-bottom: 1.5rem;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.04);
-}
-
-.ugc-post-header {
-    display: flex;
-    align-items: center;
-    padding: 1rem;
-    border-bottom: 1px solid #f0f0f0; /* Lighter border for internal separation */
-}
-
-.user-avatar-ugc {
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    margin-right: 1rem;
-    object-fit: cover; /* Ensure avatar images cover the area */
-}
-
-.user-info-ugc {
-    display: flex;
-    flex-direction: column;
-}
-
-.username-ugc {
-    font-weight: 600; /* Bolder username */
-    color: #1d1d1f;
-    font-size: 1rem;
-}
-
-.post-timestamp-ugc {
-    font-size: 0.8rem;
-    color: #777777;
-}
-
-.ugc-post-content {
-    padding: 1rem;
-}
-
-.ugc-post-content p { /* Paragraphs within post content */
-    font-size: 0.95rem; /* Slightly smaller for post text */
-    line-height: 1.6;
-    color: #333333;
-    margin-bottom: 1rem; /* Space between paragraphs or before image */
-}
-
-.ugc-shared-image {
-    display: block; /* Make image block to handle margins correctly */
-    max-width: 100%;
-    border-radius: 6px;
-    margin-top: 1rem; /* Space if there's text above it */
-    border: 1px solid #e9e9ed; /* Subtle border for shared images */
-}
-
-.ugc-post-footer {
-    padding: 0.5rem 1rem;
-    border-top: 1px solid #f0f0f0;
-    display: flex;
-    justify-content: space-around; /* Distribute actions evenly */
-    gap: 0.5rem;
-}
-
-.btn-ugc-action {
-    background: transparent;
-    border: none; /* Removed border for a cleaner look */
-    color: #555555;
-    padding: 0.5rem 0.75rem;
-    border-radius: 5px;
-    font-size: 0.9rem;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    transition: background-color 0.2s ease, color 0.2s ease;
-}
-
-.btn-ugc-action:hover {
-    background-color: #e9e9ed; /* Subtle background on hover */
-    color: #1d1d1f; /* Darker text on hover */
-}
-
-.btn-ugc-action .icon {
-    font-size: 1rem; /* Adjust icon size if needed */
-}
-
-
-/* Gamification Elements Styles */
-.gamification-layout {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1.5rem;
-    margin-top: 30px; /* Spacing from section description */
-}
-
-.user-gamification-stats h4, /* Titles within the panels */
-.leaderboard-container h4 {
-    font-size: 1.3rem;
-    color: #1d1d1f;
-    margin-bottom: 1rem;
-}
-
-/* Mac Pro Location Services Section Styles */
-.map-search-layout {
-    display: grid;
-    grid-template-columns: 300px 1fr; /* Controls on left, map on right */
-    gap: 1.5rem;
-    align-items: flex-start; /* Align items to the top of their grid area */
-    margin-top: 1.5rem;
-}
-
-.map-controls-area {
-    /* Uses .content-section-panel styles, specific overrides can go here if needed */
-}
-
-.map-placeholder {
-    position: relative;
-    width: 100%;
-    min-height: 450px;
-    background-color: #e9e9ed; /* Light gray, similar to other placeholders */
-    border-radius: 8px;
-    border: 1px solid #d0d0d0; /* Slightly darker border for map area */
-    overflow: hidden; /* Important for keeping pins and tooltips contained if they go near edge */
-    background-image: url('https://via.placeholder.com/1000x700/e9e9ed/cccccc?Text=Area+Map+Showing+Mac+Pro+Locations');
-    background-size: cover;
-    background-position: center;
-}
-
-.map-pin {
-    position: absolute;
-    transform: translate(-50%, -100%); /* Center horizontally, anchor bottom point */
-    width: auto; /* Auto width based on content */
-    height: auto;
-    padding: 6px 10px; /* Slightly more padding for pill */
-    border-radius: 20px; /* Pill shape */
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.25);
-    cursor: pointer;
-    transition: transform 0.2s ease-out, background-color 0.2s ease-out, box-shadow 0.2s ease-out;
-    font-weight: 500;
-    font-size: 0.9rem; /* Pin text size */
-}
-
-.pin-icon-map {
-    font-size: 1.1rem; /* Adjusted for typical emoji/icon size */
-    margin-right: 6px; /* Space between icon and text if any */
-    line-height: 1; /* Ensure icon aligns well */
-    display: inline-block;
-}
-
-.macpro-store-pin {
-    background-color: #0071e3; /* Apple blue */
-}
-.macpro-store-pin .pin-icon-map {
-    /* Specific icon styles if needed, e.g. Apple logo color if not an emoji */
-}
-
-.macpro-service-pin {
-    background-color: #f5a623; /* Orange/Gold for service centers */
-    border-radius: 8px; /* More squared shape for service pins */
-    padding: 7px 9px; /* Slightly adjusted padding for square look */
-}
-.macpro-service-pin .pin-icon-map {
-    /* Specific icon styles if needed */
-}
-
-.map-pin:hover {
-    transform: translate(-50%, -105%) scale(1.1); /* Lift slightly more and scale up */
-    box-shadow: 0 5px 10px rgba(0,0,0,0.3);
-    z-index: 10; /* Ensure hovered pin is above others */
-}
-
-.map-pin-tooltip {
-    position: absolute;
-    background-color: rgba(28, 28, 30, 0.9); /* Dark, semi-transparent Apple style */
-    color: white;
-    padding: 6px 12px;
-    border-radius: 6px;
-    font-size: 0.9rem;
-    white-space: nowrap; /* Prevent tooltip text from wrapping */
-    transform: translate(-50%, -15px); /* Position above the pin tip */
-    /* bottom: 100%;  Alternative positioning, needs pin to be non-100% transform for y */
-    /* left: 50%; */
-    z-index: 20; /* Above pins */
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    pointer-events: none; /* Tooltip itself shouldn't be interactive */
-    opacity: 0; /* Hidden by default */
-    transition: opacity 0.2s ease-in-out;
-    /* Example of making one visible for demo - remove for actual use */
-    /* opacity: 1; */
-}
-
-/* Show tooltip on hover (JS might be better for click or more complex interactions) */
-.map-pin:hover .map-pin-tooltip { /* This would require tooltip to be child of pin */
-    opacity: 1;
-}
-/* If tooltip is not a child, JS would handle adding an 'active' class or similar */
-/* Example: .map-pin-tooltip.active { opacity: 1; } */
-
-
-/* Responsive adjustments for Location Services section */
-@media (max-width: 992px) {
-    .map-search-layout {
-        grid-template-columns: 1fr; /* Stack controls above map */
-    }
-    .map-controls-area {
-        margin-bottom: 1.5rem; /* Add space between controls and map when stacked */
-    }
-}
-
-@media (max-width: 768px) {
-    .map-placeholder {
-        min-height: 350px; /* Reduce map height on smaller screens */
-    }
-    .map-pin {
-        padding: 5px 8px;
-        font-size: 0.85rem;
-    }
-    .pin-icon-map {
-        font-size: 1rem;
-    }
-}
-
-.stat-item {
-    margin-bottom: 1rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 1rem;
-    padding: 0.6rem 0;
-    border-bottom: 1px solid #f0f0f0;
-}
-.stat-item:last-child {
-    border-bottom: none;
-    margin-bottom: 0;
-}
-
-.stat-label {
-    color: #555555;
-}
-
-.stat-value {
-    font-weight: 600;
-    color: #0071e3;
-}
-
-.badges-showcase {
-    display: flex;
-    gap: 0.75rem;
-    flex-wrap: wrap;
-    margin-top: 0.5rem;
-    justify-content: flex-start;
-}
-
-.badge-icon {
-    font-size: 2rem;
-    padding: 0.3rem;
-    background-color: #e9e9ed;
-    border: 1px solid #d0d0d0;
-    border-radius: 6px;
-    cursor: default;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
-    transition: transform 0.2s ease;
-}
-.badge-icon:hover {
-    transform: scale(1.1);
-}
-
-.leaderboard-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.leaderboard-item {
-    display: flex;
-    align-items: center;
-    padding: 0.75rem 0.5rem;
-    border-bottom: 1px solid #f0f0f0;
-    font-size: 0.95rem;
-    transition: background-color 0.2s ease;
-}
-.leaderboard-item:last-child {
-    border-bottom: none;
-}
-.leaderboard-item:hover {
-    background-color: #f9f9f9;
-}
-
-.rank {
-    font-weight: bold;
-    margin-right: 1rem;
-    color: #0071e3;
-    min-width: 25px;
-    text-align: right;
-}
-
-.leaderboard-avatar {
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    margin-right: 0.75rem;
-    object-fit: cover;
-    background-color: #e0e0e0;
-}
-
-.name {
-    flex-grow: 1;
-    font-weight: 500;
-    color: #1d1d1f;
-}
-
-.score {
-    font-weight: 600;
-    color: #34A853; /* Green for score */
-    font-size: 0.9rem;
-}
-
-/* Advanced File Upload Styles */
-.drag-drop-zone {
-    background-color: #f9f9f9;
-    border: 3px dashed #0071e3; /* Prominent dashed border */
-    border-radius: 12px; /* More rounded */
-    padding: 2.5rem;
-    text-align: center;
-    min-height: 220px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.2s ease-out, border-color 0.2s ease-out;
-    cursor: pointer; /* Indicate it's interactive */
-}
-
-.drag-drop-zone.dragover {
-    background-color: #e9f5ff; /* Light blue feedback */
-    border-color: #005bb5; /* Darker blue */
-    border-style: solid; /* Solid border on drag over */
-}
-
-.drag-drop-prompt .upload-icon {
-    font-size: 3.5rem;
-    color: #0071e3;
-    margin-bottom: 0.75rem;
-    display: block; /* Ensure margin bottom works */
-}
-
-.drag-drop-prompt p {
-    margin-bottom: 0.75rem;
-    color: #555555;
-    font-size: 1.1rem;
-    font-weight: 500; /* Slightly bolder prompt text */
-}
-
-.drag-drop-prompt .small-text {
-    font-size: 0.9rem;
-    margin-bottom: 1rem; /* More space before button */
-    color: #777777;
-}
-
-/* Fallback input is hidden, label is styled as btn btn-secondary */
-#file-upload-fallback { /* Visually hidden but accessible */
-    width: 0.1px;
-    height: 0.1px;
-    opacity: 0;
-    overflow: hidden;
-    position: absolute;
-    z-index: -1;
-}
-#file-upload-fallback + label { /* Style the label like a button */
-    cursor: pointer;
-}
-
-
-.file-preview-list {
-    margin-top: 1.5rem;
-    text-align: left;
-    width: 100%;
-    max-height: 200px; /* Limit height for many files */
-    overflow-y: auto; /* Scroll if needed */
-    padding-right: 10px; /* Space for scrollbar */
-}
-
-.file-preview-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0.6rem 0.8rem;
-    border: 1px solid #e0e0e0;
-    border-radius: 6px; /* More rounded items */
-    background-color: #ffffff;
-    margin-bottom: 0.6rem;
-    font-size: 0.9rem;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.04); /* Subtle shadow */
-}
-
-.file-icon-preview { /* For a generic file icon if added by JS */
-    font-size: 1.5rem;
-    margin-right: 0.75rem;
-    color: #0071e3; /* Use accent color for icon */
-}
-
-.file-name {
-    flex-grow: 1;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    margin-right: 1rem;
-    color: #333333; /* Darker file name */
-}
-
-.file-size {
-    color: #777777;
-    margin-right: 1rem;
-    font-size: 0.85rem;
-    flex-shrink: 0; /* Prevent shrinking */
-}
-
-.remove-file-btn {
-    background: transparent;
-    border: none;
-    color: #e74c3c; /* Red remove button */
-    cursor: pointer;
-    font-size: 1.2rem; /* Make icon slightly larger */
-    padding: 0.25rem;
-    transition: color 0.2s ease;
-}
-.remove-file-btn:hover {
-    color: #c0392b; /* Darker red on hover */
-}
-
-.upload-status-area {
-    margin-top: 1.5rem;
-    padding: 1rem;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    border: 1px solid #e0e0e0;
-}
-
-.upload-status-area h4 {
-    margin-top: 0; /* Remove default h4 margin if any */
-    margin-bottom: 0.75rem;
-    font-size: 1.1rem; /* Adjusted size */
-    color: #333333;
-    font-weight: 500;
-}
-
-.progress-bar-upload {
-    width: 100%;
-    background-color: #e0e0e0; /* Slightly darker background for progress bar */
-    border-radius: 8px; /* More rounded */
-    height: 24px; /* Taller progress bar */
-    overflow: hidden;
-    margin-bottom: 0.75rem; /* Space below progress bar */
-    box-shadow: inset 0 1px 2px rgba(0,0,0,0.1); /* Inner shadow */
-}
-
-.progress-filled-upload {
-    height: 100%;
-    background-color: #34A853; /* Green for success/progress */
-    color: white;
-    text-align: center;
-    line-height: 24px; /* Match height */
-    font-size: 0.85rem;
-    font-weight: 500;
-    transition: width 0.3s ease-out; /* Smoother transition */
-    border-radius: 8px 0 0 8px; /* Match parent, but only left side if not full */
-}
-.progress-filled-upload.full { /* Class when 100% */
-    border-radius: 8px;
-}
-
-
-#upload-feedback {
-    font-size: 0.9rem;
-    margin-top: 0.5rem;
-    color: #333333; /* Default feedback color */
-}
-#upload-feedback.success {
-    color: #34A853; /* Green for success */
-    font-weight: 500;
-}
-#upload-feedback.error {
-    color: #e74c3c; /* Red for error */
-    font-weight: 500;
-}
-
-/* User-Generated Content (UGC) Feed Styles */
-.ugc-posts-container {
-    max-width: 700px; /* Readable width for a feed */
-    margin: 30px auto; /* Centering and spacing from description */
-}
-
-.ugc-post {
-    background-color: #ffffff;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    margin-bottom: 1.5rem;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.04);
-}
-
-.ugc-post-header {
-    display: flex;
-    align-items: center;
-    padding: 1rem;
-    border-bottom: 1px solid #f0f0f0; /* Lighter border for internal separation */
-}
-
-.user-avatar-ugc {
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    margin-right: 1rem;
-    object-fit: cover; /* Ensure avatar images cover the area */
-}
-
-.user-info-ugc {
-    display: flex;
-    flex-direction: column;
-}
-
-.username-ugc {
-    font-weight: 600; /* Bolder username */
-    color: #1d1d1f;
-    font-size: 1rem;
-}
-
-.post-timestamp-ugc {
-    font-size: 0.8rem;
-    color: #777777;
-}
-
-.ugc-post-content {
-    padding: 1rem;
-}
-
-.ugc-post-content p { /* Paragraphs within post content */
-    font-size: 0.95rem; /* Slightly smaller for post text */
-    line-height: 1.6;
-    color: #333333;
-    margin-bottom: 1rem; /* Space between paragraphs or before image */
-}
-
-.ugc-shared-image {
-    display: block; /* Make image block to handle margins correctly */
-    max-width: 100%;
-    border-radius: 6px;
-    margin-top: 1rem; /* Space if there's text above it */
-    border: 1px solid #e9e9ed; /* Subtle border for shared images */
-}
-
-.ugc-post-footer {
-    padding: 0.5rem 1rem;
-    border-top: 1px solid #f0f0f0;
-    display: flex;
-    justify-content: space-around; /* Distribute actions evenly */
-    gap: 0.5rem;
-}
-
-.btn-ugc-action {
-    background: transparent;
-    border: none; /* Removed border for a cleaner look */
-    color: #555555;
-    padding: 0.5rem 0.75rem;
-    border-radius: 5px;
-    font-size: 0.9rem;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    transition: background-color 0.2s ease, color 0.2s ease;
-}
-
-.btn-ugc-action:hover {
-    background-color: #e9e9ed; /* Subtle background on hover */
-    color: #1d1d1f; /* Darker text on hover */
-}
-
-.btn-ugc-action .icon {
-    font-size: 1rem; /* Adjust icon size if needed */
-    /* margin-right: 0.4rem; /* Replaced by gap */
-}
-
-
-/* Gamification Elements Styles */
-.gamification-layout {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1.5rem;
-    margin-top: 30px; /* Spacing from section description */
-}
-
-/* .user-gamification-stats and .leaderboard-container will use .content-section-panel styles */
-/* Add specific overrides or additions if needed */
-
-.user-gamification-stats h4,
-.leaderboard-container h4 {
-    /* These will inherit from .content-section-panel h4 if that's defined,
-       or from .dashboard-chart-container h4 if that was made generic enough.
-       If not, style them: */
-    font-size: 1.3rem;
-    color: #1d1d1f;
-    margin-bottom: 1rem;
-    /* text-align: center; /* Optional: center titles within these panels */
-}
-
-
-.stat-item {
-    margin-bottom: 1rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 1rem;
-    padding: 0.6rem 0; /* Increased padding */
-    border-bottom: 1px solid #f0f0f0;
-}
-.stat-item:last-child {
-    border-bottom: none;
-    margin-bottom: 0; /* No margin for the last item */
-}
-
-.stat-label {
-    color: #555555;
-}
-
-.stat-value {
-    font-weight: 600;
-    color: #0071e3; /* Apple Blue for stat values */
-}
-
-.badges-showcase {
-    display: flex;
-    gap: 0.75rem;
-    flex-wrap: wrap;
-    margin-top: 0.5rem;
-    justify-content: flex-start; /* Align badges to the start */
-}
-
-.badge-icon {
-    font-size: 2rem; /* Larger badges */
-    padding: 0.3rem;
-    background-color: #e9e9ed; /* Light gray background */
-    border: 1px solid #d0d0d0; /* Subtle border */
-    border-radius: 6px;
-    cursor: default;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.05); /* Subtle shadow */
-    transition: transform 0.2s ease;
-}
-.badge-icon:hover {
-    transform: scale(1.1); /* Slight zoom on hover */
-}
-
-
-.leaderboard-list {
-    list-style: none;
-    padding: 0;
-    margin: 0; /* Remove default ul margin */
-}
-
-.leaderboard-item {
-    display: flex;
-    align-items: center;
-    padding: 0.75rem 0.5rem; /* Adjusted padding */
-    border-bottom: 1px solid #f0f0f0;
-    font-size: 0.95rem;
-    transition: background-color 0.2s ease;
-}
-.leaderboard-item:last-child {
-    border-bottom: none;
-}
-.leaderboard-item:hover {
-    background-color: #f9f9f9; /* Light hover for list items */
-}
-
-.rank {
-    font-weight: bold;
-    margin-right: 1rem; /* More space after rank */
-    color: #0071e3; /* Apple Blue for rank */
-    min-width: 25px; /* Ensure alignment */
-    text-align: right;
-}
-
-.leaderboard-avatar {
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    margin-right: 0.75rem;
-    object-fit: cover;
-    background-color: #e0e0e0; /* Fallback for image */
-}
-
-.name {
-    flex-grow: 1;
-    font-weight: 500;
-    color: #1d1d1f;
-}
-
-.score {
-    font-weight: 600;
-    color: #34A853; /* Green for score */
-    font-size: 0.9rem; /* Slightly smaller score text */
-}
-
-/* Media Hub Section Styles */
-.media-subsection {
-    margin-bottom: 2.5rem; /* Increased margin */
-    padding-bottom: 2rem; /* Increased padding */
-    border-bottom: 1px solid #e9e9ed; /* Softer border */
-}
-.media-subsection:last-child {
-    border-bottom: none;
-    margin-bottom: 0;
-    padding-bottom: 0.5rem; /* Less padding if it's the last one */
-}
-
-.media-subsection h3 {
-    font-size: 1.8rem; /* Consistent title size */
-    color: #1d1d1f;
-    margin-bottom: 1.5rem;
-    text-align: left; /* Align subsection titles left */
-}
-
-.video-streaming-layout,
-.live-streaming-layout {
-    /* Using CSS Grid for more complex layouts if needed, or simple block/flex */
-    display: grid;
-    grid-template-columns: 1fr; /* Default to single column */
-    gap: 1.5rem;
-}
-
-@media (min-width: 992px) { /* Desktop layout for video streaming */
-    .video-streaming-layout {
-        grid-template-columns: 2fr 1fr; /* Player takes 2/3, playlist 1/3 */
-    }
-    .live-streaming-layout { /* Could be different, e.g., player and info side-by-side */
-        grid-template-columns: 2fr 1fr;
-    }
-}
-
-
-.main-video-player-placeholder {
-    position: relative;
-    background-color: #1c1c1e; /* Darker background for video player */
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1); /* Softer shadow for player */
-}
-
-.video-player-img { /* Class for the actual <img> tag */
-    display: block;
-    width: 100%;
-    height: auto;
-    aspect-ratio: 16 / 9;
-    object-fit: cover; /* Ensure image covers the area */
-    border-radius: 8px; /* Match parent if image is the direct child */
-}
-
-.video-controls-overlay {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.3) 60%, rgba(0,0,0,0) 100%);
-    padding: 0.75rem 1rem;
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    opacity: 0;
-    transition: opacity 0.3s ease-in-out;
-    box-sizing: border-box;
-    border-bottom-left-radius: 8px; /* Match parent radius */
-    border-bottom-right-radius: 8px;
-}
-
-.main-video-player-placeholder:hover .video-controls-overlay {
-    opacity: 1;
-}
-
-.control-btn {
-    background: transparent;
-    border: none;
-    color: white;
-    font-size: 1.3rem; /* Good size for player controls */
-    cursor: pointer;
-    padding: 0.35rem; /* Slightly more padding */
-    line-height: 1; /* Ensure consistent vertical alignment */
-    opacity: 0.85;
-    transition: opacity 0.2s ease, transform 0.2s ease;
-}
-.control-btn:hover {
-    opacity: 1;
-    transform: scale(1.1);
-}
-
-.progress-bar-mock {
-    flex-grow: 1;
-    height: 10px; /* Thicker progress bar */
-    background-color: rgba(255,255,255,0.35); /* Lighter base for progress */
-    border-radius: 5px;
-    overflow: hidden;
-    cursor: pointer;
-}
-
-.progress-filled-mock {
-    height: 100%;
-    background-color: #0071e3; /* Apple Blue for progress */
-    border-radius: 5px;
-    transition: width 0.1s linear; /* Smooth progress change */
-}
-
-.video-playlist-thumbs {
-    display: flex;
-    flex-direction: column; /* Stack thumbnails vertically */
-    gap: 0.75rem;
-    overflow-y: auto; /* Scroll if many thumbs */
-    max-height: 450px; /* Corresponds to 16:9 player height roughly */
-    padding-right: 0.25rem; /* Space for scrollbar if it appears */
-}
-
-.thumb-item {
-    display: flex; /* Icon and text side-by-side */
-    align-items: center;
-    gap: 0.75rem;
-    border: 2px solid transparent;
-    border-radius: 6px;
-    cursor: pointer;
-    padding: 0.5rem; /* Padding around content */
-    background-color: #ffffff;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.07);
-    transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
-}
-
-.thumb-item:hover {
-    transform: translateY(-2px);
-    border-color: #c0c0c0;
-    background-color: #f9f9f9;
-}
-
-.thumb-item.active-thumb {
-    border-color: #0071e3;
-    background-color: #e9f5ff; /* Light blue tint for active */
-}
-
-.thumb-img { /* Class for the <img> tag in thumb item */
-    width: 120px; /* Fixed width for thumbnail image */
-    height: 67.5px; /* 16:9 aspect ratio */
-    border-radius: 4px;
-    object-fit: cover;
-    flex-shrink: 0; /* Prevent image from shrinking */
-}
-
-.thumb-title {
-    font-size: 0.9rem; /* Adjusted size */
-    color: #333;
-    line-height: 1.3;
-    /* Allow text wrapping for longer titles */
-    white-space: normal;
-    overflow: hidden;
-    /* text-overflow: ellipsis; - Might not be needed if text wraps */
-    /* display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; Max 2 lines */
-}
-
-
-/* Live Streaming Specifics */
-.live-player-placeholder {
-    /* border: 2px solid #e74c3c; Optional: Red border for live player */
-}
-
-.live-indicator-overlay {
-    position: absolute;
-    top: 15px;
-    left: 15px;
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    z-index: 5; /* Below controls if they overlap */
-}
-
-.live-badge {
-    background-color: #e74c3c; /* Bright Red */
-    color: white;
-    padding: 0.3rem 0.6rem;
-    font-size: 0.9rem;
-    font-weight: bold;
-    border-radius: 4px;
-    text-transform: uppercase;
-    line-height: 1; /* Ensure consistent height */
-}
-
-.viewer-count {
-    background-color: rgba(28, 28, 30, 0.85); /* Darker semi-transparent */
-    color: white;
-    padding: 0.3rem 0.6rem;
-    font-size: 0.9rem;
-    border-radius: 4px;
-    line-height: 1;
-}
-
-.live-stream-info {
-    padding: 1.5rem; /* More padding */
-    background-color: #ffffff; /* White background to stand out in section */
-    border-radius: 8px;
-    border: 1px solid #e0e0e0;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-}
-@media (max-width: 991px) { /* When layout stacks, add margin to info */
-    .live-stream-info {
-        margin-top: 1rem;
-    }
-}
-
-
-.live-stream-info h4 {
-    font-size: 1.4rem; /* Larger title for live event */
-    color: #1d1d1f;
-    margin-bottom: 0.75rem;
-}
-
-.live-stream-description { /* Specific class for live stream description */
-    font-size: 1rem;
-    color: #333333;
-    margin-bottom: 1.25rem;
-    line-height: 1.6;
-}
-
-.btn-join-chat { /* Uses .btn and .btn-primary, can add specific overrides */
-    width: 100%; /* Make button full width in this context */
-    padding-top: 0.75rem;
-    padding-bottom: 0.75rem;
-    font-size: 1.05rem;
-}
-
-.rec-card-category {
-    font-size: 0.85rem;
-    color: #777777; /* Muted category text */
-    margin-bottom: 1rem; /* More space before button */
-}
-
-.recommendation-card .btn-secondary.btn-small {
-    margin-top: auto; /* Pushes button to the bottom of the card */
-    align-self: flex-start; /* Align button to the left if container is wider */
-}
-
-.chat-panel-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.75rem 1.25rem; /* Adjusted padding */
-    background-color: #f5f5f7; /* Consistent light header */
-    border-bottom: 1px solid #e0e0e0;
-    /* border-top-left-radius and border-top-right-radius are inherited by overflow:hidden on parent */
-}
-
-.chat-panel-header h3 {
-    margin: 0;
-    font-size: 1.15rem; /* Slightly larger */
-    color: #1d1d1f;
-    font-weight: 600; /* Bolder header title */
-}
-
-.btn-close-chat {
-    background: transparent;
-    border: none;
-    font-size: 1.5rem; /* Larger close button */
-    color: #777777;
-    cursor: pointer;
-    padding: 0.25rem 0.5rem; /* Make it easier to click */
-    line-height: 1;
-    border-radius: 50%;
-    transition: color 0.2s ease, background-color 0.2s ease;
-}
-
-.btn-close-chat:hover {
-    color: #1d1d1f;
-    background-color: rgba(0,0,0,0.05);
-}
-
-.chat-messages-area {
-    flex-grow: 1;
-    padding: 1rem;
-    overflow-y: auto;
-    background-color: #f9f9f9; /* Slightly off-white for message area */
-}
-
-.chat-message {
-    margin-bottom: 0.85rem; /* Slightly more margin */
-    padding: 0.6rem 0.9rem; /* Adjusted padding */
-    border-radius: 15px; /* More rounded messages */
-    max-width: 85%; /* Slightly wider max-width */
-    clear: both;
-    line-height: 1.45; /* Improved line height for messages */
-    word-wrap: break-word; /* Ensure long words break */
-}
-
-.chat-message.sent {
-    background-color: #007aff; /* iOS blue for sent messages */
-    color: white;
-    float: right;
-    border-bottom-right-radius: 4px; /* Characteristic shape */
-    margin-left: auto; /* Push to right */
-}
-
-.chat-message.received {
-    background-color: #e5e5ea; /* iOS gray for received messages */
-    color: #1d1d1f;
-    float: left;
-    border-bottom-left-radius: 4px; /* Characteristic shape */
-    margin-right: auto; /* Push to left */
-}
-.chat-message p {
-    margin: 0;
-    padding: 0;
-    font-size: 0.95rem; /* Slightly larger message text */
-}
-
-.chat-message .timestamp {
-    font-size: 0.7rem;
-    color: #8e8e93; /* iOS-like timestamp color */
-    display: block;
-    margin-top: 0.3rem;
-    text-align: inherit; /* Inherit from parent for sent/received alignment */
-}
-.chat-message.sent .timestamp {
-    color: rgba(255,255,255,0.75); /* Lighter timestamp for sent messages */
-}
-
-
-.chat-input-area {
-    display: flex;
-    align-items: center; /* Align items vertically */
-    padding: 0.75rem 1rem;
-    border-top: 1px solid #e0e0e0;
-    background-color: #f5f5f7; /* Consistent light footer/input area */
-}
-
-.chat-input-area textarea,
-.chat-input-area input[type="text"] {
-    flex-grow: 1;
-    border: 1px solid #dcdcdc; /* Slightly softer border */
-    border-radius: 18px; /* Pill shape for input */
-    padding: 0.6rem 1rem; /* Comfortable padding */
-    resize: none;
-    font-size: 0.95rem;
-    line-height: 1.4;
-    margin-right: 0.75rem; /* Space before send button */
-    min-height: 38px; /* Ensure it aligns with button height roughly */
-}
-.chat-input-area textarea {
-    height: 38px; /* Start with single line height */
-    overflow-y: hidden; /* Hide scrollbar initially */
-}
-
-
-.chat-input-area .btn-send-message {
-    background-color: #007aff; /* Apple Blue */
-    color: white;
-    border: none;
-    border-radius: 18px; /* Match input pill shape */
-    padding: 0.6rem 1.25rem; /* Good padding for send button */
-    font-weight: 500;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-    font-size: 0.95rem;
-}
-
-/* Interactive Charts Section Styles */
-.chart-showcase-container {
-    /* Can add flex/grid if multiple charts are to be laid out */
-    margin-top: 1rem;
-}
-
-.chart-wrapper {
-    background: #ffffff;
-    padding: 1.5rem;
-    border-radius: 8px;
-    border: 1px solid #e0e0e0;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-    margin-bottom: 1.5rem;
-}
-
-.chart-wrapper h4 {
-    font-size: 1.3rem;
-    color: #1d1d1f;
-    margin-bottom: 1rem;
-    text-align: center;
-}
-
-.chart-placeholder-detailed {
-    position: relative;
-    min-height: 300px;
-    display: flex; /* Main container for Y-axis | (Chart + X-axis) */
-    background-color: #f9f9f9; /* Light bg for the chart area */
-    border-radius: 6px;
-    padding: 1rem;
-}
-
-.mock-axis {
-    display: flex;
-    color: #555555; /* Darker gray for axis text */
-    font-size: 0.75rem; /* Smaller axis labels */
-}
-
-.mock-y-axis {
-    flex-direction: column;
-    justify-content: space-between;
-    padding-right: 0.75rem; /* Increased padding */
-    border-right: 1px solid #cccccc;
-    text-align: right;
-}
-.mock-y-axis span {
-    display: block;
-}
-
-.mock-x-axis {
-    justify-content: space-around;
-    padding-top: 0.75rem; /* Increased padding */
-    border-top: 1px solid #cccccc;
-    width: 100%; /* Make X-axis take full width of its container */
-}
-
-.mock-chart-area {
-    flex-grow: 1;
-    position: relative; /* For positioning tooltip and SVG absolutely if needed */
-    display: flex; /* To help manage SVG if it doesn't take full height */
-    flex-direction: column; /* Stack SVG and X-axis */
-}
-
-.mock-line-chart {
-    width: 100%;
-    height: 100%; /* Make SVG take available space in .mock-chart-area */
-    flex-grow: 1;
-}
-
-.mock-line-1 {
-    fill: none;
-    stroke: #0071e3; /* Apple Blue */
-    stroke-width: 2.5px; /* Slightly thicker */
-}
-
-.mock-line-2 {
-    fill: none;
-    stroke: #34A853; /* Green */
-    stroke-width: 2.5px;
-}
-
-.mock-tooltip-point {
-    fill: #EA4335; /* Red */
-    stroke: white;
-    stroke-width: 2px;
-    r: 6px; /* Larger point */
-}
-
-.mock-tooltip {
-    background: rgba(29,29,31,0.85); /* Darker, more Mac-like tooltip */
-    color: white;
-    padding: 6px 10px; /* Adjusted padding */
-    border-radius: 5px;
-    font-size: 0.85rem;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-    pointer-events: none; /* So it doesn't interfere with chart interactions */
-}
-
-.mock-legend {
-    text-align: center;
-    padding-top: 1rem;
-    margin-top: 0.5rem; /* Space above legend */
-    border-top: 1px solid #f0f0f0; /* Light separator for legend */
-}
-
-.legend-item {
-    display: inline-flex; /* Align color swatch and text */
-    align-items: center;
-    font-size: 0.85rem;
-    color: #333333;
-    margin: 0 0.75rem;
-    cursor: default;
-}
-
-.legend-item::before {
-    content: '';
-    display: inline-block;
-    width: 12px;
-    height: 12px;
-    border-radius: 3px; /* Slightly rounded square */
-    margin-right: 0.5rem;
-}
-
-.legend-item.product-a::before { background-color: #0071e3; }
-.legend-item.product-b::before { background-color: #34A853; }
-
-
-/* Personalized Recommendations Section Styles */
-.recommendations-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 1.5rem;
-    margin-top: 1rem; /* Space below section description */
-}
-
-.recommendation-card {
-    background-color: #ffffff;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    overflow: hidden; /* To ensure img respects border-radius */
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-    display: flex;
-    flex-direction: column; /* Ensure content flows top-to-bottom */
-    transition: box-shadow 0.2s ease-out, transform 0.2s ease-out;
-}
-.recommendation-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-}
-
-
-.rec-card-img {
-    width: 100%;
-    height: 180px;
-    object-fit: cover; /* Crop image to fit, or use 'contain' if preferred */
-    display: block; /* Remove any extra space below image */
-}
-
-.rec-card-content {
-    padding: 1rem;
-    flex-grow: 1; /* Allows this area to take up remaining space */
-    display: flex;
-    flex-direction: column; /* To push button to bottom */
-}
-
-.rec-card-title {
-    font-size: 1.15rem; /* Slightly larger title */
-    margin-bottom: 0.35rem; /* Adjusted margin */
-    color: #1d1d1f; /* Darker title */
-    font-weight: 600;
-}
-
-.rec-card-category {
-    font-size: 0.85rem;
-    color: #777777; /* Muted category text */
-    margin-bottom: 1rem; /* More space before button */
-}
-
-.recommendation-card .btn-secondary.btn-small {
-    margin-top: auto; /* Pushes button to the bottom of the card */
-    align-self: flex-start; /* Align button to the left if container is wider */
-}
-
-.chat-input-area .btn-send-message:hover {
-    background-color: #005bb5; /* Darker blue */
-}
-
-/* Predictive Search Styles */
-.search-input-wrapper {
-    position: relative; /* For absolute positioning of the dropdown */
-    display: flex; /* To ensure input takes up space */
-    flex-grow: 1; /* Allows input to grow */
-}
-
-.predictive-search-dropdown {
-    position: absolute;
-    top: calc(100% + 2px); /* Below the input form, with a small gap from the form's border */
-    left: -0.5rem; /* Align with the start of the search form's padding-left */
-    right: -0.5rem; /* Align with the end of the search form (approx, button width might affect) - better to use width of parent */
-    width: calc(100% + 1rem); /* To match the parent .search-form's effective width including its padding */
-    background-color: #ffffff;
-    border: 1px solid #e0e0e0;
-    border-top: none; /* As it sits just below the form's border */
-    border-radius: 0 0 8px 8px; /* Rounded bottom corners */
-    box-shadow: 0 5px 12px rgba(0,0,0,0.1); /* Softer, more spread shadow */
-    z-index: 995; /* Below header notifications and chat, above page content */
-    max-height: 300px;
-    overflow-y: auto;
-    /* display: none; will be controlled by JS */
-    opacity: 0; /* For JS animation */
-    transform: translateY(5px);
-    transition: opacity 0.15s ease-out, transform 0.15s ease-out;
-    pointer-events: none;
-}
-.predictive-search-dropdown.active { /* JS will toggle this */
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
-}
-
-
-.search-form { /* Adjust existing search form to align dropdown correctly */
-    padding-left: 0; /* Remove previous padding, handled by wrapper or input now */
-    /* The wrapper will be inside this, so dropdown is relative to wrapper */
-}
-/* Ensure the input itself doesn't have left padding if wrapper handles it */
-#header-search-input {
-    padding-left: 0.75rem; /* Keep padding on input itself */
-}
-
-
-.suggestion-item {
-    display: flex; /* Align icon and text */
-    align-items: center;
-    padding: 0.75rem 1rem;
-    text-decoration: none;
-    color: #333333;
-    font-size: 0.9rem;
-    border-bottom: 1px solid #f0f0f0; /* Light separator for items */
-}
-.suggestion-item:last-child {
-    border-bottom: none;
-}
-
-.suggestion-icon {
-    margin-right: 0.75rem; /* Space after icon */
-    color: #777777;
-    font-size: 1rem; /* Adjust if using emoji or SVG */
-}
-
-.suggestion-item:hover {
-    background-color: #f5f5f7; /* Consistent light hover */
-    color: #0071e3; /* Highlight text on hover */
-}
-.suggestion-item:hover .suggestion-icon {
-    color: #0071e3; /* Highlight icon on hover */
-}
-
-
-.suggestion-footer {
-    padding: 0.6rem 1rem;
-    font-size: 0.8rem;
-    color: #777777;
-    background-color: #f9f9f9; /* Slightly different background for footer */
-    border-top: 1px solid #e0e0e0;
-    text-align: center;
-}
-.suggestion-footer strong { /* For the typed search term */
-    color: #333333;
-    font-weight: 600;
-}
-
-.cms-content-block .meta-info .date,
-.cms-content-block .meta-info .author {
-    font-weight: 500;
-}
-
-.cms-image-placeholder {
-    max-width: 100%;
-    height: auto;
-    margin-bottom: 1rem;
-    background-color: #e0e0e0; /* Fallback if image fails, matches placeholder URL */
-    border-radius: 6px;
-    display: block; /* Ensure it behaves as a block for margin */
-}
-
-.cms-content-block p { /* Paragraphs within cms-content-block */
-    font-size: 1rem; /* Slightly smaller than general .content-section p if needed, or keep consistent */
-    color: #333333;
-    line-height: 1.7;
-    margin-bottom: 1rem;
-}
-.cms-content-block p:last-of-type {
-    margin-bottom: 1.5rem; /* More space before "Read More" button */
-}
-
-
-.cms-editable-block {
-    background-color: #f9f9f9; /* Slightly different background for distinction */
-    padding: 1.5rem;
-    margin-bottom: 2rem;
-    border: 1px solid #dcdcdc;
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.03);
-}
-
-.cms-editable-block h4 {
-    font-size: 1.3rem;
-    color: #1d1d1f;
-    margin-bottom: 0.75rem;
-}
-
-.cms-editable-block p {
-    font-size: 1rem;
-    color: #333333;
-    line-height: 1.6;
-    margin-bottom: 0; /* No margin if it's the only paragraph */
-}
-
-/* Secondary Button Style */
-.btn-secondary {
-    color: #333333;
-    background-color: #e9e9ed; /* Light gray background */
-    border: 1px solid #dcdcdc; /* Border to match inputs/light theme elements */
-}
-
-.btn-secondary:hover {
-    background-color: #dcdcdc; /* Darker gray on hover */
-    color: #1d1d1f;
-    border-color: #c0c0c0;
-}
-
-.btn-secondary:focus, .btn-secondary.focus {
-  box-shadow: 0 0 0 0.2rem rgba(200, 200, 200, 0.5); /* Grayish focus shadow */
-}
-
-.btn-secondary:active, .btn-secondary.active {
-    background-color: #c0c0c0; /* Even darker for active state */
-    border-color: #b0b0b0;
-}
-
-/* WYSIWYG Editor Placeholder Styles */
-.wysiwyg-editor-placeholder-container {
-    margin: 2.5rem auto; /* More vertical margin to space it out */
-    padding: 1.5rem;
-    border: 1px solid #d0d0d0; /* Slightly more prominent border for a tool area */
-    border-radius: 8px;
-    background-color: #fdfdfd; /* Very light, almost white, to differentiate from section bg */
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05); /* Subtle shadow */
-}
-
-.wysiwyg-editor-placeholder-container h4 {
-    font-size: 1.4rem; /* Specific size for this title */
-    color: #1d1d1f;
-    margin-bottom: 0.5rem; /* Less margin than section description above it */
-    text-align: left; /* Align to left, not center like .section-description */
-}
-
-.wysiwyg-editor-placeholder-container .section-description {
-    text-align: left; /* Override general centered .section-description for this context */
-    margin-bottom: 1rem; /* Less margin for this specific description */
-    font-size: 1rem; /* Slightly smaller for this context */
-}
-
-.wysiwyg-toolbar-placeholder {
-    background-color: #f0f0f0; /* Light gray toolbar background */
-    padding: 0.75rem;
-    border-bottom: 1px solid #d0d0d0;
-    border-top-left-radius: 6px; /* Rounded corners for the toolbar top */
-    border-top-right-radius: 6px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem; /* Spacing for buttons */
-}
-
-.toolbar-button-placeholder {
-    padding: 0.4rem 0.6rem;
-    margin: 0; /* Gap property handles spacing */
-    background-color: #e7e7e7; /* Lighter gray for buttons */
-    border: 1px solid #cccccc;
-    border-radius: 4px;
-    font-size: 0.85rem;
-    color: #333333;
-    cursor: default; /* Indicates they are not interactive */
-    transition: background-color 0.2s ease;
-}
-
-.toolbar-button-placeholder:hover {
-    background-color: #dddddd; /* Slight darken on hover */
-}
-
-.wysiwyg-content-area-placeholder {
-    min-height: 200px;
-    padding: 1rem;
-    border: 1px solid #d0d0d0;
-    border-top: none; /* Toolbar border acts as top border */
-    background-color: #ffffff; /* White content editing area */
-    color: #1d1d1f;
-    font-size: 1rem;
-    line-height: 1.6;
-    border-bottom-left-radius: 6px; /* Rounded corners for the content area bottom */
-    border-bottom-right-radius: 6px;
-}
-
-.wysiwyg-content-area-placeholder p {
-    margin-bottom: 1rem;
-}
-.wysiwyg-content-area-placeholder p:last-child {
-    margin-bottom: 0;
-}
-
-/* User Dashboard Styles */
-.dashboard-widgets-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1.5rem; /* 20px is approx 1.25rem, using 1.5rem for consistency */
-}
-
-.dashboard-widget {
-    background-color: #ffffff; /* White background for widgets */
-    border: 1px solid #e0e0e0; /* Light gray border */
-    border-radius: 8px;
-    padding: 1.5rem;
-    flex: 1 1 calc(50% - 1.5rem); /* Two columns, accounting for gap */
-    min-width: 280px; /* Minimum width before stacking to single column */
-    box-shadow: 0 1px 3px rgba(0,0,0,0.03); /* Subtle shadow consistent with other elements */
-}
-
-.dashboard-widget h4 {
-    font-size: 1.3rem; /* Consistent with .cms-editable-block h4 */
-    color: #1d1d1f;
-    margin-bottom: 1rem; /* Space below widget title */
-}
-
-.widget-content {
-    /* Additional specific styling for widget content areas if needed */
-}
-
-/* Profile Widget Specifics */
-.widget-profile .profile-avatar-placeholder {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    margin: 0 auto 1rem auto; /* Centered avatar */
-    display: block;
-    background-color: #e0e0e0; /* Fallback color */
-}
-
-.widget-profile p {
-    font-size: 0.95rem;
-    color: #333333;
-    margin-bottom: 0.5rem;
-    line-height: 1.6;
-}
-
-.widget-profile p strong {
-    font-weight: 500;
-    color: #1d1d1f;
-}
-
-/* Admin Panel Styles */
-.admin-panel-layout {
-    display: flex;
-    gap: 1.5rem;
-    align-items: flex-start; /* Align items to the top */
-}
-
-.admin-sidebar {
-    flex: 0 0 250px; /* Fixed width for sidebar */
-    background-color: #f9f9f9; /* Slightly off-white */
-    padding: 1.5rem; /* More padding for sidebar */
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.03);
-}
-
-.admin-sidebar h3 {
-    font-size: 1.4rem; /* Consistent with WYSIWYG title */
-    color: #1d1d1f;
-    margin-bottom: 1rem;
-}
-
-.admin-nav-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.admin-nav-list li a {
-    display: block;
-    padding: 0.75rem 1rem;
-    text-decoration: none;
-    color: #333333;
-    border-radius: 5px;
-    margin-bottom: 0.5rem; /* Space between links */
-    transition: background-color 0.2s ease, color 0.2s ease;
-    font-weight: 500; /* Slightly bolder nav links */
-}
-
-.admin-nav-list li a:hover {
-    background-color: #e7e7e7; /* Light hover effect */
-    color: #1d1d1f;
-}
-
-.admin-nav-list li a.active-admin-link {
-    background-color: #0071e3; /* Apple Blue for active link */
-    color: #ffffff;
-}
-
-.admin-main-content {
-    flex-grow: 1; /* Takes remaining space */
-    background-color: #ffffff; /* White background for main content area */
-    padding: 1.5rem;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.03);
-}
-
-.admin-content-area h4 {
-    font-size: 1.5rem; /* Similar to data-display-area h3 */
-    color: #1d1d1f;
-    margin-bottom: 1rem;
-    border-bottom: 1px solid #e9e9e9; /* Subtle separator for title */
-    padding-bottom: 0.75rem;
-}
-.admin-content-area p {
-    font-size: 1rem;
-    color: #333333;
-    line-height: 1.6;
-}
-
-.admin-overview-widgets {
-    display: flex;
-    gap: 1rem;
-    margin-top: 1.5rem; /* More space above widgets */
-    flex-wrap: wrap;
-}
-
-.overview-widget {
-    background-color: #e9e9ed; /* Light gray consistent with btn-secondary */
-    padding: 1.25rem; /* Generous padding */
-    border-radius: 6px;
-    flex: 1 1 200px; /* Allow growing, base size, allow shrinking */
-    min-width: 180px; /* Prevent from becoming too narrow */
-    text-align: center;
-    font-size: 1rem;
-    color: #333333;
-    border: 1px solid #dcdcdc;
-}
-
-.overview-widget span {
-    font-weight: 500;
-    display: block;
-}
-
-/* Responsive adjustments for Admin Panel */
-@media (max-width: 992px) { /* Tablet breakpoint */
-    .admin-panel-layout {
-        flex-direction: column; /* Stack sidebar and main content */
-    }
-    .admin-sidebar {
-        flex: 0 0 auto; /* Reset flex basis */
-        width: 100%; /* Full width for sidebar */
-        margin-bottom: 1.5rem; /* Space when stacked */
-    }
-}
-.widget-profile .btn-small { /* Potentially create a .btn-small class */
-    padding: 0.4rem 0.8rem;
-    font-size: 0.85rem;
-    margin-top: 0.5rem; /* Space above the button */
-}
-
-/* List styles for other widgets */
-.dashboard-widget ul {
-    list-style: none;
-    padding-left: 0;
-    margin-bottom: 0; /* Remove default bottom margin from ul */
-}
-
-.dashboard-widget li {
-    font-size: 0.95rem;
-    color: #333333;
-    padding: 0.5rem 0; /* Vertical padding for list items */
-    border-bottom: 1px solid #f0f0f0; /* Very light separator for list items */
-}
-
-.dashboard-widget li:last-child {
-    border-bottom: none;
-}
-
-.dashboard-widget li a {
-    text-decoration: none;
-    color: #0071e3; /* Apple Blue for links */
-    transition: color 0.2s ease;
-}
-
-.dashboard-widget li a:hover {
-    color: #005bb5; /* Darker Apple Blue on hover */
-    text-decoration: underline;
-}
-
-/* Responsive adjustments for widgets */
-@media (max-width: 768px) {
-    .dashboard-widget {
-        flex: 1 1 100%; /* Stack to single column on smaller tablets/mobile */
-    }
-}
-
-/* Styled Form (Contact/Survey) */
-.styled-form {
-    max-width: 700px; /* Limit width for better readability */
-    margin: 1rem auto; /* Centering the form if section is wider */
-    background-color: #f9f9f9; /* Similar to auth-form background */
-    padding: 2rem;
-    border: 1px solid #dcdcdc;
-    border-radius: 8px;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
-}
-
-/* Reusing .form-group, input styles from .auth-form which are already themed */
-
-.form-group select,
-.form-group textarea {
-    width: 100%;
-    padding: 0.75rem 1rem;
-    border: 1px solid #d0d0d0; /* Light gray border */
-    border-radius: 5px;
-    background-color: #ffffff; /* White input background */
-    color: #1d1d1f; /* Dark text */
-    font-size: 1rem;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
-    font-family: inherit; /* Ensure select and textarea inherit body font */
-    line-height: 1.5; /* Consistent line height */
-}
-
-.form-group select:focus,
-.form-group textarea:focus {
-    outline: none;
-    border-color: #0071e3; /* Apple Blue border on focus */
-    box-shadow: 0 0 0 2px rgba(0, 113, 227, 0.2); /* Subtle blue glow */
-}
-
-.form-group textarea {
-    resize: vertical; /* Allow vertical resize, not horizontal */
-    min-height: 120px; /* Decent minimum height */
-}
-
-/* Styling for select dropdown arrow (browser default is often fine for minimalist) */
-.form-group select {
-    appearance: none; /* Remove default system appearance if custom arrow is desired */
-    /* If custom arrow: background-image: url('custom-arrow.svg'); background-repeat: no-repeat; background-position: right 1rem center; background-size: 1em; */
-    /* For now, rely on default browser arrow which is usually fine for Mac-like themes */
-}
-
-.form-group .checkbox-label { /* For custom styling of checkbox line */
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-weight: normal; /* Override if label has a general bold style */
-    color: #333333; /* Ensure text color */
-    cursor: pointer;
-}
-
-.form-group input[type="checkbox"] {
-    width: auto; /* Override 100% width from general input styles if any conflict */
-    margin-right: 0.5rem; /* Spacing between checkbox and text, if not using gap */
-    accent-color: #0071e3; /* Modern way to color checkbox, good for Apple themes */
-    /* For older browser support, more complex styling would be needed for custom checkbox */
-    height: 1em; /* Align better with text */
-    width: 1em;
-    vertical-align: middle;
-}
-
-/* Conditional field styling is handled by inline style display:none/block */
-/* .conditional-field {} */
-
-/* Social Login Styles */
-.social-login-container {
-    margin-top: 2.5rem; /* More spacing from forms above */
-    text-align: center;
-}
-
-.social-login-divider {
-    display: flex;
-    align-items: center;
-    text-align: center;
-    color: #888888; /* Muted text for divider */
-    font-size: 0.9rem;
-    margin-bottom: 1.5rem; /* More space below divider */
-}
-
-.social-login-divider span {
-    padding: 0 12px; /* Slightly more padding */
-    white-space: nowrap; /* Prevent "Or continue with" from wrapping */
-}
-
-.social-login-divider::before,
-.social-login-divider::after {
-    content: '';
-    flex-grow: 1;
-    background-color: #e0e0e0; /* Light line color */
-    height: 1px;
-}
-
-.social-login-buttons {
-    display: flex;
-    flex-direction: column; /* Stack buttons by default for mobile */
-    gap: 0.75rem;
-    align-items: center; /* Center buttons when stacked */
-}
-
-.btn-social {
-    display: inline-flex; /* Use inline-flex for better alignment with icon and text */
-    align-items: center;
-    justify-content: center; /* Center content within button */
-    gap: 0.75rem; /* Space between icon and text */
-    padding: 0.6rem 1rem;
-    border: 1px solid #d0d0d0; /* Standard light border */
-    border-radius: 5px; /* Consistent with other buttons/inputs */
-    background-color: #ffffff; /* White background */
-    color: #333333; /* Dark text */
-    font-size: 0.95rem;
-    text-decoration: none;
-    min-width: 230px; /* Ensure buttons have a decent minimum width */
-    cursor: pointer;
-    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.03); /* Subtle shadow for buttons */
-}
-
-.btn-social svg {
-    /* width and height are set inline in SVG, this is a fallback or override if needed */
-    width: 18px;
-    height: 18px;
-}
-
-.btn-social:hover {
-    border-color: #bbbbbb;
-    background-color: #f9f9f9; /* Very slight darken on hover */
-}
-
-/* Optional: Vendor-specific hover styles if desired for brand recognition */
-/* Keep them subtle to align with Mac Pro theme */
-.btn-social.btn-google:hover {
-    border-color: #C8D9F5; /* Lighter Google blue for border */
-    color: #2a75f3; /* Darker Google blue for text/icon */
-    background-color: #F8FAFF;
-}
-
-.btn-social.btn-facebook:hover {
-    border-color: #C2D4F2; /* Lighter Facebook blue for border */
-    color: #1267E0; /* Darker Facebook blue for text/icon */
-    background-color: #F5F8FF;
-}
-
-
-/* Responsive adjustments for social login buttons */
-@media (min-width: 480px) { /* For wider screens, place buttons side-by-side */
-    .social-login-buttons {
-        flex-direction: row;
-        justify-content: center; /* Center buttons in the row */
-    }
-}
-/* API Data Display Area Styles */
-.data-display-area {
-    background-color: #ffffff;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    padding: 1.5rem;
-    min-height: 100px;
-    margin-top: 1rem; /* Space below the section description */
-    box-shadow: 0 1px 3px rgba(0,0,0,0.03);
-}
-
-.data-display-area h3 { /* Styling for potential headings injected by JS */
-    font-size: 1.5rem;
-    color: #1d1d1f;
-    margin-bottom: 1rem;
-}
-.data-display-area h4 { /* Styling for potential sub-headings injected by JS */
-    font-size: 1.2rem;
-    color: #1d1d1f;
-    margin-top: 1rem;
-    margin-bottom: 0.5rem;
-}
-
-.data-display-area p {
-    font-size: 1rem;
-    color: #333333;
-    line-height: 1.6;
-    margin-bottom: 0.5rem;
-}
-
-.data-display-area p strong {
-    font-weight: 500;
-    color: #1d1d1f;
-}
-
-
-/* Header Search Styles */
-.header-search-container {
-    /* Adjust flex properties if needed, or rely on parent's flex properties */
-}
-
-.search-form {
-    display: flex;
-    align-items: center;
-    border: 1px solid #d0d0d0; /* Light gray border, consistent with inputs */
-    border-radius: 20px; /* Pill shape */
-    background-color: #f0f0f0; /* Very light gray background */
-    overflow: hidden; /* To contain children within border-radius */
-    padding-left: 0.5rem; /* Small padding before input */
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-.search-form:focus-within {
-    border-color: #0071e3; /* Apple Blue border on focus */
-    box-shadow: 0 0 0 2px rgba(0, 113, 227, 0.2); /* Subtle blue glow */
-}
-
-#header-search-input {
-    border: none;
-    outline: none;
-    padding: 0.5rem 0.75rem; /* 8px 12px */
-    background-color: transparent;
-    color: #1d1d1f; /* Dark text */
-    font-size: 0.9rem;
-    flex-grow: 1;
-    min-width: 150px; /* Prevent it from becoming too small */
-}
-
-#header-search-input::placeholder {
-    color: #888888; /* Lighter placeholder text */
-    opacity: 1; /* Firefox fix */
-}
-
-.search-button {
-    border: none;
-    background-color: transparent;
-    padding: 0.5rem 0.75rem; /* 8px 10px */
-    cursor: pointer;
-    display: flex; /* To center SVG icon if needed */
-    align-items: center;
-    justify-content: center;
-    color: #555555; /* Icon color */
-}
-
-/* Header Notifications Styles */
-.header-notifications-container {
-    position: relative; /* For positioning the dropdown panel */
-}
-
-.notification-bell-button {
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    position: relative;
-    padding: 0.5rem; /* Clickable area */
-    color: #555555; /* Icon color */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%; /* Make it round for hover effect */
-    transition: background-color 0.2s ease, color 0.2s ease;
-}
-
-.notification-bell-button:hover {
-    color: #0071e3; /* Apple Blue on hover */
-    background-color: rgba(0, 113, 227, 0.1); /* Subtle blue background */
-}
-
-.notification-bell-button svg {
-    display: block; /* Prevents small extra space */
-}
-
-.notification-badge {
-    position: absolute;
-    top: 2px;  /* Fine-tune position */
-    right: 2px; /* Fine-tune position */
-    background-color: red;
-    color: white;
-    border-radius: 50%;
-    font-size: 0.65rem; /* Smaller font for badge */
-    padding: 2px 4px;  /* Small padding */
-    line-height: 1;
-    text-align: center;
-    pointer-events: none; /* So it doesn't interfere with button click */
-}
-
-.notifications-panel {
-    position: absolute;
-    top: calc(100% + 10px); /* Position below button with a small gap */
-    right: 0;
-    background-color: #ffffff;
-    border: 1px solid #d0d0d0; /* Slightly softer border than e0e0e0 */
-    border-radius: 8px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.12); /* Softer shadow */
-    width: 360px; /* Slightly wider */
-    z-index: 1010; /* Higher than header's z-index if sticky */
-    opacity: 0; /* Hidden by default, JS will toggle */
-    transform: translateY(10px);
-    transition: opacity 0.2s ease-out, transform 0.2s ease-out;
-    pointer-events: none; /* Hidden by default */
-}
-
-.notifications-panel.active { /* JS will add this class */
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
-}
-
-
-.notifications-header {
-    padding: 0.75rem 1rem; /* Slightly reduced padding */
-    border-bottom: 1px solid #e0e0e0;
-}
-
-.notifications-header h4 {
-    margin: 0;
-    font-size: 1.1rem; /* Smaller heading for panel */
-    color: #1d1d1f;
-}
-
-.notifications-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    max-height: 320px; /* Adjusted max height */
-    overflow-y: auto;
-}
-
-.notification-item {
-    display: flex;
-    align-items: flex-start;
-    padding: 0.75rem 1rem;
-    text-decoration: none;
-    color: inherit;
-    border-bottom: 1px solid #f0f0f0; /* Lighter separator */
-    transition: background-color 0.15s ease;
-}
-.notification-item:last-child {
-    border-bottom: none;
-}
-
-.notification-item:hover {
-    background-color: #f5f5f7; /* Consistent light hover */
-}
-
-.notification-item.notification-unread {
-    background-color: #e9f0f8; /* Lighter, less saturated blue for unread */
-}
-.notification-item.notification-unread:hover {
-    background-color: #dde8f3;
-}
-
-
-.notification-icon {
-    margin-right: 0.85rem; /* Slightly more margin */
-    margin-top: 0.15rem; /* Align icon better with text block */
-    font-size: 1.1rem; /* Slightly smaller icon if emoji */
-    color: #555555;
-    width: 24px; /* Fixed width for icon area */
-    text-align: center;
-}
-
-.notification-content {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-}
-
-.notification-title {
-    font-weight: 600; /* Bolder title */
-    color: #1d1d1f; /* Darker title */
-    font-size: 0.95rem; /* Slightly adjusted size */
-    margin-bottom: 0.1rem;
-}
-
-.notification-text {
-    font-size: 0.85rem; /* Slightly smaller text */
-    color: #444444; /* Slightly darker than time */
-    line-height: 1.4;
-    margin: 0.1rem 0; /* Adjusted margin */
-}
-
-.notification-time {
-    font-size: 0.75rem; /* Smaller time text */
-    color: #777777;
-    margin-top: 0.15rem;
-}
-
-.notifications-footer {
-    padding: 0.75rem;
-    text-align: center;
-    border-top: 1px solid #e0e0e0;
-    background-color: #f9f9f9; /* Slight bg for footer */
-    border-bottom-left-radius: 7px; /* Match panel rounding */
-    border-bottom-right-radius: 7px;
-}
-
-.notifications-footer a {
-    text-decoration: none;
-    color: #0071e3; /* Apple Blue */
-    font-weight: 500;
-    font-size: 0.9rem;
-}
-
-.notifications-footer a:hover {
-    text-decoration: underline;
-}
-
-.search-button svg {
-    display: block; /* Remove extra space below SVG if any */
-}
-
-.search-button:hover {
-    color: #0071e3; /* Apple Blue on hover for icon */
-}
-
-/* Interactive Charts Section Styles */
-.chart-showcase-container {
-    /* Can add flex/grid if multiple charts are to be laid out */
-    margin-top: 1rem;
-}
-
-.chart-wrapper {
-    background: #ffffff;
-    padding: 1.5rem;
-    border-radius: 8px;
-    border: 1px solid #e0e0e0;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-    margin-bottom: 1.5rem;
-}
-
-.chart-wrapper h4 {
-    font-size: 1.3rem;
-    color: #1d1d1f;
-    margin-bottom: 1rem;
-    text-align: center;
-}
-
-.chart-placeholder-detailed {
-    position: relative;
-    min-height: 300px;
-    display: flex; /* Main container for Y-axis | (Chart + X-axis) */
-    background-color: #f9f9f9; /* Light bg for the chart area */
-    border-radius: 6px;
-    padding: 1rem;
-}
-
-.mock-axis {
-    display: flex;
-    color: #555555; /* Darker gray for axis text */
-    font-size: 0.75rem; /* Smaller axis labels */
-}
-
-.mock-y-axis {
-    flex-direction: column;
-    justify-content: space-between;
-    padding-right: 0.75rem; /* Increased padding */
-    border-right: 1px solid #cccccc;
-    text-align: right;
-}
-.mock-y-axis span {
-    display: block;
-}
-
-.mock-x-axis {
-    justify-content: space-around;
-    padding-top: 0.75rem; /* Increased padding */
-    border-top: 1px solid #cccccc;
-    width: 100%; /* Make X-axis take full width of its container */
-}
-
-.mock-chart-area {
-    flex-grow: 1;
-    position: relative; /* For positioning tooltip and SVG absolutely if needed */
-    display: flex; /* To help manage SVG if it doesn't take full height */
-    flex-direction: column; /* Stack SVG and X-axis */
-}
-
-.mock-line-chart {
-    width: 100%;
-    height: 100%; /* Make SVG take available space in .mock-chart-area */
-    flex-grow: 1;
-}
-
-.mock-line-1 {
-    fill: none;
-    stroke: #0071e3; /* Apple Blue */
-    stroke-width: 2.5px; /* Slightly thicker */
-}
-
-.mock-line-2 {
-    fill: none;
-    stroke: #34A853; /* Green */
-    stroke-width: 2.5px;
-}
-
-.mock-tooltip-point {
-    fill: #EA4335; /* Red */
-    stroke: white;
-    stroke-width: 2px;
-    r: 6px; /* Larger point */
-}
-
-.mock-tooltip {
-    background: rgba(29,29,31,0.85); /* Darker, more Mac-like tooltip */
-    color: white;
-    padding: 6px 10px; /* Adjusted padding */
-    border-radius: 5px;
-    font-size: 0.85rem;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-    pointer-events: none; /* So it doesn't interfere with chart interactions */
-}
-
-.mock-legend {
-    text-align: center;
-    padding-top: 1rem;
-    margin-top: 0.5rem; /* Space above legend */
-    border-top: 1px solid #f0f0f0; /* Light separator for legend */
-}
-
-.legend-item {
-    display: inline-flex; /* Align color swatch and text */
-    align-items: center;
-    font-size: 0.85rem;
-    color: #333333;
-    margin: 0 0.75rem;
-    cursor: default;
-}
-
-.legend-item::before {
-    content: '';
-    display: inline-block;
-    width: 12px;
-    height: 12px;
-    border-radius: 3px; /* Slightly rounded square */
-    margin-right: 0.5rem;
-}
-
-.legend-item.product-a::before { background-color: #0071e3; }
-.legend-item.product-b::before { background-color: #34A853; }
-
-
-/* Personalized Recommendations Section Styles */
-.recommendations-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 1.5rem;
-    margin-top: 1rem; /* Space below section description */
-}
-
-.recommendation-card {
-    background-color: #ffffff;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    overflow: hidden; /* To ensure img respects border-radius */
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-    display: flex;
-    flex-direction: column; /* Ensure content flows top-to-bottom */
-    transition: box-shadow 0.2s ease-out, transform 0.2s ease-out;
-}
-.recommendation-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-}
-
-
-.rec-card-img {
-    width: 100%;
-    height: 180px;
-    object-fit: cover; /* Crop image to fit, or use 'contain' if preferred */
-    display: block; /* Remove any extra space below image */
-}
-
-.rec-card-content {
-    padding: 1rem;
-    flex-grow: 1; /* Allows this area to take up remaining space */
-    display: flex;
-    flex-direction: column; /* To push button to bottom */
-}
-
-.rec-card-title {
-    font-size: 1.15rem; /* Slightly larger title */
-    margin-bottom: 0.35rem; /* Adjusted margin */
-    color: #1d1d1f; /* Darker title */
-    font-weight: 600;
-}
-
-.rec-card-category {
-    font-size: 0.85rem;
-    color: #777777; /* Muted category text */
-    margin-bottom: 1rem; /* More space before button */
-}
-
-.recommendation-card .btn-secondary.btn-small {
-    margin-top: auto; /* Pushes button to the bottom of the card */
-    align-self: flex-start; /* Align button to the left if container is wider */
-}
-/* Theme Switcher Styles */
-.theme-switcher-container {
-    margin-top: 1rem; /* Space above the toggle button */
-}
-
-.btn-theme-toggle {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.6rem; /* Increased gap slightly */
-    padding: 0.6rem 1.2rem; /* Slightly more padding for a more clickable feel */
-    border: 1px solid #d0d0d0; /* Consistent light border */
-    border-radius: 20px; /* Pill shape */
-    background-color: #f0f0f0; /* Light gray background */
-    color: #333333; /* Dark text */
-    font-size: 0.9rem;
-    font-weight: 500; /* Make text slightly bolder */
-    cursor: pointer;
-    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.04); /* Subtle shadow */
-}
-
-.btn-theme-toggle:hover {
-    border-color: #bbbbbb;
-    background-color: #e7e7e7; /* Slightly darker on hover */
-    color: #1d1d1f; /* Darken text on hover slightly */
-}
-
-.btn-theme-toggle:focus { /* Basic focus style for accessibility */
-    outline: none;
-    border-color: #0071e3;
-    box-shadow: 0 0 0 2px rgba(0, 113, 227, 0.2);
-}
-
-.toggle-icon {
-    font-size: 1.1rem; /* Adjust icon size */
-    line-height: 1; /* Ensure icons align well with text */
-}
-/* .sun-icon and .moon-icon are used by JS to toggle visibility */
-
-/* Dashboard Chart Placeholder Styles */
-.dashboard-chart-container { /* This is a .content-section-panel in HTML */
-    margin-top: 1.5rem;
-    padding: 1.5rem;
-    background-color: #ffffff;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.03);
-}
-
-.dashboard-chart-container h4 { /* Title specific to this container */
-    font-size: 1.3rem; /* Consistent with widget titles */
-    color: #1d1d1f;
-    margin-bottom: 1rem;
-}
-
-.chart-placeholder-area { /* This is the #chart-placeholder div */
-    width: 100%;
-    height: 300px;
-    background-color: #f0f0f0; /* Light gray to indicate chart area */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    border: 1px dashed #cccccc; /* Dashed border for placeholder */
-    border-radius: 6px;
-    color: #777777;
-    font-style: italic;
-    text-align: center; /* Ensure text inside is centered */
-}
-
-.chart-icon-placeholder {
-    font-size: 3rem;
-    margin-top: 0.5rem;
-    opacity: 0.5;
-}
-
-/* General Content Section Panel Style (can be reused, e.g. for dashboard-chart-container) */
-.content-section-panel {
-    margin-top: 1.5rem;
-    padding: 1.5rem;
-    background-color: #ffffff;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.03);
-}
-.content-section-panel h4 { /* Default h4 style for these panels */
-    font-size: 1.3rem;
-    color: #1d1d1f;
-    margin-bottom: 1rem;
-}
 [end of css/style.css]
 
 [end of css/style.css]
