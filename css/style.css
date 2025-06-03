@@ -1049,6 +1049,1896 @@ footer p {
     margin-bottom: 1rem;
 }
 
+/* Chat Bubble and Panel Styles */
+#chat-bubble-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1020; /* Higher than notifications panel */
+}
+
+#chat-bubble-toggle {
+    background-color: #0071e3; /* Apple Blue */
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25); /* Slightly stronger shadow */
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+#chat-bubble-toggle:hover {
+    background-color: #005bb5; /* Darker blue */
+    transform: scale(1.05);
+}
+#chat-bubble-toggle:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.4);
+}
+
+#chat-selection-popup {
+    position: absolute;
+    bottom: calc(100% + 10px); /* Above bubble with a gap */
+    right: 0;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+    padding: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 200px; /* Set a width for the popup */
+    z-index: 1021; /* Above bubble */
+}
+
+.btn-chat-select {
+    background-color: #f0f0f0;
+    color: #333;
+    border: 1px solid #d0d0d0;
+    padding: 0.6rem 1rem;
+    border-radius: 5px;
+    text-align: left; /* Align text left */
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.btn-chat-select:hover {
+    background-color: #e0e0e0;
+    color: #000;
+}
+
+.chat-panel {
+    position: fixed;
+    bottom: 90px; /* Initial position above bubble, can be adjusted by JS */
+    right: 20px;
+    width: 370px; /* Slightly wider */
+    max-height: 70vh; /* Max height relative to viewport */
+    min-height: 300px; /* Minimum sensible height */
+    background-color: #ffffff;
+    border: 1px solid #d0d0d0; /* Softer border */
+    border-radius: 12px; /* More rounded corners */
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15); /* More prominent shadow */
+    z-index: 1019; /* Below bubble container but above most content */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* Ensure children conform to border radius */
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+    transition: opacity 0.25s ease-out, transform 0.25s ease-out;
+    pointer-events: none;
+}
+.chat-panel.active { /* JS will toggle this */
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+}
+
+/* Interactive Charts Section Styles */
+.chart-showcase-container {
+    /* Can add flex/grid if multiple charts are to be laid out */
+    margin-top: 1rem;
+}
+
+.chart-wrapper {
+    background: #ffffff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    margin-bottom: 1.5rem;
+}
+
+.chart-wrapper h4 {
+    font-size: 1.3rem;
+    color: #1d1d1f;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.chart-placeholder-detailed {
+    position: relative;
+    min-height: 300px;
+    display: flex; /* Main container for Y-axis | (Chart + X-axis) */
+    background-color: #f9f9f9; /* Light bg for the chart area */
+    border-radius: 6px;
+    padding: 1rem;
+}
+
+.mock-axis {
+    display: flex;
+    color: #555555; /* Darker gray for axis text */
+    font-size: 0.75rem; /* Smaller axis labels */
+}
+
+.mock-y-axis {
+    flex-direction: column;
+    justify-content: space-between;
+    padding-right: 0.75rem; /* Increased padding */
+    border-right: 1px solid #cccccc;
+    text-align: right;
+}
+.mock-y-axis span {
+    display: block;
+}
+
+.mock-x-axis {
+    justify-content: space-around;
+    padding-top: 0.75rem; /* Increased padding */
+    border-top: 1px solid #cccccc;
+    width: 100%; /* Make X-axis take full width of its container */
+}
+
+.mock-chart-area {
+    flex-grow: 1;
+    position: relative; /* For positioning tooltip and SVG absolutely if needed */
+    display: flex; /* To help manage SVG if it doesn't take full height */
+    flex-direction: column; /* Stack SVG and X-axis */
+}
+
+.mock-line-chart {
+    width: 100%;
+    height: 100%; /* Make SVG take available space in .mock-chart-area */
+    flex-grow: 1;
+}
+
+.mock-line-1 {
+    fill: none;
+    stroke: #0071e3; /* Apple Blue */
+    stroke-width: 2.5px; /* Slightly thicker */
+}
+
+.mock-line-2 {
+    fill: none;
+    stroke: #34A853; /* Green */
+    stroke-width: 2.5px;
+}
+
+.mock-tooltip-point {
+    fill: #EA4335; /* Red */
+    stroke: white;
+    stroke-width: 2px;
+    r: 6px; /* Larger point */
+}
+
+.mock-tooltip {
+    background: rgba(29,29,31,0.85); /* Darker, more Mac-like tooltip */
+    color: white;
+    padding: 6px 10px; /* Adjusted padding */
+    border-radius: 5px;
+    font-size: 0.85rem;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    pointer-events: none; /* So it doesn't interfere with chart interactions */
+}
+
+.mock-legend {
+    text-align: center;
+    padding-top: 1rem;
+    margin-top: 0.5rem; /* Space above legend */
+    border-top: 1px solid #f0f0f0; /* Light separator for legend */
+}
+
+.legend-item {
+    display: inline-flex; /* Align color swatch and text */
+    align-items: center;
+    font-size: 0.85rem;
+    color: #333333;
+    margin: 0 0.75rem;
+    cursor: default;
+}
+
+.legend-item::before {
+    content: '';
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 3px; /* Slightly rounded square */
+    margin-right: 0.5rem;
+}
+
+.legend-item.product-a::before { background-color: #0071e3; }
+.legend-item.product-b::before { background-color: #34A853; }
+
+
+/* Personalized Recommendations Section Styles */
+.recommendations-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem; /* Space below section description */
+}
+
+.recommendation-card {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden; /* To ensure img respects border-radius */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column; /* Ensure content flows top-to-bottom */
+    transition: box-shadow 0.2s ease-out, transform 0.2s ease-out;
+}
+.recommendation-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+
+.rec-card-img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover; /* Crop image to fit, or use 'contain' if preferred */
+    display: block; /* Remove any extra space below image */
+}
+
+.rec-card-content {
+    padding: 1rem;
+    flex-grow: 1; /* Allows this area to take up remaining space */
+    display: flex;
+    flex-direction: column; /* To push button to bottom */
+}
+
+.rec-card-title {
+    font-size: 1.15rem; /* Slightly larger title */
+    margin-bottom: 0.35rem; /* Adjusted margin */
+    color: #1d1d1f; /* Darker title */
+    font-weight: 600;
+}
+
+/* Advanced File Upload Styles */
+.drag-drop-zone {
+    background-color: #f9f9f9;
+    border: 3px dashed #0071e3; /* Prominent dashed border */
+    border-radius: 12px; /* More rounded */
+    padding: 2.5rem;
+    text-align: center;
+    min-height: 220px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease-out, border-color 0.2s ease-out;
+    cursor: pointer; /* Indicate it's interactive */
+}
+
+.drag-drop-zone.dragover {
+    background-color: #e9f5ff; /* Light blue feedback */
+    border-color: #005bb5; /* Darker blue */
+    border-style: solid; /* Solid border on drag over */
+}
+
+.drag-drop-prompt .upload-icon {
+    font-size: 3.5rem;
+    color: #0071e3;
+    margin-bottom: 0.75rem;
+    display: block; /* Ensure margin bottom works */
+}
+
+.drag-drop-prompt p {
+    margin-bottom: 0.75rem;
+    color: #555555;
+    font-size: 1.1rem;
+    font-weight: 500; /* Slightly bolder prompt text */
+}
+
+.drag-drop-prompt .small-text {
+    font-size: 0.9rem;
+    margin-bottom: 1rem; /* More space before button */
+    color: #777777;
+}
+
+/* Fallback input is hidden, label is styled as btn btn-secondary */
+#file-upload-fallback { /* Visually hidden but accessible */
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+#file-upload-fallback + label { /* Style the label like a button */
+    cursor: pointer;
+}
+
+
+.file-preview-list {
+    margin-top: 1.5rem;
+    text-align: left;
+    width: 100%;
+    max-height: 200px; /* Limit height for many files */
+    overflow-y: auto; /* Scroll if needed */
+    padding-right: 10px; /* Space for scrollbar */
+}
+
+.file-preview-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.6rem 0.8rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px; /* More rounded items */
+    background-color: #ffffff;
+    margin-bottom: 0.6rem;
+    font-size: 0.9rem;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04); /* Subtle shadow */
+}
+
+.file-icon-preview { /* For a generic file icon if added by JS */
+    font-size: 1.5rem;
+    margin-right: 0.75rem;
+    color: #0071e3; /* Use accent color for icon */
+}
+
+.file-name {
+    flex-grow: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-right: 1rem;
+    color: #333333; /* Darker file name */
+}
+
+.file-size {
+    color: #777777;
+    margin-right: 1rem;
+    font-size: 0.85rem;
+    flex-shrink: 0; /* Prevent shrinking */
+}
+
+.remove-file-btn {
+    background: transparent;
+    border: none;
+    color: #e74c3c; /* Red remove button */
+    cursor: pointer;
+    font-size: 1.2rem; /* Make icon slightly larger */
+    padding: 0.25rem;
+    transition: color 0.2s ease;
+}
+.remove-file-btn:hover {
+    color: #c0392b; /* Darker red on hover */
+}
+
+.upload-status-area {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+}
+
+.upload-status-area h4 {
+    margin-top: 0; /* Remove default h4 margin if any */
+    margin-bottom: 0.75rem;
+    font-size: 1.1rem; /* Adjusted size */
+    color: #333333;
+    font-weight: 500;
+}
+
+.progress-bar-upload {
+    width: 100%;
+    background-color: #e0e0e0; /* Slightly darker background for progress bar */
+    border-radius: 8px; /* More rounded */
+    height: 24px; /* Taller progress bar */
+    overflow: hidden;
+    margin-bottom: 0.75rem; /* Space below progress bar */
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.1); /* Inner shadow */
+}
+
+.progress-filled-upload {
+    height: 100%;
+    background-color: #34A853; /* Green for success/progress */
+    color: white;
+    text-align: center;
+    line-height: 24px; /* Match height */
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: width 0.3s ease-out; /* Smoother transition */
+    border-radius: 8px 0 0 8px; /* Match parent, but only left side if not full */
+}
+.progress-filled-upload.full { /* Class when 100% */
+    border-radius: 8px;
+}
+
+
+#upload-feedback {
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    color: #333333; /* Default feedback color */
+}
+#upload-feedback.success {
+    color: #34A853; /* Green for success */
+    font-weight: 500;
+}
+#upload-feedback.error {
+    color: #e74c3c; /* Red for error */
+    font-weight: 500;
+}
+/* Media Hub Section Styles */
+.media-subsection {
+    margin-bottom: 2.5rem; /* Increased margin */
+    padding-bottom: 2rem; /* Increased padding */
+    border-bottom: 1px solid #e9e9ed; /* Softer border */
+}
+.media-subsection:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0.5rem; /* Less padding if it's the last one */
+}
+
+.media-subsection h3 {
+    font-size: 1.8rem; /* Consistent title size */
+    color: #1d1d1f;
+    margin-bottom: 1.5rem;
+    text-align: left; /* Align subsection titles left */
+}
+
+.video-streaming-layout,
+.live-streaming-layout {
+    display: grid;
+    grid-template-columns: 1fr; /* Default to single column */
+    gap: 1.5rem;
+}
+
+@media (min-width: 992px) { /* Desktop layout for video streaming */
+    .video-streaming-layout {
+        grid-template-columns: 2fr 1fr; /* Player takes 2/3, playlist 1/3 */
+    }
+    .live-streaming-layout { /* Player and info side-by-side */
+        grid-template-columns: 2fr 1fr;
+    }
+}
+
+.main-video-player-placeholder {
+    position: relative;
+    background-color: #1c1c1e; /* Darker background for video player */
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1); /* Softer shadow for player */
+    /* margin-bottom: 1rem; /* Removed as gap is handled by grid */
+}
+
+.video-player-img { /* Class for the actual <img> tag */
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    object-fit: cover; /* Ensure image covers the area */
+    /* border-radius: 8px; /* Removed, parent overflow:hidden handles it */
+}
+
+.video-controls-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.3) 60%, rgba(0,0,0,0) 100%);
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    box-sizing: border-box;
+    /* border-bottom-left-radius and right already handled by parent overflow:hidden */
+}
+
+.main-video-player-placeholder:hover .video-controls-overlay {
+    opacity: 1;
+}
+
+.control-btn {
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 1.3rem; /* Good size for player controls */
+    cursor: pointer;
+    padding: 0.35rem; /* Slightly more padding */
+    line-height: 1; /* Ensure consistent vertical alignment */
+    opacity: 0.85;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.control-btn:hover {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+.progress-bar-mock {
+    flex-grow: 1;
+    height: 10px; /* Thicker progress bar */
+    background-color: rgba(255,255,255,0.35); /* Lighter base for progress */
+    border-radius: 5px;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.progress-filled-mock {
+    height: 100%;
+    background-color: #0071e3; /* Apple Blue for progress */
+    border-radius: 5px;
+    transition: width 0.1s linear; /* Smooth progress change */
+}
+
+.video-playlist-thumbs {
+    display: flex;
+    flex-direction: column; /* Stack thumbnails vertically */
+    gap: 0.75rem;
+    overflow-y: auto; /* Scroll if many thumbs */
+    max-height: 450px; /* Corresponds to 16:9 player height roughly on desktop */
+    padding: 0.25rem; /* Small padding around thumbs area */
+    background-color: #f9f9f9; /* Light background for playlist area */
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+}
+
+.thumb-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    border: 2px solid transparent;
+    border-radius: 6px;
+    cursor: pointer;
+    padding: 0.5rem;
+    background-color: #ffffff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.07);
+    transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+    flex-shrink: 0; /* Prevent items from shrinking if container is too small (though overflow-y handles this) */
+}
+
+.thumb-item:hover {
+    transform: translateY(-2px);
+    border-color: #c0c0c0;
+    background-color: #f0f0f0; /* Slightly lighter hover */
+}
+
+.thumb-item.active-thumb {
+    border-color: #0071e3;
+    background-color: #e9f5ff; /* Light blue tint for active */
+    box-shadow: 0 2px 5px rgba(0,113,227,0.2);
+}
+
+.thumb-img {
+    width: 120px;
+    height: 67.5px; /* 16:9 aspect ratio */
+    border-radius: 4px;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.thumb-title {
+    font-size: 0.9rem;
+    color: #333;
+    line-height: 1.3;
+    white-space: normal;
+    overflow: hidden;
+    /* For multi-line ellipsis (optional) */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+
+/* Live Streaming Specifics */
+.live-player-placeholder {
+    /* Can add specific styles if it needs to differ from regular video player */
+}
+
+.live-indicator-overlay {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    z-index: 5; /* Ensure it's above video but below controls if they overlap */
+}
+
+.live-badge {
+    background-color: #e74c3c; /* Bright Red */
+    color: white;
+    padding: 0.3rem 0.6rem;
+    font-size: 0.9rem;
+    font-weight: bold;
+    border-radius: 4px;
+    text-transform: uppercase;
+    line-height: 1;
+}
+
+.viewer-count {
+    background-color: rgba(28, 28, 30, 0.85);
+    color: white;
+    padding: 0.3rem 0.6rem;
+    font-size: 0.9rem;
+    border-radius: 4px;
+    line-height: 1;
+}
+
+.live-stream-info {
+    padding: 1.5rem;
+    background-color: #ffffff; /* White background for info panel */
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    display: flex; /* Added for better internal alignment */
+    flex-direction: column; /* Stack content vertically */
+}
+@media (max-width: 991px) {
+    .live-stream-info {
+        margin-top: 0; /* Grid gap handles spacing */
+    }
+}
+
+.live-stream-info h4 {
+    font-size: 1.4rem;
+    color: #1d1d1f;
+    margin-bottom: 0.75rem;
+}
+
+.live-stream-description {
+    font-size: 1rem;
+    color: #333333;
+    margin-bottom: 1.25rem;
+    line-height: 1.6;
+    flex-grow: 1; /* Allow description to take available space */
+}
+
+.btn-join-chat {
+    width: 100%;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    font-size: 1.05rem;
+    margin-top: auto; /* Push to bottom if content above is short */
+}
+
+/* User-Generated Content (UGC) Feed Styles */
+.ugc-posts-container {
+    max-width: 700px; /* Readable width for a feed */
+    margin: 30px auto; /* Centering and spacing from description */
+}
+
+.ugc-post {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+}
+
+.ugc-post-header {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid #f0f0f0; /* Lighter border for internal separation */
+}
+
+.user-avatar-ugc {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    margin-right: 1rem;
+    object-fit: cover; /* Ensure avatar images cover the area */
+}
+
+.user-info-ugc {
+    display: flex;
+    flex-direction: column;
+}
+
+.username-ugc {
+    font-weight: 600; /* Bolder username */
+    color: #1d1d1f;
+    font-size: 1rem;
+}
+
+.post-timestamp-ugc {
+    font-size: 0.8rem;
+    color: #777777;
+}
+
+.ugc-post-content {
+    padding: 1rem;
+}
+
+.ugc-post-content p { /* Paragraphs within post content */
+    font-size: 0.95rem; /* Slightly smaller for post text */
+    line-height: 1.6;
+    color: #333333;
+    margin-bottom: 1rem; /* Space between paragraphs or before image */
+}
+
+.ugc-shared-image {
+    display: block; /* Make image block to handle margins correctly */
+    max-width: 100%;
+    border-radius: 6px;
+    margin-top: 1rem; /* Space if there's text above it */
+    border: 1px solid #e9e9ed; /* Subtle border for shared images */
+}
+
+.ugc-post-footer {
+    padding: 0.5rem 1rem;
+    border-top: 1px solid #f0f0f0;
+    display: flex;
+    justify-content: space-around; /* Distribute actions evenly */
+    gap: 0.5rem;
+}
+
+.btn-ugc-action {
+    background: transparent;
+    border: none; /* Removed border for a cleaner look */
+    color: #555555;
+    padding: 0.5rem 0.75rem;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.btn-ugc-action:hover {
+    background-color: #e9e9ed; /* Subtle background on hover */
+    color: #1d1d1f; /* Darker text on hover */
+}
+
+.btn-ugc-action .icon {
+    font-size: 1rem; /* Adjust icon size if needed */
+}
+
+
+/* Gamification Elements Styles */
+.gamification-layout {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 30px; /* Spacing from section description */
+}
+
+.user-gamification-stats h4, /* Titles within the panels */
+.leaderboard-container h4 {
+    font-size: 1.3rem;
+    color: #1d1d1f;
+    margin-bottom: 1rem;
+}
+
+.stat-item {
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1rem;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+.stat-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.stat-label {
+    color: #555555;
+}
+
+.stat-value {
+    font-weight: 600;
+    color: #0071e3;
+}
+
+.badges-showcase {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-top: 0.5rem;
+    justify-content: flex-start;
+}
+
+.badge-icon {
+    font-size: 2rem;
+    padding: 0.3rem;
+    background-color: #e9e9ed;
+    border: 1px solid #d0d0d0;
+    border-radius: 6px;
+    cursor: default;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    transition: transform 0.2s ease;
+}
+.badge-icon:hover {
+    transform: scale(1.1);
+}
+
+.leaderboard-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.leaderboard-item {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 0.5rem;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 0.95rem;
+    transition: background-color 0.2s ease;
+}
+.leaderboard-item:last-child {
+    border-bottom: none;
+}
+.leaderboard-item:hover {
+    background-color: #f9f9f9;
+}
+
+.rank {
+    font-weight: bold;
+    margin-right: 1rem;
+    color: #0071e3;
+    min-width: 25px;
+    text-align: right;
+}
+
+.leaderboard-avatar {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    margin-right: 0.75rem;
+    object-fit: cover;
+    background-color: #e0e0e0;
+}
+
+.name {
+    flex-grow: 1;
+    font-weight: 500;
+    color: #1d1d1f;
+}
+
+.score {
+    font-weight: 600;
+    color: #34A853; /* Green for score */
+    font-size: 0.9rem;
+}
+
+/* Advanced File Upload Styles */
+.drag-drop-zone {
+    background-color: #f9f9f9;
+    border: 3px dashed #0071e3; /* Prominent dashed border */
+    border-radius: 12px; /* More rounded */
+    padding: 2.5rem;
+    text-align: center;
+    min-height: 220px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease-out, border-color 0.2s ease-out;
+    cursor: pointer; /* Indicate it's interactive */
+}
+
+.drag-drop-zone.dragover {
+    background-color: #e9f5ff; /* Light blue feedback */
+    border-color: #005bb5; /* Darker blue */
+    border-style: solid; /* Solid border on drag over */
+}
+
+.drag-drop-prompt .upload-icon {
+    font-size: 3.5rem;
+    color: #0071e3;
+    margin-bottom: 0.75rem;
+    display: block; /* Ensure margin bottom works */
+}
+
+.drag-drop-prompt p {
+    margin-bottom: 0.75rem;
+    color: #555555;
+    font-size: 1.1rem;
+    font-weight: 500; /* Slightly bolder prompt text */
+}
+
+.drag-drop-prompt .small-text {
+    font-size: 0.9rem;
+    margin-bottom: 1rem; /* More space before button */
+    color: #777777;
+}
+
+/* Fallback input is hidden, label is styled as btn btn-secondary */
+#file-upload-fallback { /* Visually hidden but accessible */
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+#file-upload-fallback + label { /* Style the label like a button */
+    cursor: pointer;
+}
+
+
+.file-preview-list {
+    margin-top: 1.5rem;
+    text-align: left;
+    width: 100%;
+    max-height: 200px; /* Limit height for many files */
+    overflow-y: auto; /* Scroll if needed */
+    padding-right: 10px; /* Space for scrollbar */
+}
+
+.file-preview-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.6rem 0.8rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px; /* More rounded items */
+    background-color: #ffffff;
+    margin-bottom: 0.6rem;
+    font-size: 0.9rem;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04); /* Subtle shadow */
+}
+
+.file-icon-preview { /* For a generic file icon if added by JS */
+    font-size: 1.5rem;
+    margin-right: 0.75rem;
+    color: #0071e3; /* Use accent color for icon */
+}
+
+.file-name {
+    flex-grow: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-right: 1rem;
+    color: #333333; /* Darker file name */
+}
+
+.file-size {
+    color: #777777;
+    margin-right: 1rem;
+    font-size: 0.85rem;
+    flex-shrink: 0; /* Prevent shrinking */
+}
+
+.remove-file-btn {
+    background: transparent;
+    border: none;
+    color: #e74c3c; /* Red remove button */
+    cursor: pointer;
+    font-size: 1.2rem; /* Make icon slightly larger */
+    padding: 0.25rem;
+    transition: color 0.2s ease;
+}
+.remove-file-btn:hover {
+    color: #c0392b; /* Darker red on hover */
+}
+
+.upload-status-area {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+}
+
+.upload-status-area h4 {
+    margin-top: 0; /* Remove default h4 margin if any */
+    margin-bottom: 0.75rem;
+    font-size: 1.1rem; /* Adjusted size */
+    color: #333333;
+    font-weight: 500;
+}
+
+.progress-bar-upload {
+    width: 100%;
+    background-color: #e0e0e0; /* Slightly darker background for progress bar */
+    border-radius: 8px; /* More rounded */
+    height: 24px; /* Taller progress bar */
+    overflow: hidden;
+    margin-bottom: 0.75rem; /* Space below progress bar */
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.1); /* Inner shadow */
+}
+
+.progress-filled-upload {
+    height: 100%;
+    background-color: #34A853; /* Green for success/progress */
+    color: white;
+    text-align: center;
+    line-height: 24px; /* Match height */
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: width 0.3s ease-out; /* Smoother transition */
+    border-radius: 8px 0 0 8px; /* Match parent, but only left side if not full */
+}
+.progress-filled-upload.full { /* Class when 100% */
+    border-radius: 8px;
+}
+
+
+#upload-feedback {
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    color: #333333; /* Default feedback color */
+}
+#upload-feedback.success {
+    color: #34A853; /* Green for success */
+    font-weight: 500;
+}
+#upload-feedback.error {
+    color: #e74c3c; /* Red for error */
+    font-weight: 500;
+}
+
+/* User-Generated Content (UGC) Feed Styles */
+.ugc-posts-container {
+    max-width: 700px; /* Readable width for a feed */
+    margin: 30px auto; /* Centering and spacing from description */
+}
+
+.ugc-post {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+}
+
+.ugc-post-header {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid #f0f0f0; /* Lighter border for internal separation */
+}
+
+.user-avatar-ugc {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    margin-right: 1rem;
+    object-fit: cover; /* Ensure avatar images cover the area */
+}
+
+.user-info-ugc {
+    display: flex;
+    flex-direction: column;
+}
+
+.username-ugc {
+    font-weight: 600; /* Bolder username */
+    color: #1d1d1f;
+    font-size: 1rem;
+}
+
+.post-timestamp-ugc {
+    font-size: 0.8rem;
+    color: #777777;
+}
+
+.ugc-post-content {
+    padding: 1rem;
+}
+
+.ugc-post-content p { /* Paragraphs within post content */
+    font-size: 0.95rem; /* Slightly smaller for post text */
+    line-height: 1.6;
+    color: #333333;
+    margin-bottom: 1rem; /* Space between paragraphs or before image */
+}
+
+.ugc-shared-image {
+    display: block; /* Make image block to handle margins correctly */
+    max-width: 100%;
+    border-radius: 6px;
+    margin-top: 1rem; /* Space if there's text above it */
+    border: 1px solid #e9e9ed; /* Subtle border for shared images */
+}
+
+.ugc-post-footer {
+    padding: 0.5rem 1rem;
+    border-top: 1px solid #f0f0f0;
+    display: flex;
+    justify-content: space-around; /* Distribute actions evenly */
+    gap: 0.5rem;
+}
+
+.btn-ugc-action {
+    background: transparent;
+    border: none; /* Removed border for a cleaner look */
+    color: #555555;
+    padding: 0.5rem 0.75rem;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.btn-ugc-action:hover {
+    background-color: #e9e9ed; /* Subtle background on hover */
+    color: #1d1d1f; /* Darker text on hover */
+}
+
+.btn-ugc-action .icon {
+    font-size: 1rem; /* Adjust icon size if needed */
+    /* margin-right: 0.4rem; /* Replaced by gap */
+}
+
+
+/* Gamification Elements Styles */
+.gamification-layout {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 30px; /* Spacing from section description */
+}
+
+/* .user-gamification-stats and .leaderboard-container will use .content-section-panel styles */
+/* Add specific overrides or additions if needed */
+
+.user-gamification-stats h4,
+.leaderboard-container h4 {
+    /* These will inherit from .content-section-panel h4 if that's defined,
+       or from .dashboard-chart-container h4 if that was made generic enough.
+       If not, style them: */
+    font-size: 1.3rem;
+    color: #1d1d1f;
+    margin-bottom: 1rem;
+    /* text-align: center; /* Optional: center titles within these panels */
+}
+
+
+.stat-item {
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1rem;
+    padding: 0.6rem 0; /* Increased padding */
+    border-bottom: 1px solid #f0f0f0;
+}
+.stat-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0; /* No margin for the last item */
+}
+
+.stat-label {
+    color: #555555;
+}
+
+.stat-value {
+    font-weight: 600;
+    color: #0071e3; /* Apple Blue for stat values */
+}
+
+.badges-showcase {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-top: 0.5rem;
+    justify-content: flex-start; /* Align badges to the start */
+}
+
+.badge-icon {
+    font-size: 2rem; /* Larger badges */
+    padding: 0.3rem;
+    background-color: #e9e9ed; /* Light gray background */
+    border: 1px solid #d0d0d0; /* Subtle border */
+    border-radius: 6px;
+    cursor: default;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05); /* Subtle shadow */
+    transition: transform 0.2s ease;
+}
+.badge-icon:hover {
+    transform: scale(1.1); /* Slight zoom on hover */
+}
+
+
+.leaderboard-list {
+    list-style: none;
+    padding: 0;
+    margin: 0; /* Remove default ul margin */
+}
+
+.leaderboard-item {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 0.5rem; /* Adjusted padding */
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 0.95rem;
+    transition: background-color 0.2s ease;
+}
+.leaderboard-item:last-child {
+    border-bottom: none;
+}
+.leaderboard-item:hover {
+    background-color: #f9f9f9; /* Light hover for list items */
+}
+
+.rank {
+    font-weight: bold;
+    margin-right: 1rem; /* More space after rank */
+    color: #0071e3; /* Apple Blue for rank */
+    min-width: 25px; /* Ensure alignment */
+    text-align: right;
+}
+
+.leaderboard-avatar {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    margin-right: 0.75rem;
+    object-fit: cover;
+    background-color: #e0e0e0; /* Fallback for image */
+}
+
+.name {
+    flex-grow: 1;
+    font-weight: 500;
+    color: #1d1d1f;
+}
+
+.score {
+    font-weight: 600;
+    color: #34A853; /* Green for score */
+    font-size: 0.9rem; /* Slightly smaller score text */
+}
+
+/* Media Hub Section Styles */
+.media-subsection {
+    margin-bottom: 2.5rem; /* Increased margin */
+    padding-bottom: 2rem; /* Increased padding */
+    border-bottom: 1px solid #e9e9ed; /* Softer border */
+}
+.media-subsection:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0.5rem; /* Less padding if it's the last one */
+}
+
+.media-subsection h3 {
+    font-size: 1.8rem; /* Consistent title size */
+    color: #1d1d1f;
+    margin-bottom: 1.5rem;
+    text-align: left; /* Align subsection titles left */
+}
+
+.video-streaming-layout,
+.live-streaming-layout {
+    /* Using CSS Grid for more complex layouts if needed, or simple block/flex */
+    display: grid;
+    grid-template-columns: 1fr; /* Default to single column */
+    gap: 1.5rem;
+}
+
+@media (min-width: 992px) { /* Desktop layout for video streaming */
+    .video-streaming-layout {
+        grid-template-columns: 2fr 1fr; /* Player takes 2/3, playlist 1/3 */
+    }
+    .live-streaming-layout { /* Could be different, e.g., player and info side-by-side */
+        grid-template-columns: 2fr 1fr;
+    }
+}
+
+
+.main-video-player-placeholder {
+    position: relative;
+    background-color: #1c1c1e; /* Darker background for video player */
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1); /* Softer shadow for player */
+}
+
+.video-player-img { /* Class for the actual <img> tag */
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    object-fit: cover; /* Ensure image covers the area */
+    border-radius: 8px; /* Match parent if image is the direct child */
+}
+
+.video-controls-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.3) 60%, rgba(0,0,0,0) 100%);
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    box-sizing: border-box;
+    border-bottom-left-radius: 8px; /* Match parent radius */
+    border-bottom-right-radius: 8px;
+}
+
+.main-video-player-placeholder:hover .video-controls-overlay {
+    opacity: 1;
+}
+
+.control-btn {
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 1.3rem; /* Good size for player controls */
+    cursor: pointer;
+    padding: 0.35rem; /* Slightly more padding */
+    line-height: 1; /* Ensure consistent vertical alignment */
+    opacity: 0.85;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.control-btn:hover {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+.progress-bar-mock {
+    flex-grow: 1;
+    height: 10px; /* Thicker progress bar */
+    background-color: rgba(255,255,255,0.35); /* Lighter base for progress */
+    border-radius: 5px;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.progress-filled-mock {
+    height: 100%;
+    background-color: #0071e3; /* Apple Blue for progress */
+    border-radius: 5px;
+    transition: width 0.1s linear; /* Smooth progress change */
+}
+
+.video-playlist-thumbs {
+    display: flex;
+    flex-direction: column; /* Stack thumbnails vertically */
+    gap: 0.75rem;
+    overflow-y: auto; /* Scroll if many thumbs */
+    max-height: 450px; /* Corresponds to 16:9 player height roughly */
+    padding-right: 0.25rem; /* Space for scrollbar if it appears */
+}
+
+.thumb-item {
+    display: flex; /* Icon and text side-by-side */
+    align-items: center;
+    gap: 0.75rem;
+    border: 2px solid transparent;
+    border-radius: 6px;
+    cursor: pointer;
+    padding: 0.5rem; /* Padding around content */
+    background-color: #ffffff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.07);
+    transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.thumb-item:hover {
+    transform: translateY(-2px);
+    border-color: #c0c0c0;
+    background-color: #f9f9f9;
+}
+
+.thumb-item.active-thumb {
+    border-color: #0071e3;
+    background-color: #e9f5ff; /* Light blue tint for active */
+}
+
+.thumb-img { /* Class for the <img> tag in thumb item */
+    width: 120px; /* Fixed width for thumbnail image */
+    height: 67.5px; /* 16:9 aspect ratio */
+    border-radius: 4px;
+    object-fit: cover;
+    flex-shrink: 0; /* Prevent image from shrinking */
+}
+
+.thumb-title {
+    font-size: 0.9rem; /* Adjusted size */
+    color: #333;
+    line-height: 1.3;
+    /* Allow text wrapping for longer titles */
+    white-space: normal;
+    overflow: hidden;
+    /* text-overflow: ellipsis; - Might not be needed if text wraps */
+    /* display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; Max 2 lines */
+}
+
+
+/* Live Streaming Specifics */
+.live-player-placeholder {
+    /* border: 2px solid #e74c3c; Optional: Red border for live player */
+}
+
+.live-indicator-overlay {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    z-index: 5; /* Below controls if they overlap */
+}
+
+.live-badge {
+    background-color: #e74c3c; /* Bright Red */
+    color: white;
+    padding: 0.3rem 0.6rem;
+    font-size: 0.9rem;
+    font-weight: bold;
+    border-radius: 4px;
+    text-transform: uppercase;
+    line-height: 1; /* Ensure consistent height */
+}
+
+.viewer-count {
+    background-color: rgba(28, 28, 30, 0.85); /* Darker semi-transparent */
+    color: white;
+    padding: 0.3rem 0.6rem;
+    font-size: 0.9rem;
+    border-radius: 4px;
+    line-height: 1;
+}
+
+.live-stream-info {
+    padding: 1.5rem; /* More padding */
+    background-color: #ffffff; /* White background to stand out in section */
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+@media (max-width: 991px) { /* When layout stacks, add margin to info */
+    .live-stream-info {
+        margin-top: 1rem;
+    }
+}
+
+
+.live-stream-info h4 {
+    font-size: 1.4rem; /* Larger title for live event */
+    color: #1d1d1f;
+    margin-bottom: 0.75rem;
+}
+
+.live-stream-description { /* Specific class for live stream description */
+    font-size: 1rem;
+    color: #333333;
+    margin-bottom: 1.25rem;
+    line-height: 1.6;
+}
+
+.btn-join-chat { /* Uses .btn and .btn-primary, can add specific overrides */
+    width: 100%; /* Make button full width in this context */
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    font-size: 1.05rem;
+}
+
+.rec-card-category {
+    font-size: 0.85rem;
+    color: #777777; /* Muted category text */
+    margin-bottom: 1rem; /* More space before button */
+}
+
+.recommendation-card .btn-secondary.btn-small {
+    margin-top: auto; /* Pushes button to the bottom of the card */
+    align-self: flex-start; /* Align button to the left if container is wider */
+}
+
+.chat-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1.25rem; /* Adjusted padding */
+    background-color: #f5f5f7; /* Consistent light header */
+    border-bottom: 1px solid #e0e0e0;
+    /* border-top-left-radius and border-top-right-radius are inherited by overflow:hidden on parent */
+}
+
+.chat-panel-header h3 {
+    margin: 0;
+    font-size: 1.15rem; /* Slightly larger */
+    color: #1d1d1f;
+    font-weight: 600; /* Bolder header title */
+}
+
+.btn-close-chat {
+    background: transparent;
+    border: none;
+    font-size: 1.5rem; /* Larger close button */
+    color: #777777;
+    cursor: pointer;
+    padding: 0.25rem 0.5rem; /* Make it easier to click */
+    line-height: 1;
+    border-radius: 50%;
+    transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.btn-close-chat:hover {
+    color: #1d1d1f;
+    background-color: rgba(0,0,0,0.05);
+}
+
+.chat-messages-area {
+    flex-grow: 1;
+    padding: 1rem;
+    overflow-y: auto;
+    background-color: #f9f9f9; /* Slightly off-white for message area */
+}
+
+.chat-message {
+    margin-bottom: 0.85rem; /* Slightly more margin */
+    padding: 0.6rem 0.9rem; /* Adjusted padding */
+    border-radius: 15px; /* More rounded messages */
+    max-width: 85%; /* Slightly wider max-width */
+    clear: both;
+    line-height: 1.45; /* Improved line height for messages */
+    word-wrap: break-word; /* Ensure long words break */
+}
+
+.chat-message.sent {
+    background-color: #007aff; /* iOS blue for sent messages */
+    color: white;
+    float: right;
+    border-bottom-right-radius: 4px; /* Characteristic shape */
+    margin-left: auto; /* Push to right */
+}
+
+.chat-message.received {
+    background-color: #e5e5ea; /* iOS gray for received messages */
+    color: #1d1d1f;
+    float: left;
+    border-bottom-left-radius: 4px; /* Characteristic shape */
+    margin-right: auto; /* Push to left */
+}
+.chat-message p {
+    margin: 0;
+    padding: 0;
+    font-size: 0.95rem; /* Slightly larger message text */
+}
+
+.chat-message .timestamp {
+    font-size: 0.7rem;
+    color: #8e8e93; /* iOS-like timestamp color */
+    display: block;
+    margin-top: 0.3rem;
+    text-align: inherit; /* Inherit from parent for sent/received alignment */
+}
+.chat-message.sent .timestamp {
+    color: rgba(255,255,255,0.75); /* Lighter timestamp for sent messages */
+}
+
+
+.chat-input-area {
+    display: flex;
+    align-items: center; /* Align items vertically */
+    padding: 0.75rem 1rem;
+    border-top: 1px solid #e0e0e0;
+    background-color: #f5f5f7; /* Consistent light footer/input area */
+}
+
+.chat-input-area textarea,
+.chat-input-area input[type="text"] {
+    flex-grow: 1;
+    border: 1px solid #dcdcdc; /* Slightly softer border */
+    border-radius: 18px; /* Pill shape for input */
+    padding: 0.6rem 1rem; /* Comfortable padding */
+    resize: none;
+    font-size: 0.95rem;
+    line-height: 1.4;
+    margin-right: 0.75rem; /* Space before send button */
+    min-height: 38px; /* Ensure it aligns with button height roughly */
+}
+.chat-input-area textarea {
+    height: 38px; /* Start with single line height */
+    overflow-y: hidden; /* Hide scrollbar initially */
+}
+
+
+.chat-input-area .btn-send-message {
+    background-color: #007aff; /* Apple Blue */
+    color: white;
+    border: none;
+    border-radius: 18px; /* Match input pill shape */
+    padding: 0.6rem 1.25rem; /* Good padding for send button */
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    font-size: 0.95rem;
+}
+
+/* Interactive Charts Section Styles */
+.chart-showcase-container {
+    /* Can add flex/grid if multiple charts are to be laid out */
+    margin-top: 1rem;
+}
+
+.chart-wrapper {
+    background: #ffffff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    margin-bottom: 1.5rem;
+}
+
+.chart-wrapper h4 {
+    font-size: 1.3rem;
+    color: #1d1d1f;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.chart-placeholder-detailed {
+    position: relative;
+    min-height: 300px;
+    display: flex; /* Main container for Y-axis | (Chart + X-axis) */
+    background-color: #f9f9f9; /* Light bg for the chart area */
+    border-radius: 6px;
+    padding: 1rem;
+}
+
+.mock-axis {
+    display: flex;
+    color: #555555; /* Darker gray for axis text */
+    font-size: 0.75rem; /* Smaller axis labels */
+}
+
+.mock-y-axis {
+    flex-direction: column;
+    justify-content: space-between;
+    padding-right: 0.75rem; /* Increased padding */
+    border-right: 1px solid #cccccc;
+    text-align: right;
+}
+.mock-y-axis span {
+    display: block;
+}
+
+.mock-x-axis {
+    justify-content: space-around;
+    padding-top: 0.75rem; /* Increased padding */
+    border-top: 1px solid #cccccc;
+    width: 100%; /* Make X-axis take full width of its container */
+}
+
+.mock-chart-area {
+    flex-grow: 1;
+    position: relative; /* For positioning tooltip and SVG absolutely if needed */
+    display: flex; /* To help manage SVG if it doesn't take full height */
+    flex-direction: column; /* Stack SVG and X-axis */
+}
+
+.mock-line-chart {
+    width: 100%;
+    height: 100%; /* Make SVG take available space in .mock-chart-area */
+    flex-grow: 1;
+}
+
+.mock-line-1 {
+    fill: none;
+    stroke: #0071e3; /* Apple Blue */
+    stroke-width: 2.5px; /* Slightly thicker */
+}
+
+.mock-line-2 {
+    fill: none;
+    stroke: #34A853; /* Green */
+    stroke-width: 2.5px;
+}
+
+.mock-tooltip-point {
+    fill: #EA4335; /* Red */
+    stroke: white;
+    stroke-width: 2px;
+    r: 6px; /* Larger point */
+}
+
+.mock-tooltip {
+    background: rgba(29,29,31,0.85); /* Darker, more Mac-like tooltip */
+    color: white;
+    padding: 6px 10px; /* Adjusted padding */
+    border-radius: 5px;
+    font-size: 0.85rem;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    pointer-events: none; /* So it doesn't interfere with chart interactions */
+}
+
+.mock-legend {
+    text-align: center;
+    padding-top: 1rem;
+    margin-top: 0.5rem; /* Space above legend */
+    border-top: 1px solid #f0f0f0; /* Light separator for legend */
+}
+
+.legend-item {
+    display: inline-flex; /* Align color swatch and text */
+    align-items: center;
+    font-size: 0.85rem;
+    color: #333333;
+    margin: 0 0.75rem;
+    cursor: default;
+}
+
+.legend-item::before {
+    content: '';
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 3px; /* Slightly rounded square */
+    margin-right: 0.5rem;
+}
+
+.legend-item.product-a::before { background-color: #0071e3; }
+.legend-item.product-b::before { background-color: #34A853; }
+
+
+/* Personalized Recommendations Section Styles */
+.recommendations-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem; /* Space below section description */
+}
+
+.recommendation-card {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden; /* To ensure img respects border-radius */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column; /* Ensure content flows top-to-bottom */
+    transition: box-shadow 0.2s ease-out, transform 0.2s ease-out;
+}
+.recommendation-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+
+.rec-card-img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover; /* Crop image to fit, or use 'contain' if preferred */
+    display: block; /* Remove any extra space below image */
+}
+
+.rec-card-content {
+    padding: 1rem;
+    flex-grow: 1; /* Allows this area to take up remaining space */
+    display: flex;
+    flex-direction: column; /* To push button to bottom */
+}
+
+.rec-card-title {
+    font-size: 1.15rem; /* Slightly larger title */
+    margin-bottom: 0.35rem; /* Adjusted margin */
+    color: #1d1d1f; /* Darker title */
+    font-weight: 600;
+}
+
+.rec-card-category {
+    font-size: 0.85rem;
+    color: #777777; /* Muted category text */
+    margin-bottom: 1rem; /* More space before button */
+}
+
+.recommendation-card .btn-secondary.btn-small {
+    margin-top: auto; /* Pushes button to the bottom of the card */
+    align-self: flex-start; /* Align button to the left if container is wider */
+}
+
+.chat-input-area .btn-send-message:hover {
+    background-color: #005bb5; /* Darker blue */
+}
+
+/* Predictive Search Styles */
+.search-input-wrapper {
+    position: relative; /* For absolute positioning of the dropdown */
+    display: flex; /* To ensure input takes up space */
+    flex-grow: 1; /* Allows input to grow */
+}
+
+.predictive-search-dropdown {
+    position: absolute;
+    top: calc(100% + 2px); /* Below the input form, with a small gap from the form's border */
+    left: -0.5rem; /* Align with the start of the search form's padding-left */
+    right: -0.5rem; /* Align with the end of the search form (approx, button width might affect) - better to use width of parent */
+    width: calc(100% + 1rem); /* To match the parent .search-form's effective width including its padding */
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-top: none; /* As it sits just below the form's border */
+    border-radius: 0 0 8px 8px; /* Rounded bottom corners */
+    box-shadow: 0 5px 12px rgba(0,0,0,0.1); /* Softer, more spread shadow */
+    z-index: 995; /* Below header notifications and chat, above page content */
+    max-height: 300px;
+    overflow-y: auto;
+    /* display: none; will be controlled by JS */
+    opacity: 0; /* For JS animation */
+    transform: translateY(5px);
+    transition: opacity 0.15s ease-out, transform 0.15s ease-out;
+    pointer-events: none;
+}
+.predictive-search-dropdown.active { /* JS will toggle this */
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+
+.search-form { /* Adjust existing search form to align dropdown correctly */
+    padding-left: 0; /* Remove previous padding, handled by wrapper or input now */
+    /* The wrapper will be inside this, so dropdown is relative to wrapper */
+}
+/* Ensure the input itself doesn't have left padding if wrapper handles it */
+#header-search-input {
+    padding-left: 0.75rem; /* Keep padding on input itself */
+}
+
+
+.suggestion-item {
+    display: flex; /* Align icon and text */
+    align-items: center;
+    padding: 0.75rem 1rem;
+    text-decoration: none;
+    color: #333333;
+    font-size: 0.9rem;
+    border-bottom: 1px solid #f0f0f0; /* Light separator for items */
+}
+.suggestion-item:last-child {
+    border-bottom: none;
+}
+
+.suggestion-icon {
+    margin-right: 0.75rem; /* Space after icon */
+    color: #777777;
+    font-size: 1rem; /* Adjust if using emoji or SVG */
+}
+
+.suggestion-item:hover {
+    background-color: #f5f5f7; /* Consistent light hover */
+    color: #0071e3; /* Highlight text on hover */
+}
+.suggestion-item:hover .suggestion-icon {
+    color: #0071e3; /* Highlight icon on hover */
+}
+
+
+.suggestion-footer {
+    padding: 0.6rem 1rem;
+    font-size: 0.8rem;
+    color: #777777;
+    background-color: #f9f9f9; /* Slightly different background for footer */
+    border-top: 1px solid #e0e0e0;
+    text-align: center;
+}
+.suggestion-footer strong { /* For the typed search term */
+    color: #333333;
+    font-weight: 600;
+}
+
 .cms-content-block .meta-info .date,
 .cms-content-block .meta-info .author {
     font-weight: 500;
@@ -1795,6 +3685,187 @@ footer p {
     color: #0071e3; /* Apple Blue on hover for icon */
 }
 
+/* Interactive Charts Section Styles */
+.chart-showcase-container {
+    /* Can add flex/grid if multiple charts are to be laid out */
+    margin-top: 1rem;
+}
+
+.chart-wrapper {
+    background: #ffffff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    margin-bottom: 1.5rem;
+}
+
+.chart-wrapper h4 {
+    font-size: 1.3rem;
+    color: #1d1d1f;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.chart-placeholder-detailed {
+    position: relative;
+    min-height: 300px;
+    display: flex; /* Main container for Y-axis | (Chart + X-axis) */
+    background-color: #f9f9f9; /* Light bg for the chart area */
+    border-radius: 6px;
+    padding: 1rem;
+}
+
+.mock-axis {
+    display: flex;
+    color: #555555; /* Darker gray for axis text */
+    font-size: 0.75rem; /* Smaller axis labels */
+}
+
+.mock-y-axis {
+    flex-direction: column;
+    justify-content: space-between;
+    padding-right: 0.75rem; /* Increased padding */
+    border-right: 1px solid #cccccc;
+    text-align: right;
+}
+.mock-y-axis span {
+    display: block;
+}
+
+.mock-x-axis {
+    justify-content: space-around;
+    padding-top: 0.75rem; /* Increased padding */
+    border-top: 1px solid #cccccc;
+    width: 100%; /* Make X-axis take full width of its container */
+}
+
+.mock-chart-area {
+    flex-grow: 1;
+    position: relative; /* For positioning tooltip and SVG absolutely if needed */
+    display: flex; /* To help manage SVG if it doesn't take full height */
+    flex-direction: column; /* Stack SVG and X-axis */
+}
+
+.mock-line-chart {
+    width: 100%;
+    height: 100%; /* Make SVG take available space in .mock-chart-area */
+    flex-grow: 1;
+}
+
+.mock-line-1 {
+    fill: none;
+    stroke: #0071e3; /* Apple Blue */
+    stroke-width: 2.5px; /* Slightly thicker */
+}
+
+.mock-line-2 {
+    fill: none;
+    stroke: #34A853; /* Green */
+    stroke-width: 2.5px;
+}
+
+.mock-tooltip-point {
+    fill: #EA4335; /* Red */
+    stroke: white;
+    stroke-width: 2px;
+    r: 6px; /* Larger point */
+}
+
+.mock-tooltip {
+    background: rgba(29,29,31,0.85); /* Darker, more Mac-like tooltip */
+    color: white;
+    padding: 6px 10px; /* Adjusted padding */
+    border-radius: 5px;
+    font-size: 0.85rem;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    pointer-events: none; /* So it doesn't interfere with chart interactions */
+}
+
+.mock-legend {
+    text-align: center;
+    padding-top: 1rem;
+    margin-top: 0.5rem; /* Space above legend */
+    border-top: 1px solid #f0f0f0; /* Light separator for legend */
+}
+
+.legend-item {
+    display: inline-flex; /* Align color swatch and text */
+    align-items: center;
+    font-size: 0.85rem;
+    color: #333333;
+    margin: 0 0.75rem;
+    cursor: default;
+}
+
+.legend-item::before {
+    content: '';
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 3px; /* Slightly rounded square */
+    margin-right: 0.5rem;
+}
+
+.legend-item.product-a::before { background-color: #0071e3; }
+.legend-item.product-b::before { background-color: #34A853; }
+
+
+/* Personalized Recommendations Section Styles */
+.recommendations-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem; /* Space below section description */
+}
+
+.recommendation-card {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden; /* To ensure img respects border-radius */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column; /* Ensure content flows top-to-bottom */
+    transition: box-shadow 0.2s ease-out, transform 0.2s ease-out;
+}
+.recommendation-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+
+.rec-card-img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover; /* Crop image to fit, or use 'contain' if preferred */
+    display: block; /* Remove any extra space below image */
+}
+
+.rec-card-content {
+    padding: 1rem;
+    flex-grow: 1; /* Allows this area to take up remaining space */
+    display: flex;
+    flex-direction: column; /* To push button to bottom */
+}
+
+.rec-card-title {
+    font-size: 1.15rem; /* Slightly larger title */
+    margin-bottom: 0.35rem; /* Adjusted margin */
+    color: #1d1d1f; /* Darker title */
+    font-weight: 600;
+}
+
+.rec-card-category {
+    font-size: 0.85rem;
+    color: #777777; /* Muted category text */
+    margin-bottom: 1rem; /* More space before button */
+}
+
+.recommendation-card .btn-secondary.btn-small {
+    margin-top: auto; /* Pushes button to the bottom of the card */
+    align-self: flex-start; /* Align button to the left if container is wider */
+}
 /* Theme Switcher Styles */
 .theme-switcher-container {
     margin-top: 1rem; /* Space above the toggle button */

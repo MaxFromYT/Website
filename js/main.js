@@ -460,4 +460,278 @@ document.addEventListener('DOMContentLoaded', () => {
             enquiryTypeSelect.dispatchEvent(new Event('change'));
         }
     }
+
+    // Chat Bubble and Panel Logic
+    const chatBubbleToggle = document.getElementById('chat-bubble-toggle');
+    const chatSelectionPopup = document.getElementById('chat-selection-popup');
+    const chatSelectButtons = document.querySelectorAll('.btn-chat-select');
+    const chatPanels = document.querySelectorAll('.chat-panel');
+    const closeChatButtons = document.querySelectorAll('.btn-close-chat');
+
+    if (chatBubbleToggle) {
+        chatBubbleToggle.addEventListener('click', () => {
+            const isExpanded = chatBubbleToggle.getAttribute('aria-expanded') === 'true';
+            chatBubbleToggle.setAttribute('aria-expanded', !isExpanded);
+            if (chatSelectionPopup) {
+                chatSelectionPopup.style.display = isExpanded ? 'none' : 'flex';
+            }
+            // If opening selection popup, ensure all main chat panels are closed
+            if (!isExpanded) {
+                chatPanels.forEach(panel => {
+                    panel.style.display = 'none';
+                    panel.classList.remove('active');
+                });
+            }
+        });
+    }
+
+    chatSelectButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const targetPanelId = button.getAttribute('data-chat-target');
+            const targetPanel = document.getElementById(targetPanelId);
+
+            // Hide all panels first
+            chatPanels.forEach(panel => {
+                panel.style.display = 'none';
+                panel.classList.remove('active');
+            });
+
+            // Show target panel
+            if (targetPanel) {
+                targetPanel.style.display = 'flex'; // Or 'block' if that's how it's styled
+                setTimeout(() => targetPanel.classList.add('active'), 10); // For transition
+            }
+
+            if (chatSelectionPopup) {
+                chatSelectionPopup.style.display = 'none';
+            }
+            if (chatBubbleToggle) {
+                chatBubbleToggle.setAttribute('aria-expanded', 'true'); // Bubble is active if a panel is open
+            }
+        });
+    });
+
+    closeChatButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const panelToClose = button.closest('.chat-panel');
+            if (panelToClose) {
+                panelToClose.style.display = 'none';
+                panelToClose.classList.remove('active');
+            }
+            // Check if any other panel is open, if not, set bubble to collapsed
+            const anyPanelOpen = Array.from(chatPanels).some(p => p.style.display !== 'none' && p.classList.contains('active'));
+            if (!anyPanelOpen && chatBubbleToggle) {
+                chatBubbleToggle.setAttribute('aria-expanded', 'false');
+            }
+        });
+    });
+
+    // Optional: Close popups/panels if clicking outside
+    document.addEventListener('click', function(event) {
+        if (chatBubbleToggle && chatSelectionPopup) {
+            const isClickInsideBubbleContainer = chatBubbleToggle.parentElement.contains(event.target);
+            const isClickInsidePopup = chatSelectionPopup.contains(event.target);
+
+            if (!isClickInsideBubbleContainer && !isClickInsidePopup && chatSelectionPopup.style.display === 'flex') {
+                chatSelectionPopup.style.display = 'none';
+                // Only set expanded to false if no chat panel is active
+                const anyPanelOpen = Array.from(chatPanels).some(p => p.classList.contains('active'));
+                if (!anyPanelOpen) {
+                    chatBubbleToggle.setAttribute('aria-expanded', 'false');
+                }
+            }
+        }
+    });
+
+    // Auto-adjust textarea height in chat input
+    const chatTextareas = document.querySelectorAll('.chat-input-area textarea');
+    chatTextareas.forEach(textarea => {
+        textarea.addEventListener('input', function () {
+            this.style.height = 'auto'; // Reset height
+            this.style.height = (this.scrollHeight) + 'px'; // Set to scroll height
+            // Max height check if needed
+            // if (this.scrollHeight > SOME_MAX_HEIGHT) {
+            //     this.style.height = SOME_MAX_HEIGHT + 'px';
+            //     this.style.overflowY = 'auto';
+            // } else {
+            //     this.style.overflowY = 'hidden';
+            // }
+        });
+    });
+
+    // Predictive Search Logic
+    const searchInput = document.getElementById('header-search-input');
+    const predictiveSearchResults = document.getElementById('predictive-search-results');
+    const typedSearchTerm = document.getElementById('typed-search-term');
+
+    if (searchInput && predictiveSearchResults && typedSearchTerm) {
+        searchInput.addEventListener('focus', () => {
+            if (searchInput.value.trim() !== '') {
+                predictiveSearchResults.style.display = 'block'; // Show immediately on focus if there's text
+                setTimeout(() => predictiveSearchResults.classList.add('active'), 0); // Add active for transition
+                typedSearchTerm.textContent = searchInput.value;
+            }
+        });
+
+        searchInput.addEventListener('input', () => {
+            const query = searchInput.value.trim();
+            if (query !== '') {
+                typedSearchTerm.textContent = query;
+                // In a real scenario, fetch/filter results here
+                // For now, just show the static list
+                predictiveSearchResults.style.display = 'block';
+                setTimeout(() => predictiveSearchResults.classList.add('active'), 0);
+            } else {
+                predictiveSearchResults.classList.remove('active');
+                // Wait for transition to complete before hiding
+                setTimeout(() => predictiveSearchResults.style.display = 'none', 150);
+            }
+        });
+
+        // Hide dropdown when clicking outside
+        // Use a timeout for blur to allow click on suggestion items
+        let blurTimeout;
+        searchInput.addEventListener('blur', () => {
+            blurTimeout = setTimeout(() => {
+                predictiveSearchResults.classList.remove('active');
+                setTimeout(() => predictiveSearchResults.style.display = 'none', 150);
+            }, 200); // Delay to allow click on suggestion item
+        });
+
+        // If a suggestion item is clicked, we might want to fill the input or navigate
+        // For now, just prevent the blur from hiding it too soon if we were to handle click
+        if (predictiveSearchResults) {
+            predictiveSearchResults.addEventListener('mousedown', (event) => {
+                // If a suggestion link is clicked, prevent blur from hiding the dropdown immediately
+                if (event.target.classList.contains('suggestion-item') || event.target.closest('.suggestion-item')) {
+                    clearTimeout(blurTimeout);
+                }
+            });
+        }
+    }
+
+    // Advanced File Upload Logic
+    const dragDropArea = document.getElementById('drag-drop-area');
+    const fileUploadFallback = document.getElementById('file-upload-fallback');
+    const filePreviewArea = document.getElementById('file-preview-area');
+    const uploadStatusArea = document.querySelector('.upload-status-area');
+    const progressFilled = document.querySelector('.progress-filled-upload');
+    const uploadFeedback = document.getElementById('upload-feedback');
+
+    if (dragDropArea && fileUploadFallback && filePreviewArea && uploadStatusArea && progressFilled && uploadFeedback) {
+
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dragDropArea.addEventListener(eventName, preventDefaults, false);
+            document.body.addEventListener(eventName, preventDefaults, false); // Prevent browser from opening file if dropped outside zone
+        });
+
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dragDropArea.addEventListener(eventName, () => {
+                dragDropArea.classList.add('dragover');
+            }, false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            dragDropArea.addEventListener(eventName, () => {
+                dragDropArea.classList.remove('dragover');
+            }, false);
+        });
+
+        dragDropArea.addEventListener('drop', (e) => {
+            handleFiles(e.dataTransfer.files);
+        }, false);
+
+        fileUploadFallback.addEventListener('change', (e) => {
+            handleFiles(e.target.files);
+        }, false);
+
+        function handleFiles(files) {
+            filePreviewArea.innerHTML = ''; // Clear previous previews
+            uploadFeedback.textContent = '';
+            uploadFeedback.className = '';
+
+            if (!files.length) {
+                filePreviewArea.style.display = 'none';
+                uploadStatusArea.style.display = 'none';
+                uploadFeedback.textContent = 'No files selected.';
+                return;
+            }
+
+            filePreviewArea.style.display = 'block';
+            uploadStatusArea.style.display = 'block';
+            progressFilled.style.width = '0%';
+            progressFilled.textContent = '0%';
+
+            Array.from(files).forEach(file => {
+                const previewItem = document.createElement('div');
+                previewItem.className = 'file-preview-item';
+
+                const fileIcon = document.createElement('span');
+                fileIcon.className = 'file-icon-preview';
+                fileIcon.textContent = '📄'; // Generic file icon
+
+                const fileName = document.createElement('span');
+                fileName.className = 'file-name';
+                fileName.textContent = file.name;
+
+                const fileSize = document.createElement('span');
+                fileSize.className = 'file-size';
+                fileSize.textContent = formatFileSize(file.size);
+
+                const removeBtn = document.createElement('button');
+                removeBtn.className = 'remove-file-btn';
+                removeBtn.innerHTML = '&times;'; // '×' character
+                removeBtn.setAttribute('aria-label', `Remove ${file.name}`);
+                removeBtn.onclick = () => {
+                    previewItem.remove();
+                    // If all files are removed, hide preview and status
+                    if (filePreviewArea.children.length === 0) {
+                        filePreviewArea.style.display = 'none';
+                        uploadStatusArea.style.display = 'none';
+                    }
+                };
+
+                previewItem.appendChild(fileIcon);
+                previewItem.appendChild(fileName);
+                previewItem.appendChild(fileSize);
+                previewItem.appendChild(removeBtn);
+                filePreviewArea.appendChild(previewItem);
+            });
+
+            // Simulate upload
+            let currentProgress = 0;
+            const interval = setInterval(() => {
+                currentProgress += 10;
+                if (currentProgress <= 100) {
+                    progressFilled.style.width = currentProgress + '%';
+                    progressFilled.textContent = currentProgress + '%';
+                    if (currentProgress === 100) {
+                        progressFilled.classList.add('full');
+                    }
+                } else {
+                    clearInterval(interval);
+                    uploadFeedback.textContent = 'Upload complete!';
+                    uploadFeedback.className = 'success'; // For success styling
+                    // setTimeout(() => { // Optionally hide status after a delay
+                    //    uploadStatusArea.style.display = 'none';
+                    //    filePreviewArea.style.display = 'none';
+                    //    filePreviewArea.innerHTML = '';
+                    // }, 3000);
+                }
+            }, 200);
+        }
+
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+    }
 });
