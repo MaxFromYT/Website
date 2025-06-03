@@ -1,5 +1,42 @@
 // Main JS file for site-wide scripts and GSAP animations
 
+function fetchAndDisplayMockData() {
+    const displayArea = document.getElementById('fetched-data-display');
+    if (!displayArea) {
+        console.warn('API data display area not found.');
+        return;
+    }
+
+    displayArea.innerHTML = '<p>Loading data...</p>'; // Show loading message
+
+    fetch('https://jsonplaceholder.typicode.com/users/1') // Fetch a single user as an example
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Simple display of some fetched data
+            displayArea.innerHTML = `
+                <h3>User Details (from JSONPlaceholder)</h3>
+                <p><strong>Name:</strong> ${data.name}</p>
+                <p><strong>Username:</strong> ${data.username}</p>
+                <p><strong>Email:</strong> ${data.email}</p>
+                <p><strong>Website:</strong> ${data.website}</p>
+                <h4>Address:</h4>
+                <p>
+                    ${data.address.street}, ${data.address.suite}<br>
+                    ${data.address.city}, ${data.address.zipcode}
+                </p>
+            `;
+        })
+        .catch(error => {
+            console.error('Error fetching mock data:', error);
+            displayArea.innerHTML = `<p style="color: red;">Failed to load data: ${error.message}</p>`;
+        });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
 
     function throttle(func, limit) {
@@ -393,5 +430,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     } else {
         // if(typeof SplitText === 'undefined') console.warn("SplitText plugin not available for nav link hover effects. Using CSS fallback hover effects."); // Removed
+    }
+
+    // Call for fetching mock API data
+    if (document.getElementById('api-data-placeholder')) {
+        fetchAndDisplayMockData();
     }
 });
