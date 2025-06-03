@@ -263,7 +263,7 @@ main .container {
 /* Review Quotes in Biography */
 .review-quotes {
     margin-top: 1.5rem;
-    border-left: 3px solid #0071e3; /* Apple Blue accent line - RETAINED */
+    border-left: 3px solid #c0c0c0; /* NEW: Medium Gray accent line */
     padding-left: 1rem;
 }
 .review-quotes .quote {
