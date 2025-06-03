@@ -1891,6 +1891,130 @@ footer p {
     margin-bottom: 1rem;
 }
 
+/* Mac Pro Location Services Section Styles */
+.map-search-layout {
+    display: grid;
+    grid-template-columns: 300px 1fr; /* Controls on left, map on right */
+    gap: 1.5rem;
+    align-items: flex-start; /* Align items to the top of their grid area */
+    margin-top: 1.5rem;
+}
+
+.map-controls-area {
+    /* Uses .content-section-panel styles, specific overrides can go here if needed */
+}
+
+.map-placeholder {
+    position: relative;
+    width: 100%;
+    min-height: 450px;
+    background-color: #e9e9ed; /* Light gray, similar to other placeholders */
+    border-radius: 8px;
+    border: 1px solid #d0d0d0; /* Slightly darker border for map area */
+    overflow: hidden; /* Important for keeping pins and tooltips contained if they go near edge */
+    background-image: url('https://via.placeholder.com/1000x700/e9e9ed/cccccc?Text=Area+Map+Showing+Mac+Pro+Locations');
+    background-size: cover;
+    background-position: center;
+}
+
+.map-pin {
+    position: absolute;
+    transform: translate(-50%, -100%); /* Center horizontally, anchor bottom point */
+    width: auto; /* Auto width based on content */
+    height: auto;
+    padding: 6px 10px; /* Slightly more padding for pill */
+    border-radius: 20px; /* Pill shape */
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.25);
+    cursor: pointer;
+    transition: transform 0.2s ease-out, background-color 0.2s ease-out, box-shadow 0.2s ease-out;
+    font-weight: 500;
+    font-size: 0.9rem; /* Pin text size */
+}
+
+.pin-icon-map {
+    font-size: 1.1rem; /* Adjusted for typical emoji/icon size */
+    margin-right: 6px; /* Space between icon and text if any */
+    line-height: 1; /* Ensure icon aligns well */
+    display: inline-block;
+}
+
+.macpro-store-pin {
+    background-color: #0071e3; /* Apple blue */
+}
+.macpro-store-pin .pin-icon-map {
+    /* Specific icon styles if needed, e.g. Apple logo color if not an emoji */
+}
+
+.macpro-service-pin {
+    background-color: #f5a623; /* Orange/Gold for service centers */
+    border-radius: 8px; /* More squared shape for service pins */
+    padding: 7px 9px; /* Slightly adjusted padding for square look */
+}
+.macpro-service-pin .pin-icon-map {
+    /* Specific icon styles if needed */
+}
+
+.map-pin:hover {
+    transform: translate(-50%, -105%) scale(1.1); /* Lift slightly more and scale up */
+    box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+    z-index: 10; /* Ensure hovered pin is above others */
+}
+
+.map-pin-tooltip {
+    position: absolute;
+    background-color: rgba(28, 28, 30, 0.9); /* Dark, semi-transparent Apple style */
+    color: white;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    white-space: nowrap; /* Prevent tooltip text from wrapping */
+    transform: translate(-50%, -15px); /* Position above the pin tip */
+    /* bottom: 100%;  Alternative positioning, needs pin to be non-100% transform for y */
+    /* left: 50%; */
+    z-index: 20; /* Above pins */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    pointer-events: none; /* Tooltip itself shouldn't be interactive */
+    opacity: 0; /* Hidden by default */
+    transition: opacity 0.2s ease-in-out;
+    /* Example of making one visible for demo - remove for actual use */
+    /* opacity: 1; */
+}
+
+/* Show tooltip on hover (JS might be better for click or more complex interactions) */
+.map-pin:hover .map-pin-tooltip { /* This would require tooltip to be child of pin */
+    opacity: 1;
+}
+/* If tooltip is not a child, JS would handle adding an 'active' class or similar */
+/* Example: .map-pin-tooltip.active { opacity: 1; } */
+
+
+/* Responsive adjustments for Location Services section */
+@media (max-width: 992px) {
+    .map-search-layout {
+        grid-template-columns: 1fr; /* Stack controls above map */
+    }
+    .map-controls-area {
+        margin-bottom: 1.5rem; /* Add space between controls and map when stacked */
+    }
+}
+
+@media (max-width: 768px) {
+    .map-placeholder {
+        min-height: 350px; /* Reduce map height on smaller screens */
+    }
+    .map-pin {
+        padding: 5px 8px;
+        font-size: 0.85rem;
+    }
+    .pin-icon-map {
+        font-size: 1rem;
+    }
+}
+
 .stat-item {
     margin-bottom: 1rem;
     display: flex;
