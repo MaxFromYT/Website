@@ -30,20 +30,20 @@
                 <div class="header-search-container">
                     <form action="#" method="get" class="search-form" role="search">
                         <div class="search-input-wrapper"> <!-- New wrapper for input and dropdown -->
-                            <input type="search" id="header-search-input" name="q" placeholder="Search..." aria-label="Search website" autocomplete="off">
+                            <input type="search" id="header-search-input" name="q" placeholder="Search Mac Pro specs, articles, support..." aria-label="Search website" autocomplete="off">
                             <div id="predictive-search-results" class="predictive-search-dropdown" style="display: none;">
                                 <!-- Mock search suggestions -->
                                 <a href="#" class="suggestion-item">
-                                    <span class="suggestion-icon">🔍</span> User Authentication Flow
+                                    <span class="suggestion-icon">🔍</span> Mac Pro M2 Ultra benchmarks
                                 </a>
                                 <a href="#" class="suggestion-item">
-                                    <span class="suggestion-icon">📄</span> CMS Content Types
+                                    <span class="suggestion-icon">📄</span> Final Cut Pro performance on Mac Pro
                                 </a>
                                 <a href="#" class="suggestion-item">
-                                    <span class="suggestion-icon">⚙️</span> Admin Panel Settings
+                                    <span class="suggestion-icon">⚙️</span> Mac Pro rack mount
                                 </a>
                                 <a href="#" class="suggestion-item">
-                                    <span class="suggestion-icon">📈</span> Dashboard Analytics
+                                    <span class="suggestion-icon">📈</span> Pro Display XDR compatibility
                                 </a>
                                 <div class="suggestion-footer">
                                     <span>Press Enter to search for "<strong id="typed-search-term"></strong>"</span>
@@ -315,13 +315,14 @@
             <!-- New Feature Sections Will Go Here -->
             <div id="new-features-container">
                 <section id="user-authentication" class="content-section feature-section">
-                    <h2>User Authentication</h2>
+                    <h2>Developer & Pro Access</h2>
+                    <p class="section-description">Login or register to access exclusive Mac Pro resources, configurations, and support.</p>
                     <div class="auth-forms-container">
                         <div class="auth-form login-form">
-                            <h3>Login</h3>
+                            <h3>Pro Login</h3>
                             <form action="#" method="post">
                                 <div class="form-group">
-                                    <label for="login-email">Email Address</label>
+                                    <label for="login-email">Apple ID (Email)</label>
                                     <input type="email" id="login-email" name="login-email" required>
                                 </div>
                                 <div class="form-group">
@@ -329,25 +330,25 @@
                                     <input type="password" id="login-password" name="login-password" required>
                                 </div>
                                 <div class="form-group">
-                                    <button type="submit" class="btn btn-primary">Login</button>
+                                    <button type="submit" class="btn btn-primary">Sign In</button>
                                 </div>
-                                <p class="form-switch-text">Don't have an account? <a href="#register-form" class="switch-to-register">Register here</a></p>
+                                <p class="form-switch-text">Don't have a Pro Account? <a href="#register-form" class="switch-to-register">Register for Developer Access</a></p>
                             </form>
                         </div>
 
                         <div class="auth-form register-form" id="register-form">
-                            <h3>Register</h3>
+                            <h3>Register for Developer Access</h3>
                             <form action="#" method="post">
                                 <div class="form-group">
-                                    <label for="register-username">Username</label>
+                                    <label for="register-username">Full Name</label>
                                     <input type="text" id="register-username" name="register-username" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="register-email">Email Address</label>
+                                    <label for="register-email">Apple ID (Email)</label>
                                     <input type="email" id="register-email" name="register-email" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="register-password">Password</label>
+                                    <label for="register-password">Create Password</label>
                                     <input type="password" id="register-password" name="register-password" required>
                                 </div>
                                 <div class="form-group">
@@ -355,9 +356,9 @@
                                     <input type="password" id="register-confirm-password" name="register-confirm-password" required>
                                 </div>
                                 <div class="form-group">
-                                    <button type="submit" class="btn btn-primary">Register</button>
+                                    <button type="submit" class="btn btn-primary">Create Account</button>
                                 </div>
-                                 <p class="form-switch-text">Already have an account? <a href="#login-form" class="switch-to-login">Login here</a></p>
+                                 <p class="form-switch-text">Already have a Pro Account? <a href="#login-form" class="switch-to-login">Sign In</a></p>
                             </form>
                         </div>
                     </div>
@@ -377,12 +378,12 @@
                 </section>
 
                 <section id="cms-placeholder-area" class="content-section feature-section">
-                    <h2>Managed Content Area</h2>
-                    <p class="section-description">This area will display content managed through a Content Management System. Below are examples of how content blocks might appear.</p>
+                    <h2>Mac Pro News & Articles</h2>
+                    <p class="section-description">Latest updates, articles, and deep dives into Mac Pro technology and workflows.</p>
 
                     <div class="wysiwyg-editor-placeholder-container">
-                        <h4>Content Editor Interface (WYSIWYG)</h4>
-                        <p class="section-description">Below is a representation of where a WYSIWYG editor would be integrated for creating and editing content.</p>
+                        <h4>Content Publishing Interface</h4>
+                        <p class="section-description">Placeholder for an integrated editor to manage Mac Pro articles and documentation.</p>
                         <div class="wysiwyg-toolbar-placeholder">
                             <!-- Fake toolbar buttons -->
                             <span class="toolbar-button-placeholder">B</span>
@@ -401,69 +402,70 @@
                     </div>
 
                     <article class="cms-content-block">
-                        <h3>Sample Article Title 1</h3>
-                        <p class="meta-info">Published on: <span class="date">October 26, 2023</span> by <span class="author">Admin</span></p>
-                        <img src="https://via.placeholder.com/800x300/e0e0e0/969696?Text=Placeholder+Article+Image" alt="Placeholder Article Image" class="cms-image-placeholder">
-                        <p>This is a paragraph of placeholder text for a managed article. It demonstrates where the actual content fetched from the CMS would be displayed. The styling will ensure it fits the clean, minimalist aesthetic of the website.</p>
+                        <h3>Optimizing Final Cut Pro on Mac Pro</h3>
+                        <p class="meta-info">Published on: <span class="date">November 15, 2023</span> by <span class="author">Pro Apps Team</span></p>
+                        <img src="https://via.placeholder.com/800x300/e0e0e0/969696?Text=Mac+Pro+with+Final+Cut+Pro+UI" alt="Mac Pro running Final Cut Pro" class="cms-image-placeholder">
+                        <p>Unlock unparalleled performance in Final Cut Pro with the new Mac Pro. This article explores best practices for configuring your system and workflow for maximum efficiency in 8K editing and complex color grading.</p>
                         <a href="#" class="btn btn-secondary">Read More</a>
                     </article>
 
                     <article class="cms-content-block">
-                        <h3>Sample Article Title 2</h3>
-                        <p class="meta-info">Published on: <span class="date">October 27, 2023</span> by <span class="author">Editor</span></p>
-                        <p>Another block of text representing a piece of content. This could be a news item, a blog post, or any other type of update managed through the CMS. Each block can be styled uniformly.</p>
+                        <h3>The Future of Mac Pro Modularity</h3>
+                        <p class="meta-info">Published on: <span class="date">November 10, 2023</span> by <span class="author">Hardware Insights</span></p>
+                        <img src="https://via.placeholder.com/800x300/d0d0d0/969696?Text=Mac+Pro+Internal+Components" alt="Internal view of Mac Pro components" class="cms-image-placeholder">
+                        <p>Dive deep into the innovative modular design of the Mac Pro. We discuss the benefits of MPX Modules, Afterburner, and how professionals can customize their Mac Pro for any demanding task.</p>
                         <a href="#" class="btn btn-secondary">Read More</a>
                     </article>
 
                     <div class="cms-editable-block">
-                        <h4>Simple Editable Block</h4>
-                        <p>This represents a smaller, directly editable content snippet that might be managed by the CMS, like a welcome message or an announcement.</p>
+                        <h4>Mac Pro Tip of the Week</h4>
+                        <p>Utilize the Mac Pro's dual 10Gb Ethernet ports for lightning-fast network transfers and collaborative workflows.</p>
                     </div>
                 </section>
 
                 <section id="user-dashboard" class="content-section feature-section">
-                    <h2>User Dashboard</h2>
-                    <p class="section-description">Welcome to your personalized dashboard. Here you'll find your information and quick access to various features.</p>
+                    <h2>Your Mac Pro Dashboard</h2>
+                    <p class="section-description">Manage your registered Mac Pros, software licenses, and access personalized support.</p>
                     <div class="dashboard-widgets-container">
                         <div class="dashboard-widget widget-profile">
-                            <h4>My Profile</h4>
+                            <h4>My Apple ID Profile</h4>
                             <div class="widget-content">
                                 <img src="https://via.placeholder.com/100x100/e0e0e0/969696?Text=Avatar" alt="User Avatar Placeholder" class="profile-avatar-placeholder">
-                                <p><strong>Name:</strong> <span class="profile-name">John Doe</span></p>
-                                <p><strong>Email:</strong> <span class="profile-email">john.doe@example.com</span></p>
+                                <p><strong>Name:</strong> <span class="profile-name">Pro User</span></p>
+                                <p><strong>Email:</strong> <span class="profile-email">pro.user@example.com</span></p>
                                 <a href="#" class="btn btn-secondary btn-small">Edit Profile</a>
                             </div>
                         </div>
 
                         <div class="dashboard-widget widget-settings">
-                            <h4>Account Settings</h4>
+                            <h4>Device & Service Settings</h4>
                             <div class="widget-content">
                                 <ul>
-                                    <li><a href="#">Change Password</a></li>
-                                    <li><a href="#">Notification Preferences</a></li>
-                                    <li><a href="#">Privacy Settings</a></li>
+                                    <li><a href="#">Manage Registered Mac Pros</a></li>
+                                    <li><a href="#">Software Update Preferences</a></li>
+                                    <li><a href="#">Pro App Subscriptions</a></li>
                                 </ul>
                             </div>
                         </div>
 
                         <div class="dashboard-widget widget-activity">
-                            <h4>Recent Activity</h4>
+                            <h4>Recent Mac Pro Activity</h4>
                             <div class="widget-content">
                                 <ul>
-                                    <li>Logged in successfully.</li>
-                                    <li>Viewed 'Sample Article Title 1'.</li>
-                                    <li>Updated profile information.</li>
+                                    <li>Logged into Mac Pro Hub.</li>
+                                    <li>Viewed 'Mac Pro 2023 Specs'.</li>
+                                    <li>Downloaded Pro Apps update.</li>
                                 </ul>
                             </div>
                         </div>
 
                         <div class="dashboard-widget widget-quick-links">
-                            <h4>Quick Links</h4>
+                            <h4>Mac Pro Resources</h4>
                             <div class="widget-content">
                                 <ul>
-                                    <li><a href="#cms-placeholder-area">View Content</a></li>
-                                    <li><a href="#">My Subscriptions</a></li>
-                                    <li><a href="#">Support Tickets</a></li>
+                                    <li><a href="#cms-placeholder-area">View Mac Pro News</a></li>
+                                    <li><a href="#">My Configurations</a></li>
+                                    <li><a href="#">Developer Documentation</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -471,26 +473,26 @@
                 </section>
 
                 <section id="api-data-placeholder" class="content-section feature-section">
-                    <h2>Mock API Data</h2>
-                    <p class="section-description">This section demonstrates fetching and displaying data from a placeholder (JSONPlaceholder) API endpoint.</p>
+                    <h2>Mac Pro Performance Metrics (Demo)</h2>
+                    <p class="section-description">Demonstrating data fetch for Mac Pro system information or component status.</p>
                     <div id="fetched-data-display" class="data-display-area">
                         <p>Loading data...</p>
                     </div>
                 </section>
 
                 <section id="admin-panel" class="content-section feature-section">
-                    <h2>Admin Panel</h2>
-                    <p class="section-description">Site administration and management tools.</p>
+                    <h2>Mac Pro Hub Administration</h2>
+                    <p class="section-description">Management interface for Mac Pro Hub content, users, and services.</p>
                     <div class="admin-panel-layout">
                         <aside class="admin-sidebar">
                             <nav aria-label="Admin Section Navigation">
                                 <h3>Navigation</h3>
                                 <ul class="admin-nav-list">
                                     <li><a href="#admin-dashboard" class="active-admin-link">Dashboard Overview</a></li>
-                                    <li><a href="#admin-user-management">User Management</a></li>
-                                <li><a href="#admin-content-management">Content Management</a></li>
-                                <li><a href="#admin-site-settings">Site Settings</a></li>
-                                <li><a href="#admin-analytics">Analytics</a></li>
+                                    <li><a href="#admin-user-management">User Management (Pro Accounts)</a></li>
+                                <li><a href="#admin-content-management">Content Publishing (Mac Pro News)</a></li>
+                                <li><a href="#admin-site-settings">Service & Support Tickets</a></li>
+                                <li><a href="#admin-analytics">Mac Pro Configurations DB</a></li>
                             </ul>
                             </nav>
                         </aside>
@@ -500,26 +502,26 @@
                                 <p>Welcome to the admin dashboard. Here you'll find key metrics and quick access to management tasks.</p>
                                 <!-- Placeholder for overview widgets -->
                                 <div class="admin-overview-widgets">
-                                    <div class="overview-widget"><span>Users Online: 5</span></div>
-                                    <div class="overview-widget"><span>Pending Approvals: 2</span></div>
-                                    <div class="overview-widget"><span>New Signups (24h): 10</span></div>
+                                    <div class="overview-widget"><span>Registered Mac Pros: 1500</span></div>
+                                    <div class="overview-widget"><span>Support Tickets Open: 25</span></div>
+                                    <div class="overview-widget"><span>New Pro App Downloads (24h): 300</span></div>
                                 </div>
                             </div>
                             <div id="admin-user-management" class="admin-content-area" style="display: none;">
-                                <h4>User Management</h4>
+                                <h4>User Management (Pro Accounts)</h4>
                                 <p>Tools for managing user accounts, roles, and permissions will appear here.</p>
                                 <!-- Placeholder for user table or list -->
                             </div>
                             <div id="admin-content-management" class="admin-content-area" style="display: none;">
-                                <h4>Content Management</h4>
+                                <h4>Content Publishing (Mac Pro News)</h4>
                                 <p>Tools for creating, editing, and organizing site content will appear here. (Links to CMS, etc.)</p>
                             </div>
                             <div id="admin-site-settings" class="admin-content-area" style="display: none;">
-                                <h4>Site Settings</h4>
+                                <h4>Service & Support Tickets</h4>
                                 <p>Configuration options for the website will be available here.</p>
                             </div>
                             <div id="admin-analytics" class="admin-content-area" style="display: none;">
-                                <h4>Analytics</h4>
+                                <h4>Mac Pro Configurations DB</h4>
                                 <p>Site usage statistics and reports will be displayed here.</p>
                             </div>
                         </main>
@@ -527,8 +529,8 @@
                 </section>
 
                 <section id="advanced-form-section" class="content-section feature-section">
-                    <h2>Contact Us / Survey</h2>
-                    <p class="section-description">This form includes an example of conditional logic (e.g., showing a field based on a selection).</p>
+                    <h2>Contact Mac Pro Specialists</h2>
+                    <p class="section-description">Reach out for specialized Mac Pro support, sales inquiries, or feedback on Pro Apps.</p>
                     <form id="contact-survey-form" action="#" method="post" class="styled-form">
                         <div class="form-group">
                             <label for="form-name">Full Name</label>
@@ -539,15 +541,19 @@
                             <input type="email" id="form-email" name="email" required>
                         </div>
                         <div class="form-group">
+                            <label for="form-macpro-model">Mac Pro Model (Optional)</label>
+                            <input type="text" id="form-macpro-model" name="macpro-model" placeholder="e.g., Mac Pro (2023), Mac Pro (Rack, 2019)">
+                        </div>
+                        <div class="form-group">
                             <label for="form-subject">Subject</label>
-                            <input type="text" id="form-subject" name="subject" required>
+                            <input type="text" id="form-subject" name="subject" placeholder="e.g., Performance Issue, Sales Question" required>
                         </div>
                         <div class="form-group">
                             <label for="form-enquiry-type">Type of Enquiry</label>
                             <select id="form-enquiry-type" name="enquiry-type">
-                                <option value="general">General Question</option>
                                 <option value="support">Technical Support</option>
-                                <option value="feedback">Website Feedback</option>
+                                <option value="sales">Sales Inquiry</option>
+                                <option value="proapp-feedback">Pro App Feedback</option>
                                 <option value="other">Other</option>
                             </select>
                         </div>
@@ -557,46 +563,46 @@
                             <input type="text" id="form-other-enquiry-specify" name="other-enquiry-specify">
                         </div>
                         <div class="form-group">
-                            <label for="form-message">Message</label>
+                            <label for="form-message">Describe your issue or question in detail</label>
                             <textarea id="form-message" name="message" rows="6" required></textarea>
                         </div>
                         <div class="form-group">
                             <label class="checkbox-label">
                                 <input type="checkbox" id="form-newsletter" name="newsletter" value="subscribe">
-                                Subscribe to our newsletter?
+                                Receive updates on Mac Pro news and Pro Apps?
                             </label>
                         </div>
                         <div class="form-group">
-                            <button type="submit" class="btn btn-primary">Send Message</button>
+                            <button type="submit" class="btn btn-primary">Submit to Support</button>
                         </div>
                     </form>
                 </section>
 
                 <section id="interactive-charts-section" class="content-section feature-section">
-                    <h2>Interactive Data Visualizations</h2>
-                    <p class="section-description">Showcasing examples of complex and interactive charts.</p>
+                    <h2>Mac Pro Performance Analytics</h2>
+                    <p class="section-description">Visualizing performance metrics and benchmark data for Mac Pro configurations.</p>
                     <div class="chart-showcase-container">
                         <div class="chart-wrapper">
-                            <h4>Sales Performance Q1-Q4</h4>
+                            <h4>Mac Pro M2 Ultra vs. Previous Gen (Geekbench)</h4>
                             <div class="chart-placeholder-detailed" id="sales-chart-placeholder">
                                 <!-- Mockup of a line chart with tooltips, legends etc. -->
                                 <div class="mock-axis mock-y-axis">
-                                    <span>100k</span><span>80k</span><span>60k</span><span>40k</span><span>20k</span><span>0</span>
+                                    <span>20k</span><span>15k</span><span>10k</span><span>5k</span><span>0</span>
                                 </div>
                                 <div class="mock-chart-area">
                                     <svg class="mock-line-chart" viewBox="0 0 500 200" preserveAspectRatio="none">
-                                        <polyline points="0,150 100,100 200,120 300,80 400,90 500,60" class="mock-line-1"/>
-                                        <polyline points="0,180 100,150 200,160 300,130 400,140 500,120" class="mock-line-2"/>
-                                        <circle cx="400" cy="90" r="5" class="mock-tooltip-point"/>
+                                        <polyline points="0,50 150,30 300,60 450,20" class="mock-line-1"/> <!-- M2 Ultra Scores -->
+                                        <polyline points="0,100 150,90 300,110 450,80" class="mock-line-2"/> <!-- Previous Gen Scores -->
+                                        <circle cx="450" cy="20" r="5" class="mock-tooltip-point"/>
                                     </svg>
-                                    <div class="mock-tooltip" style="position:absolute; left: 410px; top: 70px;">Value: 90k</div>
+                                    <div class="mock-tooltip" style="position:absolute; left: 460px; top: 0px;">Score: 19,800</div>
                                 </div>
                                 <div class="mock-axis mock-x-axis">
-                                    <span>Q1</span><span>Q2</span><span>Q3</span><span>Q4</span>
+                                    <span>Single-Core</span><span>Multi-Core</span><span>Metal GPU</span><span>Compute</span>
                                 </div>
                                 <div class="mock-legend">
-                                    <span class="legend-item product-a">Product A</span>
-                                    <span class="legend-item product-b">Product B</span>
+                                    <span class="legend-item product-a">M2 Ultra Mac Pro</span>
+                                    <span class="legend-item product-b">Previous Gen Mac Pro</span>
                                 </div>
                             </div>
                         </div>
@@ -605,46 +611,54 @@
                 </section>
 
                 <section id="recommendations-section" class="content-section feature-section">
-                    <h2>Personalized Recommendations</h2>
-                    <p class="section-description">A selection of items curated just for you.</p>
+                    <h2>Recommended Mac Pro Accessories & Software</h2>
+                    <p class="section-description">A selection of peripherals, Pro Apps, and upgrades compatible with your Mac Pro setup.</p>
                     <div class="recommendations-grid">
                         <div class="recommendation-card">
-                            <img src="https://via.placeholder.com/300x180/e0e0e0/969696?Text=Recommended+Item+1" alt="Recommended Item 1" class="rec-card-img">
+                            <img src="https://via.placeholder.com/300x180/e0e0e0/969696?Text=Pro+Display+XDR" alt="Pro Display XDR" class="rec-card-img">
                             <div class="rec-card-content">
-                                <h4 class="rec-card-title">Modern Art Piece</h4>
-                                <p class="rec-card-category">Art & Collectibles</p>
+                                <h4 class="rec-card-title">Pro Display XDR</h4>
+                                <p class="rec-card-category">Professional Displays</p>
                                 <a href="#" class="btn btn-secondary btn-small">View Details</a>
                             </div>
                         </div>
                         <div class="recommendation-card">
-                            <img src="https://via.placeholder.com/300x180/e0e0e0/969696?Text=Recommended+Item+2" alt="Recommended Item 2" class="rec-card-img">
+                            <img src="https://via.placeholder.com/300x180/e0e0e0/969696?Text=Magic+Keyboard+with+Touch+ID" alt="Magic Keyboard with Touch ID" class="rec-card-img">
                             <div class="rec-card-content">
-                                <h4 class="rec-card-title">Tech Gadget Weekly</h4>
-                                <p class="rec-card-category">Magazines</p>
-                                <a href="#" class="btn btn-secondary btn-small">Subscribe</a>
+                                <h4 class="rec-card-title">Magic Keyboard with Touch ID</h4>
+                                <p class="rec-card-category">Keyboards & Accessories</p>
+                                <a href="#" class="btn btn-secondary btn-small">Buy Now</a>
                             </div>
                         </div>
                         <div class="recommendation-card">
-                            <img src="https://via.placeholder.com/300x180/e0e0e0/969696?Text=Recommended+Item+3" alt="Recommended Item 3" class="rec-card-img">
+                            <img src="https://via.placeholder.com/300x180/e0e0e0/969696?Text=Logic+Pro+X+Update" alt="Logic Pro X Update" class="rec-card-img">
                             <div class="rec-card-content">
-                                <h4 class="rec-card-title">Advanced JavaScript Course</h4>
-                                <p class="rec-card-category">Online Learning</p>
-                                <a href="#" class="btn btn-secondary btn-small">Enroll Now</a>
+                                <h4 class="rec-card-title">Logic Pro X Update</h4>
+                                <p class="rec-card-category">Pro Audio Software</p>
+                                <a href="#" class="btn btn-secondary btn-small">Learn More</a>
+                            </div>
+                        </div>
+                        <div class="recommendation-card">
+                            <img src="https://via.placeholder.com/300x180/e0e0e0/969696?Text=Afterburner+Card" alt="Afterburner Card" class="rec-card-img">
+                            <div class="rec-card-content">
+                                <h4 class="rec-card-title">Afterburner Card</h4>
+                                <p class="rec-card-category">ProRes Acceleration</p>
+                                <a href="#" class="btn btn-secondary btn-small">Add to Build</a>
                             </div>
                         </div>
                         <!-- Add more cards as needed -->
                     </div>
                 </section>
                 <section id="media-hub-section" class="content-section feature-section">
-                    <h2>Media Hub</h2>
-                    <p class="section-description">Explore our latest video content and live streams.</p>
+                    <h2>Mac Pro Media Showcase</h2>
+                    <p class="section-description">Explore official Mac Pro videos, tutorials, and event streams.</p>
 
                     <!-- Video Streaming Subsection -->
                     <div class="media-subsection" id="video-streaming-subsection">
                         <h3>Featured Videos</h3>
                         <div class="video-streaming-layout">
                             <div class="main-video-player-placeholder">
-                                <img src="https://via.placeholder.com/800x450/333/ccc?Text=Main+Video+Player" alt="Main Video Player Placeholder" class="video-player-img">
+                                <img src="https://via.placeholder.com/800x450/333/ccc?Text=Mac+Pro+Guided+Tour" alt="Mac Pro Guided Tour Thumbnail" class="video-player-img">
                                 <div class="video-controls-overlay">
                                     <button type="button" class="control-btn play-pause" aria-label="Play/Pause">▶️</button>
                                     <div class="progress-bar-mock"><div class="progress-filled-mock" style="width:30%"></div></div>
@@ -654,16 +668,16 @@
                             </div>
                             <div class="video-playlist-thumbs">
                                 <div class="thumb-item active-thumb">
-                                    <img src="https://via.placeholder.com/160x90/555/ccc?Text=Video+1" alt="Video 1 Thumbnail" class="thumb-img">
-                                    <p class="thumb-title">Video Title 1: The Adventure Begins</p>
+                                    <img src="https://via.placeholder.com/160x90/555/ccc?Text=Mac+Pro+2023+Tour" alt="Mac Pro 2023: A Guided Tour Thumbnail" class="thumb-img">
+                                    <p class="thumb-title">Mac Pro 2023: A Guided Tour</p>
                                 </div>
                                 <div class="thumb-item">
-                                    <img src="https://via.placeholder.com/160x90/555/ccc?Text=Video+2" alt="Video 2 Thumbnail" class="thumb-img">
-                                    <p class="thumb-title">Video Title 2: Deep Dive into Tech</p>
+                                    <img src="https://via.placeholder.com/160x90/555/ccc?Text=WWDC+Mac+Pro" alt="WWDC: Mac Pro Deep Dive Thumbnail" class="thumb-img">
+                                    <p class="thumb-title">WWDC: Mac Pro Deep Dive</p>
                                 </div>
                                 <div class="thumb-item">
-                                    <img src="https://via.placeholder.com/160x90/555/ccc?Text=Video+3" alt="Video 3 Thumbnail" class="thumb-img">
-                                    <p class="thumb-title">Video Title 3: Culinary Masterclass</p>
+                                    <img src="https://via.placeholder.com/160x90/555/ccc?Text=Pro+Apps+Workflow" alt="Optimizing Workflows with Pro Apps Thumbnail" class="thumb-img">
+                                    <p class="thumb-title">Optimizing Workflows with Pro Apps</p>
                                 </div>
                             </div>
                         </div>
@@ -674,7 +688,7 @@
                         <h3>Live Now!</h3>
                         <div class="live-streaming-layout">
                             <div class="main-video-player-placeholder live-player-placeholder">
-                                <img src="https://via.placeholder.com/800x450/c0392b/f0f0f0?Text=LIVE+Event+Stream" alt="Live Event Stream Placeholder" class="video-player-img">
+                                <img src="https://via.placeholder.com/800x450/c0392b/f0f0f0?Text=LIVE+Mac+Pro+Q&A" alt="LIVE Mac Pro Q&A with Apple Engineers Thumbnail" class="video-player-img">
                                 <div class="live-indicator-overlay">
                                     <span class="live-badge">LIVE</span>
                                     <span class="viewer-count">👁️ 1.2K viewers</span>
@@ -687,8 +701,8 @@
                                 </div>
                             </div>
                             <div class="live-stream-info">
-                                <h4>Special Event: Product Launch</h4>
-                                <p class="live-stream-description">Join us live for the unveiling of our latest innovations. Hosted by Jane Doe.</p>
+                                <h4>LIVE: Mac Pro Q&A with Apple Engineers</h4>
+                                <p class="live-stream-description">Join us live for an exclusive Q&A session with the engineers behind the Mac Pro. Get your questions answered!</p>
                                 <button type="button" class="btn btn-primary btn-join-chat">Join Live Chat</button>
                             </div>
                         </div>
@@ -696,21 +710,21 @@
                 </section>
 
                 <section id="ugc-feed-section" class="content-section feature-section">
-                    <h2>Community Feed</h2>
-                    <p class="section-description">Latest posts and updates from our vibrant community.</p>
+                    <h2>Mac Pro Community Showcase</h2>
+                    <p class="section-description">See how professionals are using Mac Pro for their groundbreaking work.</p>
                     <div class="ugc-posts-container">
                         <!-- Sample Post 1 -->
                         <article class="ugc-post">
                             <header class="ugc-post-header">
-                                <img src="https://via.placeholder.com/40x40/e0e0e0/969696?Text=U1" alt="User 1 Avatar" class="user-avatar-ugc">
+                                <img src="https://via.placeholder.com/40x40/e0e0e0/969696?Text=MPA" alt="MacProArtist Avatar" class="user-avatar-ugc">
                                 <div class="user-info-ugc">
-                                    <span class="username-ugc">TrailBlazer123</span>
+                                    <span class="username-ugc">MacProArtist</span>
                                     <span class="post-timestamp-ugc">2 hours ago</span>
                                 </div>
                             </header>
                             <div class="ugc-post-content">
-                                <p>Just completed the advanced JavaScript course! Highly recommend it. #JS #WebDev</p>
-                                <img src="https://via.placeholder.com/600x300/e0e0e0/969696?Text=Shared+Image+1" alt="User shared image" class="ugc-shared-image">
+                                <p>My new Mac Pro setup for 8K video editing! This thing flies through ProRes RAW. #MacPro #VideoEditing #8K</p>
+                                <img src="https://via.placeholder.com/600x300/e0e0e0/969696?Text=User's+Mac+Pro+editing+suite" alt="User's Mac Pro editing suite" class="ugc-shared-image">
                             </div>
                             <footer class="ugc-post-footer">
                                 <button type="button" class="btn-ugc-action like" aria-label="Like post"><span class="icon">👍</span> 15 Likes</button>
@@ -721,14 +735,14 @@
                         <!-- Sample Post 2 -->
                         <article class="ugc-post">
                             <header class="ugc-post-header">
-                                <img src="https://via.placeholder.com/40x40/e0e0e0/969696?Text=U2" alt="User 2 Avatar" class="user-avatar-ugc">
+                                <img src="https://via.placeholder.com/40x40/e0e0e0/969696?Text=CV" alt="CodeVirtuoso Avatar" class="user-avatar-ugc">
                                 <div class="user-info-ugc">
-                                    <span class="username-ugc">PixelArtPro</span>
+                                    <span class="username-ugc">CodeVirtuoso</span>
                                     <span class="post-timestamp-ugc">5 hours ago</span>
                                 </div>
                             </header>
                             <div class="ugc-post-content">
-                                <p>Working on some new pixel art. What do you all think?</p>
+                                <p>Compiling a massive project on the new Mac Pro. What used to take an hour now takes 15 minutes! #DevLife #MacProSpeed</p>
                             </div>
                             <footer class="ugc-post-footer">
                                 <button type="button" class="btn-ugc-action like" aria-label="Like post"><span class="icon">👍</span> 25 Likes</button>
@@ -740,45 +754,45 @@
                 </section>
 
                 <section id="gamification-section" class="content-section feature-section">
-                    <h2>Achievements & Leaderboard</h2>
-                    <p class="section-description">Track your progress, earn badges, and see how you rank!</p>
+                    <h2>Pro User Achievements & Community Standing</h2>
+                    <p class="section-description">Engage with the Mac Pro community, share expertise, and earn recognition!</p>
                     <div class="gamification-layout">
                         <div class="user-gamification-stats content-section-panel">
-                            <h4>Your Progress</h4>
+                            <h4>Your Pro Profile</h4>
                             <div class="stat-item points">
-                                <span class="stat-label">Total Points:</span>
-                                <span class="stat-value">1,250 XP</span>
+                                <span class="stat-label">Community Points:</span>
+                                <span class="stat-value">1,250 CP</span>
                             </div>
                             <div class="stat-item badges-earned">
                                 <span class="stat-label">Badges Earned:</span>
                                 <div class="badges-showcase">
-                                    <span class="badge-icon" title="Early Adopter" aria-label="Early Adopter Badge">🏆</span>
-                                    <span class="badge-icon" title="Feedback Pro" aria-label="Feedback Pro Badge">⭐</span>
-                                    <span class="badge-icon" title="Community Helper" aria-label="Community Helper Badge">🤝</span>
-                                    <span class="badge-icon" title="Streak Master" aria-label="Streak Master Badge">🔥</span>
+                                    <span class="badge-icon" title="Mac Pro Expert" aria-label="Mac Pro Expert Badge">🏆</span>
+                                    <span class="badge-icon" title="Top Contributor" aria-label="Top Contributor Badge">⭐</span>
+                                    <span class="badge-icon" title="Setup Showcase Winner" aria-label="Setup Showcase Winner Badge">🖥️</span>
+                                    <span class="badge-icon" title="Performance Guru" aria-label="Performance Guru Badge">🚀</span>
                                 </div>
                             </div>
                         </div>
                         <div class="leaderboard-container content-section-panel">
-                            <h4>Community Leaderboard</h4>
+                            <h4>Pro Community Leaderboard</h4>
                             <ol class="leaderboard-list">
-                                <li class="leaderboard-item"><span class="rank">1.</span> <img src="https://via.placeholder.com/30x30/e0e0e0/969696?Text=L1" alt="User L1 Avatar" class="leaderboard-avatar"> <span class="name">LeaderLarry</span> <span class="score">5,800 XP</span></li>
-                                <li class="leaderboard-item"><span class="rank">2.</span> <img src="https://via.placeholder.com/30x30/e0e0e0/969696?Text=L2" alt="User L2 Avatar" class="leaderboard-avatar"> <span class="name">CaptainCode</span> <span class="score">5,250 XP</span></li>
-                                <li class="leaderboard-item"><span class="rank">3.</span> <img src="https://via.placeholder.com/30x30/e0e0e0/969696?Text=U1" alt="User U1 Avatar" class="leaderboard-avatar"> <span class="name">TrailBlazer123</span> <span class="score">4,900 XP</span></li>
+                                <li class="leaderboard-item"><span class="rank">1.</span> <img src="https://via.placeholder.com/30x30/e0e0e0/969696?Text=SA" alt="StudioArchitect Avatar" class="leaderboard-avatar"> <span class="name">StudioArchitect</span> <span class="score">5,800 CP</span></li>
+                                <li class="leaderboard-item"><span class="rank">2.</span> <img src="https://via.placeholder.com/30x30/e0e0e0/969696?Text=CV" alt="CodeVirtuoso Avatar" class="leaderboard-avatar"> <span class="name">CodeVirtuoso</span> <span class="score">5,250 CP</span></li>
+                                <li class="leaderboard-item"><span class="rank">3.</span> <img src="https://via.placeholder.com/30x30/e0e0e0/969696?Text=MPA" alt="MacProArtist Avatar" class="leaderboard-avatar"> <span class="name">MacProArtist</span> <span class="score">4,900 CP</span></li>
                             </ol>
                         </div>
                     </div>
                 </section>
 
                 <section id="file-upload-section" class="content-section feature-section">
-                    <h2>Advanced File Upload</h2>
-                    <p class="section-description">Drag and drop files below, or use the traditional upload button.</p>
+                    <h2>Upload Project Files / Diagnostics</h2>
+                    <p class="section-description">Securely share large project files or diagnostic reports with Apple Support or collaborators.</p>
                     <div id="drag-drop-area" class="drag-drop-zone">
                         <div class="drag-drop-prompt">
                             <span class="upload-icon" aria-hidden="true">📤</span>
-                            <p>Drag & Drop Files Here</p>
+                            <p>Drag & Drop Project Archives (.zip, .pkg) or Diagnostic Logs (.txt, .log)</p>
                             <p class="small-text">or</p>
-                            <label for="file-upload-fallback" class="btn btn-secondary">Select Files</label>
+                            <label for="file-upload-fallback" class="btn btn-secondary">Select Files to Upload</label>
                             <input type="file" id="file-upload-fallback" multiple hidden>
                         </div>
                         <div id="file-preview-area" class="file-preview-list" style="display:none;">
@@ -802,7 +816,7 @@
                             <h4>Search Locations</h4>
                             <div class="form-group">
                                 <label for="macpro-location-search-input">Enter City, Zip Code, or Address</label>
-                                <input type="text" id="macpro-location-search-input" placeholder="e.g., Cupertino, CA or 1 Infinite Loop">
+                                <input type="text" id="macpro-location-search-input" placeholder="Search Apple Stores or Service Centers...">
                             </div>
                             <div class="form-group">
                                 <label for="macpro-location-type-filter">Show</label>
@@ -892,30 +906,30 @@
 
     <div id="live-chat-panel" class="chat-panel" style="display: none;">
         <div class="chat-panel-header">
-            <h3>Live Chat Support</h3>
+            <h3>Mac Pro Live Support</h3>
             <button type="button" class="btn-close-chat" aria-label="Close chat">×</button>
         </div>
         <div class="chat-messages-area">
             <!-- Mock messages -->
-            <div class="chat-message received"><p>Hello! How can I help you today?</p><span class="timestamp">10:00 AM</span></div>
-            <div class="chat-message sent"><p>I have a question about my order.</p><span class="timestamp">10:01 AM</span></div>
+            <div class="chat-message received"><p>Hello! How can we help with your Mac Pro today?</p><span class="timestamp">10:00 AM</span></div>
+            <div class="chat-message sent"><p>I have a question about my Mac Pro configuration.</p><span class="timestamp">10:01 AM</span></div>
         </div>
         <div class="chat-input-area">
-            <textarea placeholder="Type your message..." aria-label="Chat message input"></textarea>
+            <textarea placeholder="Type your Mac Pro question..." aria-label="Chat message input"></textarea>
             <button type="button" class="btn-send-message" aria-label="Send message">Send</button>
         </div>
     </div>
 
     <div id="ai-chatbot-panel" class="chat-panel" style="display: none;">
         <div class="chat-panel-header">
-            <h3>AI Chatbot Assistant</h3>
+            <h3>Mac Pro AI Assistant</h3>
             <button type="button" class="btn-close-chat" aria-label="Close chat">×</button>
         </div>
         <div class="chat-messages-area">
-            <div class="chat-message received"><p>Greetings! I am your AI Assistant. Ask me anything.</p><span class="timestamp">10:02 AM</span></div>
+            <div class="chat-message received"><p>Greetings! I am the Mac Pro AI. Ask about configurations, troubleshooting, or Pro Apps.</p><span class="timestamp">10:02 AM</span></div>
         </div>
         <div class="chat-input-area">
-            <input type="text" placeholder="Ask the AI..." aria-label="AI Chat input">
+            <input type="text" placeholder="Ask about Mac Pro..." aria-label="AI Chat input">
             <button type="button" class="btn-send-message" aria-label="Send message">Ask</button>
         </div>
     </div>

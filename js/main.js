@@ -17,17 +17,24 @@ function fetchAndDisplayMockData() {
             return response.json();
         })
         .then(data => {
-            // Simple display of some fetched data
+            // Display mock Mac Pro system info
             displayArea.innerHTML = `
-                <h3>User Details (from JSONPlaceholder)</h3>
-                <p><strong>Name:</strong> ${data.name}</p>
-                <p><strong>Username:</strong> ${data.username}</p>
-                <p><strong>Email:</strong> ${data.email}</p>
-                <p><strong>Website:</strong> ${data.website}</p>
-                <h4>Address:</h4>
+                <h3>Mock System Report</h3>
+                <p><strong>Device Name:</strong> ${data.name}'s Mac Pro</p> <!-- Using fetched name for some dynamic feel -->
+                <p><strong>Model Identifier:</strong> MacPro7,1</p>
+                <p><strong>Processor Name:</strong> Apple M2 Ultra</p>
+                <p><strong>Memory:</strong> 192 GB</p>
+                <p><strong>Graphics:</strong> Apple M2 Ultra (Integrated)</p>
+                <p><strong>Serial Number (Mock):</strong> ${data.id.toString().padStart(8, '0')}${data.username.toUpperCase()}</p>
+                <h4>Storage:</h4>
                 <p>
-                    ${data.address.street}, ${data.address.suite}<br>
-                    ${data.address.city}, ${data.address.zipcode}
+                    <strong>Capacity:</strong> 8TB SSD<br>
+                    <strong>Available:</strong> ${Math.floor(8000 - (data.id * 100))} GB <!-- Fake available space based on ID -->
+                </p>
+                <h4>Network:</h4>
+                <p>
+                    <strong>Primary Interface:</strong> Ethernet 1<br>
+                    <strong>IP Address (Local):</strong> 192.168.${data.address.geo.lat.split('.')[1] % 255}.${data.address.geo.lng.split('.')[1] % 255} <!-- Fake local IP -->
                 </p>
             `;
         })
@@ -375,39 +382,84 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    const follower = document.querySelector('.cursor-follower');
-    if (follower) {
+    // New Dot and Outline Cursor Logic
+    const cursorDot = document.getElementById('cursor-dot');
+    const cursorOutline = document.getElementById('cursor-outline');
+
+    if (cursorDot && cursorOutline) {
         let mouseX = 0, mouseY = 0;
-        let followerX = 0, followerY = 0;
-        const trailFactor = 0.15;
+        let dotX = 0, dotY = 0;
+        let outlineX = 0, outlineY = 0;
+
+        const dotTrailFactor = 0.9; // Dot is very responsive
+        const outlineTrailFactor = 0.2; // Outline has a smoother trail
+
+        let animationFrameId = null;
+        let isCursorVisible = false;
+
         document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX; mouseY = e.clientY;
-        });
-        function updateFollower() {
-            const dx = mouseX - followerX; const dy = mouseY - followerY;
-            followerX += dx * trailFactor; followerY += dy * trailFactor;
-            if (Math.abs(dx) > 0.1 || Math.abs(dy) > 0.1) {
-                follower.style.transform = `translate(${followerX-(follower.offsetWidth/2)}px, ${followerY-(follower.offsetHeight/2)}px) scale(${follower.classList.contains('hover-link')?2.5:1})`;
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+
+            if (!isCursorVisible) {
+                isCursorVisible = true;
+                document.body.classList.add('cursor-visible');
+                // Initialize positions immediately for first render
+                dotX = mouseX;
+                dotY = mouseY;
+                outlineX = mouseX;
+                outlineY = mouseY;
+                cursorDot.style.transform = `translate(${dotX - cursorDot.offsetWidth / 2}px, ${dotY - cursorDot.offsetHeight / 2}px)`;
+                cursorOutline.style.transform = `translate(${outlineX - cursorOutline.offsetWidth / 2}px, ${outlineY - cursorOutline.offsetHeight / 2}px)`;
             }
-            requestAnimationFrame(updateFollower);
+        });
+
+        function updateCursor() {
+            if (isCursorVisible) {
+                // Update Dot position
+                const dxDot = mouseX - dotX;
+                const dyDot = mouseY - dotY;
+                dotX += dxDot * dotTrailFactor;
+                dotY += dyDot * dotTrailFactor;
+                cursorDot.style.transform = `translate(${dotX - cursorDot.offsetWidth / 2}px, ${dotY - cursorDot.offsetHeight / 2}px)`;
+
+                // Update Outline position
+                const dxOutline = mouseX - outlineX;
+                const dyOutline = mouseY - outlineY;
+                outlineX += dxOutline * outlineTrailFactor;
+                outlineY += dyOutline * outlineTrailFactor;
+                cursorOutline.style.transform = `translate(${outlineX - cursorOutline.offsetWidth / 2}px, ${outlineY - cursorOutline.offsetHeight / 2}px) scale(${cursorOutline.classList.contains('cursor-hover-link') ? 1.5 : 1})`;
+            }
+            animationFrameId = requestAnimationFrame(updateCursor);
         }
-        requestAnimationFrame(updateFollower);
-        const links = document.querySelectorAll('a, button, .swiper-button-prev, .swiper-button-next, .play-button-overlay');
-        links.forEach(link => {
-            link.addEventListener('mouseenter', () => {
-                follower.classList.add('hover-link');
-                follower.style.transform = `translate(${followerX-(follower.offsetWidth/2)}px, ${followerY-(follower.offsetHeight/2)}px) scale(2.5)`;
+
+        // Start animation loop
+        animationFrameId = requestAnimationFrame(updateCursor);
+
+        const interactiveElements = document.querySelectorAll('a, button, .swiper-button-prev, .swiper-button-next, .play-button-overlay, input[type="submit"], input[type="button"], select, textarea, input[type="text"], input[type="email"], input[type="password"], .auth-form label, .checkbox-label');
+        interactiveElements.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursorOutline.classList.add('cursor-hover-link');
+                // Optional: Add class to dot as well if needed for its own hover style
+                // cursorDot.classList.add('cursor-hover-link');
             });
-            link.addEventListener('mouseleave', () => {
-                follower.classList.remove('hover-link');
-                follower.style.transform = `translate(${followerX-(follower.offsetWidth/2)}px, ${followerY-(follower.offsetHeight/2)}px) scale(1)`;
+            el.addEventListener('mouseleave', () => {
+                cursorOutline.classList.remove('cursor-hover-link');
+                // cursorDot.classList.remove('cursor-hover-link');
             });
         });
-        setTimeout(() => {
-            followerX = mouseX; followerY = mouseY;
-            const initialScale = document.body.matches(':hover') ? 1 : 0;
-            follower.style.transform = `translate(${followerX-(follower.offsetWidth/2)}px, ${followerY-(follower.offsetHeight/2)}px) scale(${initialScale})`;
-        }, 10);
+
+        // Hide cursor elements if mouse leaves window
+        document.addEventListener('mouseleave', () => {
+            document.body.classList.remove('cursor-visible');
+            isCursorVisible = false; // Will re-initialize on next mousemove in window
+        });
+        document.addEventListener('mouseenter', () => {
+             if (!isCursorVisible) { // Re-initialize if mouse enters again
+                isCursorVisible = true;
+                document.body.classList.add('cursor-visible');
+            }
+        });
     }
 
     const navLinksForSplit = document.querySelectorAll('header nav ul li a');
