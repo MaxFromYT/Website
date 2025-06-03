@@ -1016,6 +1016,71 @@ footer p {
     font-weight: 500;
 }
 
+/* Immersive Tech Placeholders Styles */
+.immersive-showcase-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid */
+    gap: 2rem; /* Increased gap for better separation */
+    margin-top: 1.5rem;
+}
+
+.immersive-card {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px; /* More rounded cards */
+    padding: 2rem 1.5rem; /* Adjusted padding */
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.06); /* Slightly more pronounced shadow */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between; /* Pushes button to bottom if content height varies */
+    transition: transform 0.25s ease-out, box-shadow 0.25s ease-out;
+}
+
+.immersive-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 18px rgba(0,0,0,0.1); /* Enhanced shadow on hover */
+}
+
+.immersive-card-icon-container {
+    margin-bottom: 1.5rem; /* More space below icon */
+}
+
+.immersive-card-icon {
+    font-size: 4rem; /* Larger icon */
+    color: #0071e3; /* Apple Blue */
+    background-color: #e9f5ff; /* Very light blue background */
+    padding: 1.5rem; /* More padding for icon background */
+    border-radius: 50%;
+    display: inline-block;
+    line-height: 1;
+    box-shadow: 0 3px 6px rgba(0,113,227,0.15); /* Subtle shadow for icon */
+}
+
+.immersive-card-content h4 {
+    font-size: 1.4rem; /* Slightly larger title */
+    color: #1d1d1f;
+    margin-bottom: 0.75rem;
+    font-weight: 600; /* Bolder card title */
+}
+
+.immersive-card-content p {
+    font-size: 0.95rem; /* Standard paragraph size */
+    color: #555555;
+    margin-bottom: 1.5rem; /* Space before button */
+    line-height: 1.6;
+    max-width: 320px; /* Limit text width for readability in card */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.btn-immersive { /* Uses .btn and .btn-primary styles */
+    margin-top: auto; /* Ensure button is at the bottom */
+    padding: 0.75rem 1.75rem; /* Larger padding for these main action buttons */
+    font-size: 1rem; /* Standard button font size */
+}
+
 .form-switch-text a:hover {
     text-decoration: underline;
 }
